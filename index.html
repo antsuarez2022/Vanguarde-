@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CircleSync</title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>CircleSync</h1>
+
+        <p>Build healthier routines together.</p>
+
+    </header>
+
+    <section class="card">
+
+        <h2>Today's Status</h2>
+
+        <p>Energy Score</p>
+
+        <div id="energy-score">72</div>
+
+    </section>
+
+    <section class="card">
+
+        <h2>Focus Mode</h2>
+
+        <button id="focus-btn">
+
+            Start Focus Session
+
+        </button>
+
+    </section>
+
+    <section class="card">
+
+        <h2>Accountability Circle</h2>
+
+        <ul id="circle-list">
+
+            <li>David — Ate lunch ✓</li>
+
+            <li>Sarah — Resting 😴</li>
+
+            <li>Mike — Working 💻</li>
+
+        </ul>
+
+    </section>
+
+    <section class="card">
+
+        <h2>Quick Check-In</h2>
+
+        <button onclick="checkIn('eat')">
+
+            🍽 Ate
+
+        </button>
+
+        <button onclick="checkIn('rest')">
+
+            😴 Rested
+
+        </button>
+
+        <button onclick="checkIn('focus')">
+
+            💻 Working
+
+        </button>
+
+    </section>
+
+    <section class="card">
+
+        <h2>Recommendation</h2>
+
+        <p id="recommendation">
+
+            You have been working for 3 hours.
+            Take a 15-minute break.
+
+        </p>
+
+    </section>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
