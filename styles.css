@@ -978,3 +978,39 @@ strong {
             1.6rem;
     }
 }
+/* =========================================================
+   AUTH TABS
+========================================================= */
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.auth-tab {
+    margin-top: 0;
+    background: transparent;
+    color: var(--green);
+    border: 1px solid var(--border);
+}
+
+.auth-tab:hover {
+    background: rgba(135, 255, 98, 0.08);
+}
+
+.active-tab {
+    background: linear-gradient(
+        135deg,
+        #91ff68,
+        #46dd66
+    );
+    color: #130020;
+    border-color: transparent;
+}
+
+#signin-section[hidden],
+#signup-section[hidden] {
+    display: none;
+}
