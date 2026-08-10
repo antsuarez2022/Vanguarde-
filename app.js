@@ -1,18 +1,23 @@
 "use strict";
 
-console.log("CircleSync app.js v51 loaded");
+console.log("CircleSync app.js v60 loaded");
+
 
 const SUPABASE_URL =
     "https://mkecbhmkvrtwltejwzua.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_hWxse_7flC8kSKS_xlVkYw_BRUwJ2d8";
 
+
 if (!window.supabase) {
+
     throw new Error(
         "Supabase library failed to load."
     );
 }
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -25,10 +30,7 @@ document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
-        if (
-            document.body.id ===
-            "auth-page"
-        ) {
+        if (document.body.id === "auth-page") {
 
             await initAuthPage();
 
@@ -36,10 +38,7 @@ document.addEventListener(
         }
 
 
-        if (
-            document.body.id ===
-            "dashboard-page"
-        ) {
+        if (document.body.id === "dashboard-page") {
 
             await initDashboardPage();
         }
@@ -55,49 +54,31 @@ document.addEventListener(
 async function initAuthPage() {
 
     const form =
-        document.getElementById(
-            "auth-form"
-        );
+        document.getElementById("auth-form");
 
     const emailInput =
-        document.getElementById(
-            "email"
-        );
+        document.getElementById("email");
 
     const passwordInput =
-        document.getElementById(
-            "password"
-        );
+        document.getElementById("password");
 
     const loginButton =
-        document.getElementById(
-            "login-btn"
-        );
+        document.getElementById("login-btn");
 
     const signupButton =
-        document.getElementById(
-            "signup-btn"
-        );
+        document.getElementById("signup-btn");
 
     const message =
-        document.getElementById(
-            "auth-message"
-        );
+        document.getElementById("auth-message");
 
 
-    function setMessage(
-        text,
-        isError
-    ) {
+    function setMessage(text, isError) {
 
         if (!message) {
             return;
         }
 
-
-        message.textContent =
-            text;
-
+        message.textContent = text;
 
         message.style.color =
             isError
@@ -106,37 +87,16 @@ async function initAuthPage() {
     }
 
 
-    function setBusy(
-        busy
-    ) {
+    function setBusy(busy) {
 
-        if (loginButton) {
-            loginButton.disabled =
-                busy;
-        }
+        loginButton.disabled = busy;
 
-
-        if (signupButton) {
-            signupButton.disabled =
-                busy;
-        }
+        signupButton.disabled = busy;
     }
 
 
     const sessionResult =
-        await supabaseClient.auth
-            .getSession();
-
-
-    if (
-        sessionResult.error
-    ) {
-
-        console.error(
-            "Session check error:",
-            sessionResult.error
-        );
-    }
+        await supabaseClient.auth.getSession();
 
 
     if (
@@ -152,26 +112,6 @@ async function initAuthPage() {
     }
 
 
-    if (
-        !form ||
-        !emailInput ||
-        !passwordInput ||
-        !loginButton ||
-        !signupButton
-    ) {
-
-        console.error(
-            "Auth page is missing one or more required elements."
-        );
-
-        return;
-    }
-
-
-    // ======================================================
-    // SIGN IN
-    // ======================================================
-
     form.addEventListener(
         "submit",
         async function (event) {
@@ -182,15 +122,11 @@ async function initAuthPage() {
             const email =
                 emailInput.value.trim();
 
-
             const password =
                 passwordInput.value;
 
 
-            if (
-                !email ||
-                !password
-            ) {
+            if (!email || !password) {
 
                 setMessage(
                     "Enter both your email and password.",
@@ -202,7 +138,6 @@ async function initAuthPage() {
 
 
             setBusy(true);
-
 
             setMessage(
                 "Signing in...",
@@ -216,18 +151,13 @@ async function initAuthPage() {
                     await supabaseClient.auth
                         .signInWithPassword({
 
-                            email:
-                                email,
+                            email: email,
 
-                            password:
-                                password
-
+                            password: password
                         });
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     setMessage(
                         result.error.message,
@@ -260,16 +190,11 @@ async function initAuthPage() {
             } finally {
 
                 setBusy(false);
-
             }
 
         }
     );
 
-
-    // ======================================================
-    // SIGN UP
-    // ======================================================
 
     signupButton.addEventListener(
         "click",
@@ -277,7 +202,6 @@ async function initAuthPage() {
 
             const email =
                 emailInput.value.trim();
-
 
             const password =
                 passwordInput.value;
@@ -310,7 +234,6 @@ async function initAuthPage() {
 
             setBusy(true);
 
-
             setMessage(
                 "Creating account...",
                 false
@@ -330,11 +253,9 @@ async function initAuthPage() {
                     await supabaseClient.auth
                         .signUp({
 
-                            email:
-                                email,
+                            email: email,
 
-                            password:
-                                password,
+                            password: password,
 
                             options: {
 
@@ -345,9 +266,7 @@ async function initAuthPage() {
                         });
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     setMessage(
                         result.error.message,
@@ -394,14 +313,11 @@ async function initAuthPage() {
             } finally {
 
                 setBusy(false);
-
             }
 
         }
     );
-
 }
-
 
 
 // ==========================================================
@@ -410,26 +326,17 @@ async function initAuthPage() {
 
 async function initDashboardPage() {
 
-    let currentCircle =
-        null;
+    let currentUser = null;
 
-    let currentUser =
-        null;
+    let currentCircle = null;
 
-    let focusActive =
-        false;
+    let focusActive = false;
 
-    let focusStartedAt =
-        null;
+    let focusStartedAt = null;
 
-
-    // ======================================================
-    // VERIFY SESSION
-    // ======================================================
 
     const sessionResult =
-        await supabaseClient.auth
-            .getSession();
+        await supabaseClient.auth.getSession();
 
 
     if (
@@ -455,30 +362,20 @@ async function initDashboardPage() {
             "user-email"
         );
 
-
     const recommendation =
         document.getElementById(
             "recommendation"
         );
 
 
-    const logoutButton =
-        document.getElementById(
-            "logout-btn"
-        );
-
-
     if (userEmail) {
 
         userEmail.textContent =
-            currentUser.email ||
-            "Signed in";
+            currentUser.email;
     }
 
 
-    function showRecommendation(
-        text
-    ) {
+    function showRecommendation(text) {
 
         if (recommendation) {
 
@@ -492,62 +389,128 @@ async function initDashboardPage() {
     // LOG OUT
     // ======================================================
 
-    if (logoutButton) {
-
-        logoutButton.addEventListener(
+    document
+        .getElementById("logout-btn")
+        .addEventListener(
             "click",
             async function () {
 
-                const result =
-                    await supabaseClient.auth
-                        .signOut();
-
-
-                if (
-                    result.error
-                ) {
-
-                    showRecommendation(
-                        "Could not log out: " +
-                        result.error.message
-                    );
-
-                    return;
-                }
+                await supabaseClient.auth
+                    .signOut();
 
 
                 window.location.replace(
                     "index.html"
                 );
-
             }
+        );
+
+
+    // ======================================================
+    // PROFILES
+    // ======================================================
+
+    async function getProfileMap(
+        userIds
+    ) {
+
+        const profileMap = {};
+
+
+        if (
+            !userIds ||
+            userIds.length === 0
+        ) {
+
+            return profileMap;
+        }
+
+
+        const uniqueIds =
+            Array.from(
+                new Set(userIds)
+            );
+
+
+        const result =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "id, display_name"
+                )
+                .in(
+                    "id",
+                    uniqueIds
+                );
+
+
+        if (result.error) {
+
+            console.error(
+                "Profile load error:",
+                result.error
+            );
+
+            return profileMap;
+        }
+
+
+        (result.data || [])
+            .forEach(
+                function (profile) {
+
+                    profileMap[
+                        profile.id
+                    ] =
+                        profile.display_name ||
+                        "Circle Member";
+
+                }
+            );
+
+
+        return profileMap;
+    }
+
+
+    function getDisplayName(
+        userId,
+        profileMap
+    ) {
+
+        if (
+            userId ===
+            currentUser.id
+        ) {
+
+            return "You";
+        }
+
+
+        return (
+            profileMap[userId] ||
+            "Circle Member"
         );
     }
 
 
     // ======================================================
-    // GET USER MEMBERSHIPS
+    // MEMBERSHIPS
     // ======================================================
 
     async function getMyCircleIds() {
 
         const result =
             await supabaseClient
-                .from(
-                    "circle_members"
-                )
-                .select(
-                    "circle_id"
-                )
+                .from("circle_members")
+                .select("circle_id")
                 .eq(
                     "user_id",
                     currentUser.id
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
                 "Membership error:",
@@ -564,40 +527,32 @@ async function initDashboardPage() {
             function (membership) {
 
                 return membership.circle_id;
-
             }
         );
-
     }
 
 
     // ======================================================
-    // GET VISIBLE CIRCLES
+    // VISIBLE CIRCLES
     // ======================================================
 
     async function getVisibleCircles() {
 
         const result =
             await supabaseClient
-                .from(
-                    "circles"
-                )
+                .from("circles")
                 .select(
                     "id, name, description, created_by, is_public, created_at"
                 )
                 .order(
                     "created_at",
                     {
-
-                        ascending:
-                            false
+                        ascending: false
                     }
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
                 "Circle load error:",
@@ -609,44 +564,25 @@ async function initDashboardPage() {
 
 
         return result.data || [];
-
     }
 
 
     // ======================================================
-    // LOAD ACTIVE USER CIRCLE
+    // ACTIVE CIRCLE
     // ======================================================
 
     async function loadMyCircle() {
-
-        const circleName =
-            document.getElementById(
-                "circle-name"
-            );
-
-
-        const circleDescription =
-            document.getElementById(
-                "circle-description"
-            );
-
-
-        const circleList =
-            document.getElementById(
-                "circle-list"
-            );
-
 
         const myCircleIds =
             await getMyCircleIds();
 
 
-        const visibleCircles =
+        const circles =
             await getVisibleCircles();
 
 
         const myCircles =
-            visibleCircles.filter(
+            circles.filter(
                 function (circle) {
 
                     return (
@@ -656,7 +592,6 @@ async function initDashboardPage() {
                             circle.id
                         )
                     );
-
                 }
             );
 
@@ -665,33 +600,30 @@ async function initDashboardPage() {
             myCircles.length === 0
         ) {
 
-            currentCircle =
-                null;
+            currentCircle = null;
 
 
-            if (circleName) {
-
-                circleName.textContent =
-                    "No Circle Selected";
-            }
-
-
-            if (circleDescription) {
-
-                circleDescription.textContent =
-                    "Create or join an accountability circle.";
-            }
+            document.getElementById(
+                "circle-name"
+            ).textContent =
+                "No Circle Selected";
 
 
-            if (circleList) {
+            document.getElementById(
+                "circle-description"
+            ).textContent =
+                "Create or join an accountability circle.";
 
-                circleList.innerHTML =
-                    "<li>No members loaded yet.</li>";
-            }
 
+            document.getElementById(
+                "circle-list"
+            ).innerHTML =
+                "<li>No members loaded yet.</li>";
+
+
+            await loadCircleFeed();
 
             return;
-
         }
 
 
@@ -699,48 +631,40 @@ async function initDashboardPage() {
             myCircles[0];
 
 
-        if (circleName) {
+        document.getElementById(
+            "circle-name"
+        ).textContent =
+            currentCircle.name;
 
-            circleName.textContent =
-                currentCircle.name;
-        }
 
-
-        if (circleDescription) {
-
-            circleDescription.textContent =
-                currentCircle.description ||
-                "No description provided.";
-        }
+        document.getElementById(
+            "circle-description"
+        ).textContent =
+            currentCircle.description ||
+            "No description provided.";
 
 
         await loadCircleMembers();
 
+        await loadCircleFeed();
     }
 
 
     // ======================================================
-    // LOAD CIRCLE MEMBERS
+    // CIRCLE MEMBERS
     // ======================================================
 
     async function loadCircleMembers() {
 
-        const circleList =
+        const list =
             document.getElementById(
                 "circle-list"
             );
 
 
-        if (!circleList) {
-            return;
-        }
+        if (!currentCircle) {
 
-
-        if (
-            !currentCircle
-        ) {
-
-            circleList.innerHTML =
+            list.innerHTML =
                 "<li>No members yet.</li>";
 
             return;
@@ -749,9 +673,7 @@ async function initDashboardPage() {
 
         const result =
             await supabaseClient
-                .from(
-                    "circle_members"
-                )
+                .from("circle_members")
                 .select(
                     "user_id, role, joined_at"
                 )
@@ -762,26 +684,20 @@ async function initDashboardPage() {
                 .order(
                     "joined_at",
                     {
-
-                        ascending:
-                            true
+                        ascending: true
                     }
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
-                "Member load error:",
+                "Member error:",
                 result.error
             );
 
-
-            circleList.innerHTML =
+            list.innerHTML =
                 "<li>Unable to load members.</li>";
-
 
             return;
         }
@@ -791,44 +707,32 @@ async function initDashboardPage() {
             result.data || [];
 
 
-        circleList.innerHTML =
-            "";
+        const userIds =
+            members.map(
+                function (member) {
+
+                    return member.user_id;
+                }
+            );
+
+
+        const profiles =
+            await getProfileMap(
+                userIds
+            );
+
+
+        list.innerHTML = "";
 
 
         if (
             members.length === 0
         ) {
 
-            if (
-                currentCircle.created_by ===
-                currentUser.id
-            ) {
-
-                const item =
-                    document.createElement(
-                        "li"
-                    );
-
-
-                item.textContent =
-                    "You — owner";
-
-
-                circleList.appendChild(
-                    item
-                );
-
-
-            } else {
-
-                circleList.innerHTML =
-                    "<li>No members yet.</li>";
-
-            }
-
+            list.innerHTML =
+                "<li>No members yet.</li>";
 
             return;
-
         }
 
 
@@ -841,31 +745,25 @@ async function initDashboardPage() {
                     );
 
 
-                const label =
-                    member.user_id ===
-                    currentUser.id
-                        ? "You"
-                        : "Circle Member";
-
-
                 item.textContent =
-                    label +
+                    getDisplayName(
+                        member.user_id,
+                        profiles
+                    ) +
                     " — " +
                     member.role;
 
 
-                circleList.appendChild(
+                list.appendChild(
                     item
                 );
-
             }
         );
-
     }
 
 
     // ======================================================
-    // DISCOVER PUBLIC GROUPS
+    // DISCOVER GROUPS
     // ======================================================
 
     async function loadDiscoverGroups() {
@@ -876,24 +774,17 @@ async function initDashboardPage() {
             );
 
 
-        if (!container) {
-            return;
-        }
-
-
         container.innerHTML =
             "<p>Loading groups...</p>";
 
 
-        const myCircleIds =
+        const membershipIds =
             await getMyCircleIds();
 
 
         const result =
             await supabaseClient
-                .from(
-                    "circles"
-                )
+                .from("circles")
                 .select(
                     "id, name, description, created_by, is_public, created_at"
                 )
@@ -904,31 +795,21 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
-
-                        ascending:
-                            false
+                        ascending: false
                     }
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
+
+            container.textContent =
+                "Unable to load groups.";
 
             console.error(
-                "Group discovery error:",
                 result.error
             );
 
-
-            container.innerHTML =
-                "<p>Unable to load groups: " +
-                result.error.message +
-                "</p>";
-
-
             return;
-
         }
 
 
@@ -936,14 +817,7 @@ async function initDashboardPage() {
             result.data || [];
 
 
-        console.log(
-            "Public groups returned from Supabase:",
-            groups
-        );
-
-
-        container.innerHTML =
-            "";
+        container.innerHTML = "";
 
 
         if (
@@ -960,13 +834,13 @@ async function initDashboardPage() {
         groups.forEach(
             function (circle) {
 
-                const groupCard =
+                const card =
                     document.createElement(
                         "div"
                     );
 
 
-                groupCard.className =
+                card.className =
                     "discover-group-card";
 
 
@@ -991,240 +865,165 @@ async function initDashboardPage() {
                     "No description provided.";
 
 
-                const statusButton =
+                const button =
                     document.createElement(
                         "button"
                     );
 
 
-                statusButton.type =
-                    "button";
-
-
-                const isOwner =
+                const owner =
                     circle.created_by ===
                     currentUser.id;
 
 
-                const alreadyJoined =
-                    myCircleIds.includes(
+                const joined =
+                    membershipIds.includes(
                         circle.id
                     );
 
 
-                if (
-                    isOwner
-                ) {
+                if (owner) {
 
-                    statusButton.textContent =
+                    button.textContent =
                         "Your Group ✓";
 
-
-                    statusButton.disabled =
+                    button.disabled =
                         true;
 
 
-                } else if (
-                    alreadyJoined
-                ) {
+                } else if (joined) {
 
-                    statusButton.textContent =
+                    button.textContent =
                         "Joined ✓";
 
-
-                    statusButton.disabled =
+                    button.disabled =
                         true;
 
 
                 } else {
 
-                    statusButton.textContent =
+                    button.textContent =
                         "Join Group";
 
 
-                    statusButton.className =
-                        "join-group-btn";
-
-
-                    statusButton.addEventListener(
+                    button.addEventListener(
                         "click",
                         async function () {
 
-                            statusButton.disabled =
+                            button.disabled =
                                 true;
 
 
-                            statusButton.textContent =
+                            button.textContent =
                                 "Joining...";
 
 
-                            const joined =
-                                await joinCircle(
-                                    circle
+                            const result =
+                                await supabaseClient
+                                    .from(
+                                        "circle_members"
+                                    )
+                                    .insert({
+
+                                        circle_id:
+                                            circle.id,
+
+                                        user_id:
+                                            currentUser.id,
+
+                                        role:
+                                            "member"
+
+                                    });
+
+
+                            if (
+                                result.error
+                            ) {
+
+                                console.error(
+                                    result.error
                                 );
 
 
-                            if (!joined) {
-
-                                statusButton.disabled =
+                                button.disabled =
                                     false;
 
 
-                                statusButton.textContent =
+                                button.textContent =
                                     "Join Group";
+
+
+                                showRecommendation(
+                                    "Could not join group: " +
+                                    result.error.message
+                                );
+
+
+                                return;
                             }
+
+
+                            currentCircle =
+                                circle;
+
+
+                            showRecommendation(
+                                "You joined " +
+                                circle.name +
+                                "."
+                            );
+
+
+                            await loadMyCircle();
+
+                            await loadDiscoverGroups();
 
                         }
                     );
-
                 }
 
 
-                groupCard.appendChild(
+                card.appendChild(
                     title
                 );
 
-
-                groupCard.appendChild(
+                card.appendChild(
                     description
                 );
 
-
-                groupCard.appendChild(
-                    statusButton
+                card.appendChild(
+                    button
                 );
 
 
                 container.appendChild(
-                    groupCard
+                    card
                 );
-
             }
         );
-
     }
 
 
-    // ======================================================
-    // JOIN GROUP
-    // ======================================================
-
-    async function joinCircle(
-        circle
-    ) {
-
-        const result =
-            await supabaseClient
-                .from(
-                    "circle_members"
-                )
-                .insert({
-
-                    circle_id:
-                        circle.id,
-
-                    user_id:
-                        currentUser.id,
-
-                    role:
-                        "member"
-
-                });
-
-
-        if (
-            result.error
-        ) {
-
-            console.error(
-                "Join group error:",
-                result.error
-            );
-
-
-            if (
-                result.error.code ===
-                "23505"
-            ) {
-
-                showRecommendation(
-                    "You already belong to that group."
-                );
-
-
-            } else {
-
-                showRecommendation(
-                    "Unable to join group: " +
-                    result.error.message
-                );
-
-            }
-
-
-            return false;
-
-        }
-
-
-        currentCircle =
-            circle;
-
-
-        showRecommendation(
-            "You joined " +
-            circle.name +
-            "."
-        );
-
-
-        await loadMyCircle();
-
-
-        await loadDiscoverGroups();
-
-
-        return true;
-
-    }
-
-
-    // ======================================================
-    // REFRESH GROUPS
-    // ======================================================
-
-    const refreshGroupsButton =
-        document.getElementById(
+    document
+        .getElementById(
             "refresh-groups-btn"
-        );
-
-
-    if (
-        refreshGroupsButton
-    ) {
-
-        refreshGroupsButton.addEventListener(
+        )
+        .addEventListener(
             "click",
             loadDiscoverGroups
         );
-    }
 
 
     // ======================================================
-    // CREATE CIRCLE
+    // CREATE GROUP
     // ======================================================
 
-    const createCircleButton =
-        document.getElementById(
+    document
+        .getElementById(
             "create-circle-btn"
-        );
-
-
-    if (
-        createCircleButton
-    ) {
-
-        createCircleButton.addEventListener(
+        )
+        .addEventListener(
             "click",
             async function () {
 
@@ -1238,15 +1037,6 @@ async function initDashboardPage() {
                     document.getElementById(
                         "new-circle-description"
                     );
-
-
-                if (
-                    !nameInput ||
-                    !descriptionInput
-                ) {
-
-                    return;
-                }
 
 
                 const name =
@@ -1267,19 +1057,9 @@ async function initDashboardPage() {
                 }
 
 
-                createCircleButton.disabled =
-                    true;
-
-
-                createCircleButton.textContent =
-                    "Creating...";
-
-
                 const result =
                     await supabaseClient
-                        .from(
-                            "circles"
-                        )
+                        .from("circles")
                         .insert({
 
                             name:
@@ -1299,20 +1079,9 @@ async function initDashboardPage() {
                         .single();
 
 
-                createCircleButton.disabled =
-                    false;
-
-
-                createCircleButton.textContent =
-                    "Create Circle";
-
-
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     console.error(
-                        "Create group error:",
                         result.error
                     );
 
@@ -1327,12 +1096,9 @@ async function initDashboardPage() {
                 }
 
 
-                nameInput.value =
-                    "";
+                nameInput.value = "";
 
-
-                descriptionInput.value =
-                    "";
+                descriptionInput.value = "";
 
 
                 currentCircle =
@@ -1340,22 +1106,20 @@ async function initDashboardPage() {
 
 
                 showRecommendation(
-                    "Your new accountability circle was created."
+                    "Your accountability circle was created."
                 );
 
 
                 await loadMyCircle();
 
-
                 await loadDiscoverGroups();
 
             }
         );
-    }
 
 
     // ======================================================
-    // SAVE CHECK-IN
+    // CHECK-INS
     // ======================================================
 
     async function saveCheckIn(
@@ -1369,9 +1133,7 @@ async function initDashboardPage() {
 
         const result =
             await supabaseClient
-                .from(
-                    "check_ins"
-                )
+                .from("check_ins")
                 .insert({
 
                     user_id:
@@ -1392,20 +1154,13 @@ async function initDashboardPage() {
                             : null,
 
                     stress_level:
-                        data.stress_level !==
-                        undefined
-                            ? data.stress_level
-                            : null,
+                        null,
 
                     sleep_hours:
-                        data.sleep_hours !==
-                        undefined
-                            ? data.sleep_hours
-                            : null,
+                        null,
 
                     notes:
-                        data.notes ||
-                        null,
+                        data.notes || null,
 
                     shared_with_circle:
                         data.shared_with_circle ===
@@ -1414,9 +1169,7 @@ async function initDashboardPage() {
                 });
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
                 "Check-in error:",
@@ -1431,17 +1184,507 @@ async function initDashboardPage() {
 
 
             return false;
-
         }
 
 
         return true;
-
     }
 
 
     // ======================================================
-    // ENERGY
+    // CIRCLE MESSAGES
+    // ======================================================
+
+    const messageInput =
+        document.getElementById(
+            "circle-message"
+        );
+
+
+    const sendMessageButton =
+        document.getElementById(
+            "send-message-btn"
+        );
+
+
+    const feedMessage =
+        document.getElementById(
+            "feed-message"
+        );
+
+
+    sendMessageButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!currentCircle) {
+
+                feedMessage.textContent =
+                    "Join or create a circle first.";
+
+                return;
+            }
+
+
+            const text =
+                messageInput.value.trim();
+
+
+            if (!text) {
+
+                feedMessage.textContent =
+                    "Enter a message first.";
+
+                return;
+            }
+
+
+            sendMessageButton.disabled =
+                true;
+
+
+            sendMessageButton.textContent =
+                "Sending...";
+
+
+            const result =
+                await supabaseClient
+                    .from(
+                        "circle_messages"
+                    )
+                    .insert({
+
+                        circle_id:
+                            currentCircle.id,
+
+                        user_id:
+                            currentUser.id,
+
+                        message:
+                            text
+
+                    });
+
+
+            sendMessageButton.disabled =
+                false;
+
+
+            sendMessageButton.textContent =
+                "Send Message";
+
+
+            if (result.error) {
+
+                console.error(
+                    "Message error:",
+                    result.error
+                );
+
+
+                feedMessage.textContent =
+                    result.error.message;
+
+
+                return;
+            }
+
+
+            messageInput.value = "";
+
+
+            feedMessage.textContent =
+                "Message sent.";
+
+
+            await loadCircleFeed();
+
+        }
+    );
+
+
+    // ======================================================
+    // CIRCLE FEED
+    // ======================================================
+
+    async function loadCircleFeed() {
+
+        const feed =
+            document.getElementById(
+                "circle-feed"
+            );
+
+
+        if (!currentCircle) {
+
+            feed.innerHTML =
+                "<p>Join or create a circle to see group activity.</p>";
+
+            return;
+        }
+
+
+        feed.innerHTML =
+            "<p>Loading circle activity...</p>";
+
+
+        const messagesResult =
+            await supabaseClient
+                .from(
+                    "circle_messages"
+                )
+                .select(
+                    "id, user_id, message, created_at"
+                )
+                .eq(
+                    "circle_id",
+                    currentCircle.id
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(50);
+
+
+        const checkInsResult =
+            await supabaseClient
+                .from(
+                    "check_ins"
+                )
+                .select(
+                    "id, user_id, check_in_type, notes, created_at"
+                )
+                .eq(
+                    "circle_id",
+                    currentCircle.id
+                )
+                .eq(
+                    "shared_with_circle",
+                    true
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                )
+                .limit(50);
+
+
+        if (messagesResult.error) {
+
+            console.error(
+                "Message feed error:",
+                messagesResult.error
+            );
+        }
+
+
+        if (checkInsResult.error) {
+
+            console.error(
+                "Check-in feed error:",
+                checkInsResult.error
+            );
+        }
+
+
+        const messages =
+            messagesResult.data || [];
+
+
+        const checkIns =
+            checkInsResult.data || [];
+
+
+        const allUserIds =
+            messages
+                .map(
+                    function (item) {
+
+                        return item.user_id;
+                    }
+                )
+                .concat(
+                    checkIns.map(
+                        function (item) {
+
+                            return item.user_id;
+                        }
+                    )
+                );
+
+
+        const profileMap =
+            await getProfileMap(
+                allUserIds
+            );
+
+
+        const feedItems = [];
+
+
+        messages.forEach(
+            function (message) {
+
+                feedItems.push({
+
+                    kind:
+                        "message",
+
+                    user_id:
+                        message.user_id,
+
+                    text:
+                        message.message,
+
+                    created_at:
+                        message.created_at
+
+                });
+            }
+        );
+
+
+        checkIns.forEach(
+            function (checkIn) {
+
+                feedItems.push({
+
+                    kind:
+                        "checkin",
+
+                    user_id:
+                        checkIn.user_id,
+
+                    check_in_type:
+                        checkIn.check_in_type,
+
+                    text:
+                        checkIn.notes,
+
+                    created_at:
+                        checkIn.created_at
+
+                });
+            }
+        );
+
+
+        feedItems.sort(
+            function (a, b) {
+
+                return (
+                    new Date(
+                        b.created_at
+                    ) -
+                    new Date(
+                        a.created_at
+                    )
+                );
+            }
+        );
+
+
+        feed.innerHTML = "";
+
+
+        if (
+            feedItems.length === 0
+        ) {
+
+            feed.innerHTML =
+                "<p>No circle activity yet. Send the first message or make a check-in.</p>";
+
+            return;
+        }
+
+
+        feedItems.forEach(
+            function (item) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "feed-item";
+
+
+                const top =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                top.className =
+                    "feed-item-top";
+
+
+                const name =
+                    document.createElement(
+                        "strong"
+                    );
+
+
+                name.textContent =
+                    getDisplayName(
+                        item.user_id,
+                        profileMap
+                    );
+
+
+                const time =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                time.textContent =
+                    formatFeedTime(
+                        item.created_at
+                    );
+
+
+                top.appendChild(
+                    name
+                );
+
+
+                top.appendChild(
+                    time
+                );
+
+
+                const content =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                if (
+                    item.kind ===
+                    "message"
+                ) {
+
+                    content.textContent =
+                        "💬 " +
+                        item.text;
+
+
+                } else {
+
+                    content.textContent =
+                        getCheckInLabel(
+                            item.check_in_type
+                        );
+                }
+
+
+                card.appendChild(
+                    top
+                );
+
+
+                card.appendChild(
+                    content
+                );
+
+
+                feed.appendChild(
+                    card
+                );
+            }
+        );
+    }
+
+
+    function getCheckInLabel(
+        type
+    ) {
+
+        const labels = {
+
+            breakfast:
+                "🍳 Ate breakfast",
+
+            lunch:
+                "🥗 Ate lunch",
+
+            dinner:
+                "🍽 Ate dinner",
+
+            rest:
+                "😴 Took a rest",
+
+            focus:
+                "💻 Checked in as working",
+
+            sleep:
+                "🌙 Went to sleep",
+
+            wake:
+                "☀️ Woke up",
+
+            snack:
+                "🍎 Had a snack"
+
+        };
+
+
+        return (
+            labels[type] ||
+            "✓ Completed a check-in"
+        );
+    }
+
+
+    function formatFeedTime(
+        value
+    ) {
+
+        const date =
+            new Date(value);
+
+
+        return date.toLocaleString(
+            [],
+            {
+
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                hour:
+                    "numeric",
+
+                minute:
+                    "2-digit"
+
+            }
+        );
+    }
+
+
+    document
+        .getElementById(
+            "refresh-feed-btn"
+        )
+        .addEventListener(
+            "click",
+            loadCircleFeed
+        );
+
+
+    // ======================================================
+    // ENERGY - PRIVATE
     // ======================================================
 
     const energyInput =
@@ -1462,35 +1705,21 @@ async function initDashboardPage() {
         );
 
 
-    const saveEnergyButton =
-        document.getElementById(
+    energyInput.addEventListener(
+        "input",
+        function () {
+
+            energyValue.textContent =
+                energyInput.value;
+        }
+    );
+
+
+    document
+        .getElementById(
             "save-energy"
-        );
-
-
-    if (
-        energyInput &&
-        energyValue
-    ) {
-
-        energyInput.addEventListener(
-            "input",
-            function () {
-
-                energyValue.textContent =
-                    energyInput.value;
-
-            }
-        );
-    }
-
-
-    if (
-        saveEnergyButton &&
-        energyInput
-    ) {
-
-        saveEnergyButton.addEventListener(
+        )
+        .addEventListener(
             "click",
             async function () {
 
@@ -1500,70 +1729,38 @@ async function initDashboardPage() {
                     );
 
 
-                saveEnergyButton.disabled =
-                    true;
-
-
-                saveEnergyButton.textContent =
-                    "Saving...";
-
-
                 const saved =
                     await saveCheckIn(
                         "energy",
                         {
 
                             energy_level:
-                                level
+                                level,
+
+                            shared_with_circle:
+                                false
 
                         }
                     );
 
 
-                saveEnergyButton.disabled =
-                    false;
-
-
-                saveEnergyButton.textContent =
-                    "Save Energy Level";
-
-
                 if (saved) {
 
-                    if (
-                        energyScore
-                    ) {
-
-                        energyScore.textContent =
-                            String(
-                                level * 10
-                            );
-
-                    }
+                    energyScore.textContent =
+                        String(
+                            level * 10
+                        );
 
 
                     showRecommendation(
-                        "Energy level saved."
+                        "Energy level saved privately."
                     );
-
                 }
-
             }
         );
-    }
 
 
     async function loadLatestEnergy() {
-
-        if (
-            !energyScore ||
-            !energyInput ||
-            !energyValue
-        ) {
-
-            return;
-        }
-
 
         const result =
             await supabaseClient
@@ -1585,9 +1782,7 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
-
-                        ascending:
-                            false
+                        ascending: false
                     }
                 )
                 .limit(1)
@@ -1595,31 +1790,10 @@ async function initDashboardPage() {
 
 
         if (
-            result.error
-        ) {
-
-            console.error(
-                "Energy load error:",
-                result.error
-            );
-
-
-            return;
-        }
-
-
-        if (
             result.data &&
             result.data.energy_level !==
             null
         ) {
-
-            energyScore.textContent =
-                String(
-                    result.data.energy_level *
-                    10
-                );
-
 
             energyInput.value =
                 String(
@@ -1632,13 +1806,18 @@ async function initDashboardPage() {
                     result.data.energy_level
                 );
 
-        }
 
+            energyScore.textContent =
+                String(
+                    result.data.energy_level *
+                    10
+                );
+        }
     }
 
 
     // ======================================================
-    // QUICK CHECK-INS
+    // SHARED QUICK CHECK INS
     // ======================================================
 
     const checkIns = [
@@ -1689,17 +1868,12 @@ async function initDashboardPage() {
 
 
     checkIns.forEach(
-        function (item) {
+        function (config) {
 
             const button =
                 document.getElementById(
-                    item[0]
+                    config[0]
                 );
-
-
-            if (!button) {
-                return;
-            }
 
 
             button.addEventListener(
@@ -1712,7 +1886,15 @@ async function initDashboardPage() {
 
                     const saved =
                         await saveCheckIn(
-                            item[1]
+                            config[1],
+                            {
+
+                                shared_with_circle:
+                                    Boolean(
+                                        currentCircle
+                                    )
+
+                            }
                         );
 
 
@@ -1723,14 +1905,14 @@ async function initDashboardPage() {
                     if (saved) {
 
                         showRecommendation(
-                            item[2]
+                            config[2]
                         );
 
-                    }
 
+                        await loadCircleFeed();
+                    }
                 }
             );
-
         }
     );
 
@@ -1751,114 +1933,88 @@ async function initDashboardPage() {
         );
 
 
-    if (
-        focusButton
-    ) {
+    focusButton.addEventListener(
+        "click",
+        async function () {
 
-        focusButton.addEventListener(
-            "click",
-            async function () {
+            if (!focusActive) {
 
-                if (
-                    !focusActive
-                ) {
+                focusActive = true;
 
-                    focusActive =
-                        true;
-
-
-                    focusStartedAt =
-                        new Date();
-
-
-                    focusButton.textContent =
-                        "End Focus Session";
-
-
-                    if (
-                        focusStatus
-                    ) {
-
-                        focusStatus.textContent =
-                            "Focus session active.";
-
-                    }
-
-
-                    showRecommendation(
-                        "Focus mode started. Reassess food, water, movement, and rest when you finish."
-                    );
-
-
-                    return;
-                }
-
-
-                const endTime =
+                focusStartedAt =
                     new Date();
 
 
-                const minutes =
-                    Math.max(
-                        1,
-                        Math.round(
-                            (
-                                endTime.getTime() -
-                                focusStartedAt.getTime()
-                            ) / 60000
-                        )
-                    );
-
-
-                const saved =
-                    await saveCheckIn(
-                        "focus",
-                        {
-
-                            notes:
-                                "Completed a " +
-                                minutes +
-                                " minute focus session."
-
-                        }
-                    );
-
-
-                focusActive =
-                    false;
-
-
-                focusStartedAt =
-                    null;
-
-
                 focusButton.textContent =
-                    "Start Focus Session";
+                    "End Focus Session";
 
 
-                if (
-                    focusStatus
-                ) {
-
-                    focusStatus.textContent =
-                        "Last focus session: " +
-                        minutes +
-                        " minutes.";
-
-                }
+                focusStatus.textContent =
+                    "Focus session active.";
 
 
-                if (saved) {
-
-                    showRecommendation(
-                        "Focus session complete. Check whether you need food, water, movement, or rest."
-                    );
-
-                }
-
+                return;
             }
-        );
-    }
+
+
+            const end =
+                new Date();
+
+
+            const minutes =
+                Math.max(
+                    1,
+                    Math.round(
+                        (
+                            end.getTime() -
+                            focusStartedAt.getTime()
+                        ) / 60000
+                    )
+                );
+
+
+            await saveCheckIn(
+                "focus",
+                {
+
+                    notes:
+                        "Completed a " +
+                        minutes +
+                        " minute focus session.",
+
+                    shared_with_circle:
+                        Boolean(
+                            currentCircle
+                        )
+
+                }
+            );
+
+
+            focusActive = false;
+
+            focusStartedAt = null;
+
+
+            focusButton.textContent =
+                "Start Focus Session";
+
+
+            focusStatus.textContent =
+                "Last focus session: " +
+                minutes +
+                " minutes.";
+
+
+            showRecommendation(
+                "Focus session completed."
+            );
+
+
+            await loadCircleFeed();
+
+        }
+    );
 
 
     // ======================================================
@@ -1870,42 +2026,35 @@ async function initDashboardPage() {
             "wake-time"
         );
 
-
     const breakfastTime =
         document.getElementById(
             "breakfast-time"
         );
-
 
     const lunchTime =
         document.getElementById(
             "lunch-time"
         );
 
-
     const dinnerTime =
         document.getElementById(
             "dinner-time"
         );
-
 
     const restTime =
         document.getElementById(
             "rest-time"
         );
 
-
     const bedtime =
         document.getElementById(
             "bedtime"
         );
 
-
     const sleepGoal =
         document.getElementById(
             "sleep-goal"
         );
-
 
     const routineMessage =
         document.getElementById(
@@ -1913,15 +2062,7 @@ async function initDashboardPage() {
         );
 
 
-    const saveRoutineButton =
-        document.getElementById(
-            "save-routine-btn"
-        );
-
-
-    function getTime(
-        element
-    ) {
+    function getTime(element) {
 
         return (
             element &&
@@ -1929,7 +2070,6 @@ async function initDashboardPage() {
         )
             ? element.value
             : null;
-
     }
 
 
@@ -1938,11 +2078,6 @@ async function initDashboardPage() {
         value
     ) {
 
-        if (!element) {
-            return;
-        }
-
-
         element.value =
             value
                 ? value.substring(
@@ -1950,16 +2085,14 @@ async function initDashboardPage() {
                     5
                 )
                 : "";
-
     }
 
 
-    if (
-        saveRoutineButton &&
-        sleepGoal
-    ) {
-
-        saveRoutineButton.addEventListener(
+    document
+        .getElementById(
+            "save-routine-btn"
+        )
+        .addEventListener(
             "click",
             async function () {
 
@@ -1969,42 +2102,9 @@ async function initDashboardPage() {
                     );
 
 
-                if (
-                    goal < 1 ||
-                    goal > 24
-                ) {
-
-                    if (
-                        routineMessage
-                    ) {
-
-                        routineMessage.textContent =
-                            "Sleep goal must be between 1 and 24 hours.";
-
-
-                        routineMessage.style.color =
-                            "#ff8a9a";
-
-                    }
-
-
-                    return;
-                }
-
-
-                saveRoutineButton.disabled =
-                    true;
-
-
-                saveRoutineButton.textContent =
-                    "Saving...";
-
-
                 const result =
                     await supabaseClient
-                        .from(
-                            "routines"
-                        )
+                        .from("routines")
                         .upsert(
                             {
 
@@ -2054,72 +2154,35 @@ async function initDashboardPage() {
                         );
 
 
-                saveRoutineButton.disabled =
-                    false;
+                if (result.error) {
+
+                    routineMessage.textContent =
+                        result.error.message;
 
 
-                saveRoutineButton.textContent =
-                    "Save Routine";
-
-
-                if (
-                    result.error
-                ) {
-
-                    console.error(
-                        "Routine save error:",
-                        result.error
-                    );
-
-
-                    if (
-                        routineMessage
-                    ) {
-
-                        routineMessage.textContent =
-                            result.error.message;
-
-
-                        routineMessage.style.color =
-                            "#ff8a9a";
-
-                    }
+                    routineMessage.style.color =
+                        "#ff8a9a";
 
 
                     return;
                 }
 
 
-                if (
-                    routineMessage
-                ) {
-
-                    routineMessage.textContent =
-                        "Routine saved successfully.";
+                routineMessage.textContent =
+                    "Routine saved successfully.";
 
 
-                    routineMessage.style.color =
-                        "#9cff7a";
-
-                }
-
-
-                showRecommendation(
-                    "Your daily routine was saved."
-                );
-
+                routineMessage.style.color =
+                    "#9cff7a";
             }
         );
-    }
 
 
     async function loadRoutine() {
 
         const result =
             await supabaseClient
-                .from(
-                    "routines"
-                )
+                .from("routines")
                 .select(
                     "wake_time, breakfast_time, lunch_time, dinner_time, rest_start_time, bedtime, sleep_goal_hours"
                 )
@@ -2130,23 +2193,7 @@ async function initDashboardPage() {
                 .maybeSingle();
 
 
-        if (
-            result.error
-        ) {
-
-            console.error(
-                "Routine load error:",
-                result.error
-            );
-
-
-            return;
-        }
-
-
-        if (
-            !result.data
-        ) {
+        if (!result.data) {
 
             return;
         }
@@ -2189,15 +2236,12 @@ async function initDashboardPage() {
 
 
         if (
-            sleepGoal &&
             result.data.sleep_goal_hours
         ) {
 
             sleepGoal.value =
                 result.data.sleep_goal_hours;
-
         }
-
     }
 
 
@@ -2207,23 +2251,19 @@ async function initDashboardPage() {
 
     await loadLatestEnergy();
 
-
     await loadRoutine();
 
-
     await loadMyCircle();
-
 
     await loadDiscoverGroups();
 
 
     showRecommendation(
-        "Welcome back. Create a circle, discover an existing group, or check in."
+        "Welcome back. Your circle can now see shared check-ins and messages."
     );
 
 
     console.log(
-        "CircleSync dashboard v51 ready."
+        "CircleSync dashboard v60 ready"
     );
-
 }
