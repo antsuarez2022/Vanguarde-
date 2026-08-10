@@ -1,97 +1,369 @@
+```css
+/* =========================================================
+   1. GLOBAL RESET
+========================================================= */
+
 * {
-
     box-sizing: border-box;
-
     margin: 0;
-
     padding: 0;
-
 }
+
+
+/* =========================================================
+   2. PAGE
+========================================================= */
 
 body {
-
-    font-family: Arial, sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     background: #f2f4f8;
-
+    color: #1f2937;
+    line-height: 1.5;
     padding: 20px;
-
 }
+
+
+/* =========================================================
+   3. MAIN LAYOUT
+========================================================= */
+
+main {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   4. HEADER
+========================================================= */
 
 header {
-
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto 24px auto;
     text-align: center;
-
-    margin-bottom: 20px;
-
 }
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #667085;
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   5. CARDS
+========================================================= */
 
 .card {
-
-    background: white;
-
-    border-radius: 12px;
-
-    padding: 20px;
-
-    margin-bottom: 16px;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
 }
 
-h1 {
-
-    margin-bottom: 8px;
-
+.card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
 }
 
-#energy-score {
-
-    font-size: 48px;
-
-    font-weight: bold;
-
-    text-align: center;
-
-    margin-top: 10px;
-
+.card h3 {
+    font-size: 1rem;
+    margin-top: 18px;
+    margin-bottom: 10px;
 }
+
+.card p {
+    margin-bottom: 12px;
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   6. FORM ELEMENTS
+========================================================= */
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-top: 14px;
+    margin-bottom: 6px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: #ffffff;
+    color: #111827;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 3px solid rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+
+/* =========================================================
+   7. BUTTONS
+========================================================= */
 
 button {
-
     width: 100%;
-
-    padding: 12px;
-
+    padding: 13px 16px;
     margin-top: 10px;
-
     border: none;
-
-    border-radius: 8px;
-
+    border-radius: 10px;
     cursor: pointer;
-
+    font-size: 1rem;
+    font-weight: 600;
+    background: #2563eb;
+    color: #ffffff;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        opacity 0.15s ease;
 }
 
-ul {
+button:hover {
+    background: #1d4ed8;
+}
 
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 2px;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   8. AUTHENTICATION BUTTONS
+========================================================= */
+
+#signup-btn {
+    background: #0f766e;
+}
+
+#signup-btn:hover {
+    background: #115e59;
+}
+
+#logout-btn {
+    background: #b91c1c;
+}
+
+#logout-btn:hover {
+    background: #991b1b;
+}
+
+#auth-message,
+#routine-message {
+    margin-top: 12px;
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   9. ENERGY SCORE
+========================================================= */
+
+#energy-score {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 14px 0;
+}
+
+#energy-input {
+    padding: 0;
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   10. CHECK-IN GRID
+========================================================= */
+
+.check-in-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.check-in-grid button {
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   11. ACCOUNTABILITY CIRCLE
+========================================================= */
+
+#circle-current {
+    padding: 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 14px;
+}
+
+#circle-list {
     list-style: none;
-
+    margin-top: 8px;
 }
 
-li {
-
-    padding: 8px 0;
-
+#circle-list li {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
 }
+
+
+/* =========================================================
+   12. FOCUS MODE
+========================================================= */
+
+#focus-status {
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   13. RECOMMENDATION
+========================================================= */
+
+#recommendation {
+    padding: 14px;
+    border-left: 4px solid #2563eb;
+    background: #eff6ff;
+    border-radius: 8px;
+    color: #1e3a8a;
+}
+
+
+/* =========================================================
+   14. FOOTER
+========================================================= */
+
+footer {
+    width: 100%;
+    max-width: 760px;
+    margin: 24px auto 0 auto;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   15. ACCESSIBILITY
+========================================================= */
+
+[hidden] {
+    display: none !important;
+}
+
+::placeholder {
+    color: #9ca3af;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+
+
+/* =========================================================
+   16. MOBILE RESPONSIVENESS
+========================================================= */
 
 @media (max-width: 600px) {
 
     body {
-
         padding: 12px;
-
     }
 
+    header {
+        margin-bottom: 18px;
+    }
+
+    header h1 {
+        font-size: 1.7rem;
+    }
+
+    .card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .check-in-grid {
+        grid-template-columns: 1fr;
+    }
+
+    button {
+        min-height: 46px;
+    }
+
+    #energy-score {
+        font-size: 2.5rem;
+    }
 }
+
+
+/* =========================================================
+   17. VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    body {
+        padding: 8px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    button,
+    input,
+    textarea {
+        font-size: 0.95rem;
+    }
+}
+```
