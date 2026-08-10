@@ -1,4 +1,7 @@
 ```javascript
+"use strict";
+
+
 // ==========================================================
 // CIRCLESYNC - COMPLETE APP.JS
 // ==========================================================
@@ -8,15 +11,17 @@
 // 1. SUPABASE CONFIGURATION
 // ==========================================================
 
-const SUPABASE_URL = "https://mkecbhmkvrtwltejwzua.supabase.co";
+const SUPABASE_URL =
+    "https://mkecbhmkvrtwltejwzua.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_hWxse_7flC8kSKS_xlVkYw_BRUwJ2d8-";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
 // ==========================================================
@@ -79,6 +84,30 @@ const focusStatus =
     document.getElementById("focus-status");
 
 
+// Check-in buttons
+
+const breakfastButton =
+    document.getElementById("breakfast-btn");
+
+const lunchButton =
+    document.getElementById("lunch-btn");
+
+const dinnerButton =
+    document.getElementById("dinner-btn");
+
+const restButton =
+    document.getElementById("rest-btn");
+
+const workingButton =
+    document.getElementById("working-btn");
+
+const sleepButton =
+    document.getElementById("sleep-btn");
+
+const wakeButton =
+    document.getElementById("wake-btn");
+
+
 // Circle
 
 const circleNameDisplay =
@@ -94,10 +123,14 @@ const newCircleName =
     document.getElementById("new-circle-name");
 
 const newCircleDescription =
-    document.getElementById("new-circle-description");
+    document.getElementById(
+        "new-circle-description"
+    );
 
 const createCircleButton =
-    document.getElementById("create-circle-btn");
+    document.getElementById(
+        "create-circle-btn"
+    );
 
 
 // Routine
@@ -124,156 +157,225 @@ const sleepGoal =
     document.getElementById("sleep-goal");
 
 const saveRoutineButton =
-    document.getElementById("save-routine-btn");
+    document.getElementById(
+        "save-routine-btn"
+    );
 
 const routineMessage =
-    document.getElementById("routine-message");
+    document.getElementById(
+        "routine-message"
+    );
 
 
 // Recommendation
 
 const recommendation =
-    document.getElementById("recommendation");
+    document.getElementById(
+        "recommendation"
+    );
 
 
 // ==========================================================
-// 4. GENERAL UI FUNCTIONS
+// 4. GENERAL UI HELPERS
 // ==========================================================
 
-function showAuthMessage(message, isError = false) {
+function showAuthMessage(
+    message,
+    isError
+) {
 
     if (!authMessage) {
         return;
     }
 
-    authMessage.textContent = message;
+    authMessage.textContent =
+        message;
 
-    authMessage.style.color =
-        isError ? "#b91c1c" : "#166534";
+    if (isError === true) {
+
+        authMessage.style.color =
+            "#b91c1c";
+
+    } else {
+
+        authMessage.style.color =
+            "#166534";
+    }
 }
 
 
-function showRoutineMessage(message, isError = false) {
+function showRoutineMessage(
+    message,
+    isError
+) {
 
     if (!routineMessage) {
         return;
     }
 
-    routineMessage.textContent = message;
+    routineMessage.textContent =
+        message;
 
-    routineMessage.style.color =
-        isError ? "#b91c1c" : "#166534";
+    if (isError === true) {
+
+        routineMessage.style.color =
+            "#b91c1c";
+
+    } else {
+
+        routineMessage.style.color =
+            "#166534";
+    }
 }
 
 
-function showRecommendation(message) {
+function showRecommendation(
+    message
+) {
 
     if (!recommendation) {
         return;
     }
 
-    recommendation.textContent = message;
+    recommendation.textContent =
+        message;
 }
 
 
 function updateAuthenticationUI() {
 
-    const loggedIn = Boolean(currentUser);
+    const loggedIn =
+        currentUser !== null;
+
 
     if (loginButton) {
-        loginButton.hidden = loggedIn;
+
+        loginButton.hidden =
+            loggedIn;
     }
+
 
     if (signupButton) {
-        signupButton.hidden = loggedIn;
+
+        signupButton.hidden =
+            loggedIn;
     }
+
 
     if (logoutButton) {
-        logoutButton.hidden = !loggedIn;
+
+        logoutButton.hidden =
+            !loggedIn;
     }
+
 
     if (emailInput) {
-        emailInput.disabled = loggedIn;
+
+        emailInput.disabled =
+            loggedIn;
     }
 
+
     if (passwordInput) {
-        passwordInput.disabled = loggedIn;
+
+        passwordInput.disabled =
+            loggedIn;
     }
+
 
     if (loggedIn) {
 
         showAuthMessage(
-            "Logged in as " + currentUser.email
+            "Logged in as " +
+            currentUser.email,
+            false
         );
 
     } else {
 
         showAuthMessage(
-            "You are not currently logged in."
+            "You are not currently logged in.",
+            false
         );
     }
 }
 
 
+function disableAuthButtons(
+    disabled
+) {
+
+    if (loginButton) {
+
+        loginButton.disabled =
+            disabled;
+    }
+
+
+    if (signupButton) {
+
+        signupButton.disabled =
+            disabled;
+    }
+}
+
+
 // ==========================================================
-// 5. GET CURRENT USER
+// 5. AUTHENTICATION
 // ==========================================================
 
-async function getCurrentUser() {
+async function loadSession() {
 
-    try {
+    const result =
+        await supabaseClient.auth.getSession();
 
-        const response =
-            await supabaseClient.auth.getUser();
 
-        if (response.error) {
-
-            console.error(
-                "Get user error:",
-                response.error
-            );
-
-            currentUser = null;
-
-            return null;
-        }
-
-        currentUser =
-            response.data.user || null;
-
-        return currentUser;
-
-    } catch (error) {
+    if (result.error) {
 
         console.error(
-            "Unexpected user error:",
-            error
+            "Session error:",
+            result.error
         );
 
         currentUser = null;
 
-        return null;
+        return;
+    }
+
+
+    if (
+        result.data &&
+        result.data.session
+    ) {
+
+        currentUser =
+            result.data.session.user;
+
+    } else {
+
+        currentUser = null;
     }
 }
 
 
-// ==========================================================
-// 6. SIGN UP
-// ==========================================================
-
 async function signUp() {
 
     const email =
-        emailInput ? emailInput.value.trim() : "";
+        emailInput
+            ? emailInput.value.trim()
+            : "";
+
 
     const password =
-        passwordInput ? passwordInput.value : "";
+        passwordInput
+            ? passwordInput.value
+            : "";
 
 
-    if (!email || !password) {
+    if (email === "") {
 
         showAuthMessage(
-            "Please enter an email and password.",
+            "Please enter your email address.",
             true
         );
 
@@ -284,7 +386,7 @@ async function signUp() {
     if (password.length < 6) {
 
         showAuthMessage(
-            "Password must be at least 6 characters.",
+            "Password must contain at least 6 characters.",
             true
         );
 
@@ -292,12 +394,16 @@ async function signUp() {
     }
 
 
+    disableAuthButtons(true);
+
+
     showAuthMessage(
-        "Creating your account..."
+        "Creating your account...",
+        false
     );
 
 
-    const response =
+    const result =
         await supabaseClient.auth.signUp({
 
             email: email,
@@ -313,15 +419,18 @@ async function signUp() {
         });
 
 
-    if (response.error) {
+    disableAuthButtons(false);
+
+
+    if (result.error) {
 
         console.error(
             "Signup error:",
-            response.error
+            result.error
         );
 
         showAuthMessage(
-            response.error.message,
+            result.error.message,
             true
         );
 
@@ -329,75 +438,104 @@ async function signUp() {
     }
 
 
-    if (response.data.session) {
+    if (
+        result.data &&
+        result.data.session
+    ) {
 
         currentUser =
-            response.data.user;
+            result.data.user;
 
-        showAuthMessage(
-            "Account created successfully."
-        );
 
         updateAuthenticationUI();
 
+
+        showAuthMessage(
+            "Account created and signed in.",
+            false
+        );
+
+
         await loadApplicationData();
-
-    } else {
-
-        showAuthMessage(
-            "Account created. Check your email to confirm your account."
-        );
-    }
-}
-
-
-// ==========================================================
-// 7. LOGIN
-// ==========================================================
-
-async function login() {
-
-    const email =
-        emailInput ? emailInput.value.trim() : "";
-
-    const password =
-        passwordInput ? passwordInput.value : "";
-
-
-    if (!email || !password) {
-
-        showAuthMessage(
-            "Please enter your email and password.",
-            true
-        );
 
         return;
     }
 
 
     showAuthMessage(
-        "Logging in..."
+        "Account created. Check your email for the confirmation link, then return here and log in.",
+        false
+    );
+}
+
+
+async function signIn() {
+
+    const email =
+        emailInput
+            ? emailInput.value.trim()
+            : "";
+
+
+    const password =
+        passwordInput
+            ? passwordInput.value
+            : "";
+
+
+    if (email === "") {
+
+        showAuthMessage(
+            "Please enter your email address.",
+            true
+        );
+
+        return;
+    }
+
+
+    if (password === "") {
+
+        showAuthMessage(
+            "Please enter your password.",
+            true
+        );
+
+        return;
+    }
+
+
+    disableAuthButtons(true);
+
+
+    showAuthMessage(
+        "Signing in...",
+        false
     );
 
 
-    const response =
-        await supabaseClient.auth.signInWithPassword({
+    const result =
+        await supabaseClient.auth
+            .signInWithPassword({
 
-            email: email,
+                email: email,
 
-            password: password
-        });
+                password: password
+            });
 
 
-    if (response.error) {
+    disableAuthButtons(false);
+
+
+    if (result.error) {
 
         console.error(
             "Login error:",
-            response.error
+            result.error
         );
 
         showAuthMessage(
-            response.error.message,
+            result.error.message,
             true
         );
 
@@ -406,20 +544,27 @@ async function login() {
 
 
     currentUser =
-        response.data.user;
+        result.data.user;
 
 
     if (passwordInput) {
 
-        passwordInput.value = "";
+        passwordInput.value =
+            "";
     }
 
 
     updateAuthenticationUI();
 
+
     showAuthMessage(
-        "Welcome back, " +
-        currentUser.email
+        "Signed in successfully.",
+        false
+    );
+
+
+    showRecommendation(
+        "Welcome back. Check your energy, review your routine, or start a focus session."
     );
 
 
@@ -427,25 +572,21 @@ async function login() {
 }
 
 
-// ==========================================================
-// 8. LOGOUT
-// ==========================================================
+async function signOut() {
 
-async function logout() {
-
-    const response =
+    const result =
         await supabaseClient.auth.signOut();
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Logout error:",
-            response.error
+            result.error
         );
 
         showAuthMessage(
-            response.error.message,
+            result.error.message,
             true
         );
 
@@ -466,31 +607,37 @@ async function logout() {
 
 
     showRecommendation(
-        "Log in to start tracking your routine."
+        "Log in or create an account to start building your healthier routine."
     );
 }
 
 
 // ==========================================================
-// 9. CLEAR PRIVATE UI
+// 6. CLEAR PRIVATE UI
 // ==========================================================
 
 function clearPrivateUI() {
 
     if (energyScore) {
-        energyScore.textContent = "--";
+
+        energyScore.textContent =
+            "--";
     }
 
+
     if (circleNameDisplay) {
+
         circleNameDisplay.textContent =
             "No Circle Selected";
     }
 
+
     if (circleDescriptionDisplay) {
 
         circleDescriptionDisplay.textContent =
-            "Create or join an accountability circle to get started.";
+            "Create an accountability circle to get started.";
     }
+
 
     if (circleList) {
 
@@ -498,17 +645,20 @@ function clearPrivateUI() {
             "<li>No members loaded yet.</li>";
     }
 
+
     if (focusButton) {
 
         focusButton.textContent =
             "Start Focus Session";
     }
 
+
     if (focusStatus) {
 
         focusStatus.textContent =
             "No focus session active.";
     }
+
 
     if (wakeTime) {
         wakeTime.value = "";
@@ -541,20 +691,17 @@ function clearPrivateUI() {
 
 
 // ==========================================================
-// 10. LOAD CIRCLES
+// 7. CIRCLES
 // ==========================================================
 
 async function loadMyCircles() {
 
     if (!currentUser) {
-
-        currentCircle = null;
-
-        return [];
+        return;
     }
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("circles")
             .select(
@@ -568,47 +715,43 @@ async function loadMyCircles() {
             );
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Load circles error:",
-            response.error
+            result.error
         );
 
-        return [];
+        return;
     }
 
 
     const circles =
-        response.data || [];
+        result.data || [];
 
 
-    if (circles.length > 0) {
-
-        currentCircle =
-            circles[0];
-
-        displayCurrentCircle();
-
-        await loadCircleMembers(
-            currentCircle.id
-        );
-
-    } else {
+    if (circles.length === 0) {
 
         currentCircle = null;
 
         displayNoCircle();
+
+        return;
     }
 
 
-    return circles;
+    currentCircle =
+        circles[0];
+
+
+    displayCurrentCircle();
+
+
+    await loadCircleMembers(
+        currentCircle.id
+    );
 }
 
-
-// ==========================================================
-// 11. DISPLAY CURRENT CIRCLE
-// ==========================================================
 
 function displayCurrentCircle() {
 
@@ -629,9 +772,16 @@ function displayCurrentCircle() {
 
     if (circleDescriptionDisplay) {
 
-        circleDescriptionDisplay.textContent =
-            currentCircle.description ||
-            "No description provided.";
+        if (currentCircle.description) {
+
+            circleDescriptionDisplay.textContent =
+                currentCircle.description;
+
+        } else {
+
+            circleDescriptionDisplay.textContent =
+                "No description provided.";
+        }
     }
 }
 
@@ -660,16 +810,12 @@ function displayNoCircle() {
 }
 
 
-// ==========================================================
-// 12. CREATE CIRCLE
-// ==========================================================
-
 async function createCircle() {
 
     if (!currentUser) {
 
         showRecommendation(
-            "Log in before creating an accountability circle."
+            "Please sign in before creating an accountability circle."
         );
 
         return;
@@ -688,7 +834,7 @@ async function createCircle() {
             : "";
 
 
-    if (!name) {
+    if (name === "") {
 
         showRecommendation(
             "Enter a name for your accountability circle."
@@ -708,14 +854,15 @@ async function createCircle() {
     }
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("circles")
             .insert({
 
                 name: name,
 
-                description: description,
+                description:
+                    description,
 
                 created_by:
                     currentUser.id
@@ -734,16 +881,16 @@ async function createCircle() {
     }
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Create circle error:",
-            response.error
+            result.error
         );
 
         showRecommendation(
             "Circle could not be created: " +
-            response.error.message
+            result.error.message
         );
 
         return;
@@ -751,15 +898,20 @@ async function createCircle() {
 
 
     currentCircle =
-        response.data;
+        result.data;
 
 
     if (newCircleName) {
-        newCircleName.value = "";
+
+        newCircleName.value =
+            "";
     }
 
+
     if (newCircleDescription) {
-        newCircleDescription.value = "";
+
+        newCircleDescription.value =
+            "";
     }
 
 
@@ -772,25 +924,21 @@ async function createCircle() {
 
 
     showRecommendation(
-        "Your accountability circle \"" +
-        currentCircle.name +
-        "\" was created."
+        "Accountability circle created successfully."
     );
 }
 
 
-// ==========================================================
-// 13. LOAD CIRCLE MEMBERS
-// ==========================================================
-
-async function loadCircleMembers(circleId) {
+async function loadCircleMembers(
+    circleId
+) {
 
     if (!circleId) {
-        return [];
+        return;
     }
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("circle_members")
             .select(
@@ -808,11 +956,11 @@ async function loadCircleMembers(circleId) {
             );
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Load members error:",
-            response.error
+            result.error
         );
 
 
@@ -822,35 +970,27 @@ async function loadCircleMembers(circleId) {
                 "<li>Members could not be loaded.</li>";
         }
 
-        return [];
+        return;
     }
 
 
-    const members =
-        response.data || [];
-
-
     renderCircleMembers(
-        members
+        result.data || []
     );
-
-
-    return members;
 }
 
 
-// ==========================================================
-// 14. RENDER CIRCLE MEMBERS
-// ==========================================================
-
-function renderCircleMembers(members) {
+function renderCircleMembers(
+    members
+) {
 
     if (!circleList) {
         return;
     }
 
 
-    circleList.innerHTML = "";
+    circleList.innerHTML =
+        "";
 
 
     if (members.length === 0) {
@@ -862,53 +1002,58 @@ function renderCircleMembers(members) {
     }
 
 
-    members.forEach(function (member) {
+    members.forEach(
+        function (member) {
 
-        const item =
-            document.createElement("li");
-
-
-        const isCurrentUser =
-            currentUser &&
-            member.user_id === currentUser.id;
-
-
-        let memberName;
-
-
-        if (isCurrentUser) {
-
-            memberName = "You";
-
-        } else {
-
-            memberName =
-                "Member " +
-                member.user_id.substring(
-                    0,
-                    8
+            const item =
+                document.createElement(
+                    "li"
                 );
+
+
+            let name =
+                "Member";
+
+
+            if (
+                currentUser &&
+                member.user_id ===
+                currentUser.id
+            ) {
+
+                name =
+                    "You";
+
+            } else {
+
+                name =
+                    "Member " +
+                    member.user_id.substring(
+                        0,
+                        8
+                    );
+            }
+
+
+            item.textContent =
+                name +
+                " — " +
+                capitalize(
+                    member.role
+                );
+
+
+            circleList.appendChild(
+                item
+            );
         }
-
-
-        item.textContent =
-            memberName +
-            " — " +
-            capitalize(member.role);
-
-
-        circleList.appendChild(
-            item
-        );
-    });
+    );
 }
 
 
-// ==========================================================
-// 15. CAPITALIZE HELPER
-// ==========================================================
-
-function capitalize(value) {
+function capitalize(
+    value
+) {
 
     if (!value) {
         return "";
@@ -923,81 +1068,26 @@ function capitalize(value) {
 
 
 // ==========================================================
-// 16. CHECK-IN
+// 8. CHECK-INS
 // ==========================================================
 
-async function checkIn(
+async function saveCheckIn(
     type,
-    options = {}
+    options
 ) {
 
     if (!currentUser) {
 
         showRecommendation(
-            "Please log in before recording a check-in."
+            "Please sign in before recording a check-in."
         );
 
         return null;
     }
 
 
-    const allowedTypes = [
-
-        "breakfast",
-        "lunch",
-        "dinner",
-        "snack",
-        "rest",
-        "sleep",
-        "wake",
-        "focus",
-        "energy",
-        "stress",
-        "general"
-    ];
-
-
-    if (!allowedTypes.includes(type)) {
-
-        console.error(
-            "Invalid check-in type:",
-            type
-        );
-
-        showRecommendation(
-            "That check-in type is not supported."
-        );
-
-        return null;
-    }
-
-
-    const energyLevel =
-        options.energyLevel !== undefined
-            ? options.energyLevel
-            : null;
-
-
-    const stressLevel =
-        options.stressLevel !== undefined
-            ? options.stressLevel
-            : null;
-
-
-    const sleepHours =
-        options.sleepHours !== undefined
-            ? options.sleepHours
-            : null;
-
-
-    const notes =
-        options.notes !== undefined
-            ? options.notes
-            : null;
-
-
-    const shareWithCircle =
-        options.shareWithCircle === true;
+    const settings =
+        options || {};
 
 
     const record = {
@@ -1014,121 +1104,187 @@ async function checkIn(
             type,
 
         energy_level:
-            energyLevel,
+            settings.energyLevel !== undefined
+                ? settings.energyLevel
+                : null,
 
         stress_level:
-            stressLevel,
+            settings.stressLevel !== undefined
+                ? settings.stressLevel
+                : null,
 
         sleep_hours:
-            sleepHours,
+            settings.sleepHours !== undefined
+                ? settings.sleepHours
+                : null,
 
         notes:
-            notes,
+            settings.notes !== undefined
+                ? settings.notes
+                : null,
 
         shared_with_circle:
-            shareWithCircle
+            settings.shareWithCircle === true
     };
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("check_ins")
-            .insert(record)
+            .insert(
+                record
+            )
             .select()
             .single();
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Check-in error:",
-            response.error
+            result.error
         );
+
 
         showRecommendation(
             "Your check-in could not be saved: " +
-            response.error.message
+            result.error.message
         );
+
 
         return null;
     }
 
 
-    console.log(
-        "Check-in saved:",
-        response.data
-    );
-
-
-    updateRecommendationAfterCheckIn(
-        type
-    );
-
-
-    return response.data;
+    return result.data;
 }
 
 
-// ==========================================================
-// 17. CHECK-IN RECOMMENDATIONS
-// ==========================================================
+async function recordBreakfast() {
 
-function updateRecommendationAfterCheckIn(type) {
-
-    const messages = {
-
-        breakfast:
-            "Breakfast recorded. You are starting your day with fuel.",
-
-        lunch:
-            "Lunch recorded. Take a moment to recharge before locking back in.",
-
-        dinner:
-            "Dinner recorded. Give yourself enough time to digest before bed.",
-
-        snack:
-            "Snack recorded. Continue paying attention to your hunger and energy.",
-
-        rest:
-            "Rest recorded. Recovery is part of staying productive.",
-
-        focus:
-            "Focus activity recorded. Remember to check whether you need food, water, or rest afterward.",
-
-        sleep:
-            "Sleep check-in recorded. Give yourself time to disconnect and recover.",
-
-        wake:
-            "Good morning. Check your energy and give yourself enough time for breakfast.",
-
-        energy:
-            "Energy level saved.",
-
-        stress:
-            "Stress check-in saved.",
-
-        general:
-            "Check-in saved."
-    };
-
-
-    if (messages[type]) {
-
-        showRecommendation(
-            messages[type]
+    const result =
+        await saveCheckIn(
+            "breakfast"
         );
 
-    } else {
+
+    if (result) {
 
         showRecommendation(
-            "Check-in saved."
+            "Breakfast recorded. Starting your day fueled can help prevent the rushed, low-energy cycle."
+        );
+    }
+}
+
+
+async function recordLunch() {
+
+    const result =
+        await saveCheckIn(
+            "lunch"
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Lunch recorded. Take a moment to recharge before locking back in."
+        );
+    }
+}
+
+
+async function recordDinner() {
+
+    const result =
+        await saveCheckIn(
+            "dinner"
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Dinner recorded. Give yourself enough time to digest before your planned bedtime."
+        );
+    }
+}
+
+
+async function recordRest() {
+
+    const result =
+        await saveCheckIn(
+            "rest"
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Rest recorded. Recovery is part of staying productive."
+        );
+    }
+}
+
+
+async function recordWorking() {
+
+    const result =
+        await saveCheckIn(
+            "focus",
+            {
+                notes:
+                    "User manually checked in as working."
+            }
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Work check-in recorded. Remember to reassess hunger, hydration, and energy afterward."
+        );
+    }
+}
+
+
+async function recordSleep() {
+
+    const result =
+        await saveCheckIn(
+            "sleep"
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Sleep check-in recorded. Give yourself time to disconnect and recover."
+        );
+    }
+}
+
+
+async function recordWake() {
+
+    const result =
+        await saveCheckIn(
+            "wake"
+        );
+
+
+    if (result) {
+
+        showRecommendation(
+            "Wake check-in recorded. Check your energy and make time for breakfast before your schedule takes over."
         );
     }
 }
 
 
 // ==========================================================
-// 18. ENERGY SLIDER
+// 9. ENERGY
 // ==========================================================
 
 function updateEnergySliderDisplay() {
@@ -1144,16 +1300,12 @@ function updateEnergySliderDisplay() {
 }
 
 
-// ==========================================================
-// 19. SAVE ENERGY
-// ==========================================================
-
 async function saveEnergy() {
 
     if (!currentUser) {
 
         showRecommendation(
-            "Log in before saving your energy level."
+            "Please sign in before saving your energy level."
         );
 
         return;
@@ -1192,10 +1344,11 @@ async function saveEnergy() {
 
 
     const result =
-        await checkIn(
+        await saveCheckIn(
             "energy",
             {
-                energyLevel: level
+                energyLevel:
+                    level
             }
         );
 
@@ -1213,27 +1366,30 @@ async function saveEnergy() {
     if (result) {
 
         await loadLatestEnergy();
+
+
+        showRecommendation(
+            "Energy level saved."
+        );
     }
 }
 
-
-// ==========================================================
-// 20. LOAD LATEST ENERGY
-// ==========================================================
 
 async function loadLatestEnergy() {
 
     if (!currentUser) {
 
         if (energyScore) {
-            energyScore.textContent = "--";
+
+            energyScore.textContent =
+                "--";
         }
 
         return;
     }
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("check_ins")
             .select(
@@ -1258,11 +1414,11 @@ async function loadLatestEnergy() {
             .maybeSingle();
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
             "Load energy error:",
-            response.error
+            result.error
         );
 
         return;
@@ -1274,7 +1430,7 @@ async function loadLatestEnergy() {
     }
 
 
-    if (!response.data) {
+    if (!result.data) {
 
         energyScore.textContent =
             "--";
@@ -1283,17 +1439,16 @@ async function loadLatestEnergy() {
     }
 
 
-    const percentage =
-        response.data.energy_level * 10;
-
-
     energyScore.textContent =
-        percentage;
+        String(
+            result.data.energy_level *
+            10
+        );
 }
 
 
 // ==========================================================
-// 21. FOCUS MODE
+// 10. FOCUS MODE
 // ==========================================================
 
 async function handleFocusMode() {
@@ -1301,16 +1456,17 @@ async function handleFocusMode() {
     if (!currentUser) {
 
         showRecommendation(
-            "Log in before starting Focus Mode."
+            "Please sign in before starting Focus Mode."
         );
 
         return;
     }
 
 
-    if (!focusMode) {
+    if (focusMode === false) {
 
-        focusMode = true;
+        focusMode =
+            true;
 
         focusStartTime =
             new Date();
@@ -1331,31 +1487,23 @@ async function handleFocusMode() {
 
 
         showRecommendation(
-            "Focus mode started. Lock in on your task. When you finish, check whether you need food, water, or rest."
+            "Focus mode started. Lock in now; reassess food, water, movement, and rest when you finish."
         );
-
-
-        await checkIn(
-            "focus",
-            {
-                notes:
-                    "Focus session started."
-            }
-        );
-
 
         return;
     }
 
 
-    focusMode = false;
+    focusMode =
+        false;
 
 
     const focusEndTime =
         new Date();
 
 
-    let minutesFocused = 0;
+    let minutesFocused =
+        1;
 
 
     if (focusStartTime) {
@@ -1373,6 +1521,17 @@ async function handleFocusMode() {
     }
 
 
+    await saveCheckIn(
+        "focus",
+        {
+            notes:
+                "Completed focus session lasting " +
+                minutesFocused +
+                " minutes."
+        }
+    );
+
+
     if (focusButton) {
 
         focusButton.textContent =
@@ -1385,45 +1544,22 @@ async function handleFocusMode() {
         focusStatus.textContent =
             "Last focus session: " +
             minutesFocused +
-            " minute" +
-            (
-                minutesFocused === 1
-                    ? "."
-                    : "s."
-            );
+            " minutes.";
     }
 
 
-    await checkIn(
-        "focus",
-        {
-            notes:
-                "Focus session completed after " +
-                minutesFocused +
-                " minutes."
-        }
-    );
-
-
     showRecommendation(
-        "You focused for " +
-        minutesFocused +
-        " minute" +
-        (
-            minutesFocused === 1
-                ? ""
-                : "s"
-        ) +
-        ". Before locking back in, check whether you need food, water, movement, or rest."
+        "Focus session complete. Before locking back in, check whether you need food, water, movement, or rest."
     );
 
 
-    focusStartTime = null;
+    focusStartTime =
+        null;
 }
 
 
 // ==========================================================
-// 22. SAVE DAILY ROUTINE
+// 11. ROUTINE
 // ==========================================================
 
 async function saveRoutine() {
@@ -1431,7 +1567,7 @@ async function saveRoutine() {
     if (!currentUser) {
 
         showRoutineMessage(
-            "Log in before saving your routine.",
+            "Please sign in before saving your routine.",
             true
         );
 
@@ -1476,48 +1612,42 @@ async function saveRoutine() {
         user_id:
             currentUser.id,
 
+        wake_time:
+            getTimeValue(
+                wakeTime
+            ),
+
         breakfast_time:
-            breakfastTime &&
-            breakfastTime.value
-                ? breakfastTime.value
-                : null,
+            getTimeValue(
+                breakfastTime
+            ),
 
         lunch_time:
-            lunchTime &&
-            lunchTime.value
-                ? lunchTime.value
-                : null,
+            getTimeValue(
+                lunchTime
+            ),
 
         dinner_time:
-            dinnerTime &&
-            dinnerTime.value
-                ? dinnerTime.value
-                : null,
+            getTimeValue(
+                dinnerTime
+            ),
 
         rest_start_time:
-            restTime &&
-            restTime.value
-                ? restTime.value
-                : null,
+            getTimeValue(
+                restTime
+            ),
 
         bedtime:
-            bedtime &&
-            bedtime.value
-                ? bedtime.value
-                : null,
-
-        wake_time:
-            wakeTime &&
-            wakeTime.value
-                ? wakeTime.value
-                : null,
+            getTimeValue(
+                bedtime
+            ),
 
         sleep_goal_hours:
             goal
     };
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("routines")
             .upsert(
@@ -1541,37 +1671,53 @@ async function saveRoutine() {
     }
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
-            "Save routine error:",
-            response.error
+            "Routine save error:",
+            result.error
         );
+
 
         showRoutineMessage(
             "Routine could not be saved: " +
-            response.error.message,
+            result.error.message,
             true
         );
+
 
         return;
     }
 
 
     showRoutineMessage(
-        "Your daily routine was saved successfully."
+        "Your daily routine was saved.",
+        false
     );
 
 
     showRecommendation(
-        "Your routine is saved. CircleSync can now compare your check-ins with the times you want to eat, rest, sleep, and wake."
+        "Routine saved. CircleSync can now compare your intended schedule with your actual check-ins."
     );
 }
 
 
-// ==========================================================
-// 23. LOAD ROUTINE
-// ==========================================================
+function getTimeValue(
+    element
+) {
+
+    if (
+        element &&
+        element.value
+    ) {
+
+        return element.value;
+    }
+
+
+    return null;
+}
+
 
 async function loadRoutine() {
 
@@ -1580,11 +1726,11 @@ async function loadRoutine() {
     }
 
 
-    const response =
+    const result =
         await supabaseClient
             .from("routines")
             .select(
-                "breakfast_time, lunch_time, dinner_time, rest_start_time, bedtime, wake_time, sleep_goal_hours"
+                "wake_time, breakfast_time, lunch_time, dinner_time, rest_start_time, bedtime, sleep_goal_hours"
             )
             .eq(
                 "user_id",
@@ -1593,108 +1739,96 @@ async function loadRoutine() {
             .maybeSingle();
 
 
-    if (response.error) {
+    if (result.error) {
 
         console.error(
-            "Load routine error:",
-            response.error
+            "Routine load error:",
+            result.error
         );
 
         return;
     }
 
 
-    const data =
-        response.data;
-
-
-    if (!data) {
+    if (!result.data) {
         return;
     }
 
 
-    if (breakfastTime) {
-
-        breakfastTime.value =
-            formatTimeForInput(
-                data.breakfast_time
-            );
-    }
+    setTimeInput(
+        wakeTime,
+        result.data.wake_time
+    );
 
 
-    if (lunchTime) {
-
-        lunchTime.value =
-            formatTimeForInput(
-                data.lunch_time
-            );
-    }
+    setTimeInput(
+        breakfastTime,
+        result.data.breakfast_time
+    );
 
 
-    if (dinnerTime) {
-
-        dinnerTime.value =
-            formatTimeForInput(
-                data.dinner_time
-            );
-    }
+    setTimeInput(
+        lunchTime,
+        result.data.lunch_time
+    );
 
 
-    if (restTime) {
-
-        restTime.value =
-            formatTimeForInput(
-                data.rest_start_time
-            );
-    }
+    setTimeInput(
+        dinnerTime,
+        result.data.dinner_time
+    );
 
 
-    if (bedtime) {
-
-        bedtime.value =
-            formatTimeForInput(
-                data.bedtime
-            );
-    }
+    setTimeInput(
+        restTime,
+        result.data.rest_start_time
+    );
 
 
-    if (wakeTime) {
-
-        wakeTime.value =
-            formatTimeForInput(
-                data.wake_time
-            );
-    }
+    setTimeInput(
+        bedtime,
+        result.data.bedtime
+    );
 
 
     if (sleepGoal) {
 
         sleepGoal.value =
-            data.sleep_goal_hours || 8;
+            result.data.sleep_goal_hours ||
+            8;
     }
 }
 
 
-// ==========================================================
-// 24. FORMAT DATABASE TIME
-// ==========================================================
+function setTimeInput(
+    element,
+    value
+) {
 
-function formatTimeForInput(value) {
+    if (!element) {
+        return;
+    }
+
 
     if (!value) {
-        return "";
+
+        element.value =
+            "";
+
+        return;
     }
 
 
-    return value.substring(
-        0,
-        5
-    );
+    element.value =
+        value.substring(
+            0,
+            5
+        );
 }
 
 
 // ==========================================================
-// 25. LOAD ALL USER DATA
+// 12. LOAD APPLICATION DATA
 // ==========================================================
 
 async function loadApplicationData() {
@@ -1713,7 +1847,7 @@ async function loadApplicationData() {
 
 
 // ==========================================================
-// 26. EVENT LISTENERS
+// 13. EVENT LISTENERS
 // ==========================================================
 
 if (signupButton) {
@@ -1729,7 +1863,7 @@ if (loginButton) {
 
     loginButton.addEventListener(
         "click",
-        login
+        signIn
     );
 }
 
@@ -1738,7 +1872,7 @@ if (logoutButton) {
 
     logoutButton.addEventListener(
         "click",
-        logout
+        signOut
     );
 }
 
@@ -1788,6 +1922,69 @@ if (saveRoutineButton) {
 }
 
 
+if (breakfastButton) {
+
+    breakfastButton.addEventListener(
+        "click",
+        recordBreakfast
+    );
+}
+
+
+if (lunchButton) {
+
+    lunchButton.addEventListener(
+        "click",
+        recordLunch
+    );
+}
+
+
+if (dinnerButton) {
+
+    dinnerButton.addEventListener(
+        "click",
+        recordDinner
+    );
+}
+
+
+if (restButton) {
+
+    restButton.addEventListener(
+        "click",
+        recordRest
+    );
+}
+
+
+if (workingButton) {
+
+    workingButton.addEventListener(
+        "click",
+        recordWorking
+    );
+}
+
+
+if (sleepButton) {
+
+    sleepButton.addEventListener(
+        "click",
+        recordSleep
+    );
+}
+
+
+if (wakeButton) {
+
+    wakeButton.addEventListener(
+        "click",
+        recordWake
+    );
+}
+
+
 if (passwordInput) {
 
     passwordInput.addEventListener(
@@ -1796,10 +1993,10 @@ if (passwordInput) {
 
             if (
                 event.key === "Enter" &&
-                !currentUser
+                currentUser === null
             ) {
 
-                login();
+                signIn();
             }
         }
     );
@@ -1807,33 +2004,38 @@ if (passwordInput) {
 
 
 // ==========================================================
-// 27. SUPABASE AUTH STATE CHANGES
+// 14. AUTH STATE LISTENER
 // ==========================================================
 
 supabaseClient.auth.onAuthStateChange(
-    function (event, session) {
+    function (
+        event,
+        session
+    ) {
 
-        console.log(
-            "Authentication event:",
-            event
-        );
+        if (
+            session &&
+            session.user
+        ) {
 
+            currentUser =
+                session.user;
 
-        currentUser =
-            session
-                ? session.user
-                : null;
+        } else {
+
+            currentUser =
+                null;
+        }
 
 
         updateAuthenticationUI();
 
 
         if (
-            event === "SIGNED_IN" &&
-            currentUser
+            event === "SIGNED_IN"
         ) {
 
-            setTimeout(
+            window.setTimeout(
                 function () {
 
                     loadApplicationData();
@@ -1844,9 +2046,12 @@ supabaseClient.auth.onAuthStateChange(
         }
 
 
-        if (event === "SIGNED_OUT") {
+        if (
+            event === "SIGNED_OUT"
+        ) {
 
-            currentCircle = null;
+            currentCircle =
+                null;
 
             clearPrivateUI();
         }
@@ -1855,21 +2060,20 @@ supabaseClient.auth.onAuthStateChange(
 
 
 // ==========================================================
-// 28. INITIALIZE CIRCLESYNC
+// 15. INITIALIZE
 // ==========================================================
 
 async function initializeApp() {
 
     console.log(
-        "Starting CircleSync..."
+        "CircleSync app.js version 4 loaded."
     );
 
 
     updateEnergySliderDisplay();
 
 
-    currentUser =
-        await getCurrentUser();
+    await loadSession();
 
 
     updateAuthenticationUI();
@@ -1886,37 +2090,31 @@ async function initializeApp() {
 
 
         console.log(
-            "CircleSync loaded without an authenticated user."
+            "No user currently signed in."
         );
+
 
         return;
     }
-
-
-    console.log(
-        "Authenticated user:",
-        currentUser.email
-    );
 
 
     await loadApplicationData();
 
 
     showRecommendation(
-        "Welcome back. Check your energy, review your routine, or start a focus session."
+        "Welcome back. Check your energy, review your routine, or begin a focus session."
     );
 
 
     console.log(
-        "CircleSync is ready."
+        "CircleSync ready."
     );
 }
 
 
 // ==========================================================
-// 29. START APPLICATION
+// 16. START APPLICATION
 // ==========================================================
 
 initializeApp();
 ```
-
