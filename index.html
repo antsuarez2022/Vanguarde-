@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -19,34 +18,22 @@
     <link
         rel="stylesheet"
         href="styles.css">
-
 </head>
-
 
 <body>
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header>
-
         <h1>CircleSync</h1>
 
         <p>
             Build healthier routines together.
         </p>
-
     </header>
-
 
 
     <main>
 
-
-        <!-- =================================================
-             AUTHENTICATION
-        ================================================== -->
+        <!-- ACCOUNT -->
 
         <section
             class="card"
@@ -55,8 +42,8 @@
             <h2>Account</h2>
 
             <p>
-                Sign in or create an account to save your
-                routines, check-ins, and accountability circles.
+                Sign in or create an account to save your routines,
+                check-ins, and accountability circles.
             </p>
 
 
@@ -85,18 +72,14 @@
             <button
                 type="button"
                 id="login-btn">
-
                 Log In
-
             </button>
 
 
             <button
                 type="button"
                 id="signup-btn">
-
                 Create Account
-
             </button>
 
 
@@ -104,25 +87,19 @@
                 type="button"
                 id="logout-btn"
                 hidden>
-
                 Log Out
-
             </button>
 
 
             <p
                 id="auth-message"
                 aria-live="polite">
-
             </p>
 
         </section>
 
 
-
-        <!-- =================================================
-             TODAY'S STATUS
-        ================================================== -->
+        <!-- ENERGY -->
 
         <section class="card">
 
@@ -135,16 +112,12 @@
             <div
                 id="energy-score"
                 aria-live="polite">
-
                 --
-
             </div>
 
 
             <label for="energy-input">
-
                 How is your energy right now?
-
             </label>
 
 
@@ -158,33 +131,22 @@
 
 
             <p>
-
                 Energy level:
-
-                <span id="energy-value">
-                    5
-                </span>
-
+                <span id="energy-value">5</span>
                 / 10
-
             </p>
 
 
             <button
                 type="button"
                 id="save-energy">
-
                 Save Energy Level
-
             </button>
 
         </section>
 
 
-
-        <!-- =================================================
-             FOCUS MODE
-        ================================================== -->
+        <!-- FOCUS -->
 
         <section class="card">
 
@@ -199,113 +161,81 @@
             <button
                 type="button"
                 id="focus-btn">
-
                 Start Focus Session
-
             </button>
 
 
             <p
                 id="focus-status"
                 aria-live="polite">
-
                 No focus session active.
-
             </p>
 
         </section>
 
 
-
-        <!-- =================================================
-             QUICK CHECK-IN
-        ================================================== -->
+        <!-- QUICK CHECK-IN -->
 
         <section class="card">
 
             <h2>Quick Check-In</h2>
 
             <p>
-                Record what you've done today so CircleSync
+                Record what you have done today so CircleSync
                 can understand your routine.
             </p>
 
 
             <div class="check-in-grid">
 
-
                 <button
                     type="button"
-                    onclick="checkIn('breakfast')">
-
+                    id="breakfast-btn">
                     🍳 Breakfast
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('lunch')">
-
+                    id="lunch-btn">
                     🥗 Lunch
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('dinner')">
-
+                    id="dinner-btn">
                     🍽 Dinner
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('rest')">
-
+                    id="rest-btn">
                     😴 Rested
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('focus')">
-
+                    id="working-btn">
                     💻 Working
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('sleep')">
-
+                    id="sleep-btn">
                     🌙 Going to Sleep
-
                 </button>
-
 
                 <button
                     type="button"
-                    onclick="checkIn('wake')">
-
+                    id="wake-btn">
                     ☀️ Woke Up
-
                 </button>
-
 
             </div>
 
         </section>
 
 
-
-        <!-- =================================================
-             ACCOUNTABILITY CIRCLE
-        ================================================== -->
+        <!-- ACCOUNTABILITY CIRCLE -->
 
         <section class="card">
 
@@ -320,16 +250,11 @@
             <div id="circle-current">
 
                 <h3 id="circle-name">
-
                     No Circle Selected
-
                 </h3>
 
                 <p id="circle-description">
-
-                    Create or join an accountability circle
-                    to get started.
-
+                    Create an accountability circle to get started.
                 </p>
 
             </div>
@@ -339,11 +264,8 @@
 
 
             <label for="new-circle-name">
-
                 Circle Name
-
             </label>
-
 
             <input
                 type="text"
@@ -353,11 +275,8 @@
 
 
             <label for="new-circle-description">
-
                 Description
-
             </label>
-
 
             <textarea
                 id="new-circle-description"
@@ -368,14 +287,11 @@
             <button
                 type="button"
                 id="create-circle-btn">
-
                 Create Circle
-
             </button>
 
 
             <h3>Members</h3>
-
 
             <ul
                 id="circle-list"
@@ -390,10 +306,7 @@
         </section>
 
 
-
-        <!-- =================================================
-             DAILY ROUTINE
-        ================================================== -->
+        <!-- DAILY ROUTINE -->
 
         <section class="card">
 
@@ -406,9 +319,7 @@
 
 
             <label for="wake-time">
-
                 Wake Time
-
             </label>
 
             <input
@@ -417,9 +328,7 @@
 
 
             <label for="breakfast-time">
-
                 Breakfast Time
-
             </label>
 
             <input
@@ -428,9 +337,7 @@
 
 
             <label for="lunch-time">
-
                 Lunch Time
-
             </label>
 
             <input
@@ -439,9 +346,7 @@
 
 
             <label for="dinner-time">
-
                 Dinner Time
-
             </label>
 
             <input
@@ -450,9 +355,7 @@
 
 
             <label for="rest-time">
-
                 Rest Time
-
             </label>
 
             <input
@@ -461,9 +364,7 @@
 
 
             <label for="bedtime">
-
                 Bedtime
-
             </label>
 
             <input
@@ -472,9 +373,7 @@
 
 
             <label for="sleep-goal">
-
                 Sleep Goal
-
             </label>
 
             <input
@@ -489,25 +388,19 @@
             <button
                 type="button"
                 id="save-routine-btn">
-
                 Save Routine
-
             </button>
 
 
             <p
                 id="routine-message"
                 aria-live="polite">
-
             </p>
 
         </section>
 
 
-
-        <!-- =================================================
-             RECOMMENDATION
-        ================================================== -->
+        <!-- RECOMMENDATION -->
 
         <section class="card">
 
@@ -517,20 +410,14 @@
                 id="recommendation"
                 aria-live="polite">
 
-                Log in to start tracking your routine.
+                Log in or create an account to start building your healthier routine.
 
             </p>
 
         </section>
 
-
     </main>
 
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
     <footer>
 
@@ -542,22 +429,14 @@
     </footer>
 
 
+    <!-- Supabase MUST load before app.js -->
 
-    <!-- =====================================================
-         JAVASCRIPT
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-         IMPORTANT:
-         Supabase must load BEFORE app.js.
-    ====================================================== -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-
-    <script src="app.js"></script>
-
+    <script src="app.js?v=4"></script>
 
 </body>
 
 </html>
 ```
+
