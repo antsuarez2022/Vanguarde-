@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -12,14 +13,23 @@
         name="description"
         content="CircleSync healthy routine dashboard.">
 
-    <title>CircleSync | Dashboard</title>
+    <title>
+        CircleSync | Dashboard
+    </title>
 
     <link
         rel="stylesheet"
         href="styles.css">
+
 </head>
 
+
 <body id="dashboard-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
     <header class="topbar">
 
@@ -48,8 +58,13 @@
     </header>
 
 
+
     <main class="dashboard">
 
+
+        <!-- =================================================
+             ENERGY
+        ================================================== -->
 
         <section class="card">
 
@@ -84,7 +99,7 @@
 
 
             <label for="energy-input">
-                Energy level
+                Energy Level
             </label>
 
 
@@ -121,6 +136,11 @@
         </section>
 
 
+
+        <!-- =================================================
+             FOCUS
+        ================================================== -->
+
         <section class="card">
 
             <div class="card-heading">
@@ -136,7 +156,7 @@
                     </h2>
 
                     <p>
-                        Lock in when you need to work or study.
+                        Lock in while working or studying.
                     </p>
 
                 </div>
@@ -164,6 +184,11 @@
 
         </section>
 
+
+
+        <!-- =================================================
+             QUICK CHECK-IN
+        ================================================== -->
 
         <section class="card">
 
@@ -258,6 +283,11 @@
         </section>
 
 
+
+        <!-- =================================================
+             MY ACCOUNTABILITY CIRCLE
+        ================================================== -->
+
         <section class="card">
 
             <div class="card-heading">
@@ -269,12 +299,11 @@
                 <div>
 
                     <h2>
-                        Accountability Circle
+                        My Accountability Circle
                     </h2>
 
                     <p>
-                        Coordinate healthier routines with
-                        friends, classmates, coworkers, or family.
+                        Your currently active accountability group.
                     </p>
 
                 </div>
@@ -289,44 +318,13 @@
                 </h3>
 
                 <p id="circle-description">
-                    Create an accountability circle to get started.
+                    Create or join an accountability circle.
                 </p>
 
             </div>
 
 
-            <label for="new-circle-name">
-                Circle Name
-            </label>
-
-            <input
-                id="new-circle-name"
-                type="text"
-                maxlength="100"
-                placeholder="Study Wellness Group">
-
-
-            <label for="new-circle-description">
-                Description
-            </label>
-
-            <textarea
-                id="new-circle-description"
-                rows="3"
-                placeholder="What is this circle for?">
-            </textarea>
-
-
-            <button
-                id="create-circle-btn"
-                type="button">
-
-                Create Circle
-
-            </button>
-
-
-            <h3 class="section-gap">
+            <h3>
                 Members
             </h3>
 
@@ -344,6 +342,125 @@
         </section>
 
 
+
+        <!-- =================================================
+             DISCOVER GROUPS
+        ================================================== -->
+
+        <section class="card">
+
+            <div class="card-heading">
+
+                <span class="card-icon">
+                    🔎
+                </span>
+
+                <div>
+
+                    <h2>
+                        Discover Groups
+                    </h2>
+
+                    <p>
+                        Browse accountability circles that
+                        other CircleSync users have created.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="refresh-groups-btn"
+                type="button"
+                class="secondary">
+
+                Refresh Available Groups
+
+            </button>
+
+
+            <div
+                id="discover-groups"
+                class="discover-list">
+
+                <p>
+                    Loading available groups...
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CREATE GROUP
+        ================================================== -->
+
+        <section class="card">
+
+            <div class="card-heading">
+
+                <span class="card-icon">
+                    ➕
+                </span>
+
+                <div>
+
+                    <h2>
+                        Create a Circle
+                    </h2>
+
+                    <p>
+                        Start your own accountability community.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <label for="new-circle-name">
+                Circle Name
+            </label>
+
+
+            <input
+                id="new-circle-name"
+                type="text"
+                maxlength="100"
+                placeholder="Example: Study Wellness Group">
+
+
+            <label for="new-circle-description">
+                Description
+            </label>
+
+
+            <textarea
+                id="new-circle-description"
+                rows="3"
+                placeholder="What is this group for?"></textarea>
+
+
+            <button
+                id="create-circle-btn"
+                type="button">
+
+                Create Circle
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ROUTINE
+        ================================================== -->
+
         <section class="card">
 
             <div class="card-heading">
@@ -359,8 +476,8 @@
                     </h2>
 
                     <p>
-                        Set your ideal times for food,
-                        rest, waking, and sleeping.
+                        Set your preferred meal, rest,
+                        sleep, and wake times.
                     </p>
 
                 </div>
@@ -369,6 +486,7 @@
 
 
             <div class="routine-grid">
+
 
                 <div>
 
@@ -447,12 +565,14 @@
 
                 </div>
 
+
             </div>
 
 
             <label for="sleep-goal">
-                Sleep Goal (hours)
+                Sleep Goal (Hours)
             </label>
+
 
             <input
                 id="sleep-goal"
@@ -480,6 +600,11 @@
 
         </section>
 
+
+
+        <!-- =================================================
+             RECOMMENDATION
+        ================================================== -->
 
         <section class="card recommendation">
 
@@ -510,12 +635,20 @@
 
         </section>
 
+
     </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=40"></script>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
+    <script src="app.js?v=50"></script>
+
 
 </body>
+
 </html>
 
 
