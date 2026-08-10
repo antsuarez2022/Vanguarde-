@@ -1,0 +1,472 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="CircleSync accountability and healthy routine dashboard.">
+
+    <title>CircleSync | Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css">
+</head>
+
+<body data-page="dashboard">
+
+    <header class="dashboard-header">
+
+        <div>
+
+            <h1>
+                CircleSync
+            </h1>
+
+            <p>
+                Focus. Recharge. Stay accountable.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="logout-btn"
+            class="logout-button">
+            Log Out
+        </button>
+
+    </header>
+
+
+    <main class="dashboard-container">
+
+
+        <!-- USER -->
+
+        <section class="card">
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p id="user-email">
+                Loading your account...
+            </p>
+
+        </section>
+
+
+        <!-- ENERGY -->
+
+        <section class="card">
+
+            <h2>
+                Today's Energy
+            </h2>
+
+            <p>
+                Current Energy Score
+            </p>
+
+
+            <div
+                id="energy-score"
+                aria-live="polite">
+                --
+            </div>
+
+
+            <label for="energy-input">
+                How is your energy right now?
+            </label>
+
+
+            <input
+                type="range"
+                id="energy-input"
+                min="1"
+                max="10"
+                step="1"
+                value="5">
+
+
+            <p class="slider-value">
+
+                Energy Level:
+
+                <strong id="energy-value">
+                    5
+                </strong>
+
+                / 10
+
+            </p>
+
+
+            <button
+                type="button"
+                id="save-energy">
+                Save Energy Level
+            </button>
+
+        </section>
+
+
+        <!-- FOCUS -->
+
+        <section class="card">
+
+            <h2>
+                Focus Mode
+            </h2>
+
+            <p>
+                Lock in when you need to work or study.
+                When the session ends, CircleSync will remind
+                you to reassess your food, water, energy,
+                and rest needs.
+            </p>
+
+
+            <button
+                type="button"
+                id="focus-btn">
+                Start Focus Session
+            </button>
+
+
+            <p
+                id="focus-status"
+                class="status-message"
+                aria-live="polite">
+
+                No focus session active.
+
+            </p>
+
+        </section>
+
+
+        <!-- QUICK CHECK-IN -->
+
+        <section class="card">
+
+            <h2>
+                Quick Check-In
+            </h2>
+
+            <p>
+                Record healthy actions without interrupting
+                your day for long.
+            </p>
+
+
+            <div class="check-in-grid">
+
+                <button
+                    type="button"
+                    id="breakfast-btn">
+                    🍳 Breakfast
+                </button>
+
+
+                <button
+                    type="button"
+                    id="lunch-btn">
+                    🥗 Lunch
+                </button>
+
+
+                <button
+                    type="button"
+                    id="dinner-btn">
+                    🍽 Dinner
+                </button>
+
+
+                <button
+                    type="button"
+                    id="rest-btn">
+                    😴 Rested
+                </button>
+
+
+                <button
+                    type="button"
+                    id="working-btn">
+                    💻 Working
+                </button>
+
+
+                <button
+                    type="button"
+                    id="sleep-btn">
+                    🌙 Going to Sleep
+                </button>
+
+
+                <button
+                    type="button"
+                    id="wake-btn">
+                    ☀️ Woke Up
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- CIRCLE -->
+
+        <section class="card">
+
+            <h2>
+                Accountability Circle
+            </h2>
+
+            <p>
+                Coordinate healthier routines with friends,
+                classmates, coworkers, or family.
+            </p>
+
+
+            <div id="circle-current">
+
+                <h3 id="circle-name">
+                    No Circle Selected
+                </h3>
+
+                <p id="circle-description">
+                    Create an accountability circle to get started.
+                </p>
+
+            </div>
+
+
+            <h3>
+                Create a Circle
+            </h3>
+
+
+            <label for="new-circle-name">
+                Circle Name
+            </label>
+
+            <input
+                type="text"
+                id="new-circle-name"
+                maxlength="100"
+                placeholder="Example: Study Wellness Group">
+
+
+            <label for="new-circle-description">
+                Description
+            </label>
+
+            <textarea
+                id="new-circle-description"
+                rows="3"
+                placeholder="What is your accountability circle for?"></textarea>
+
+
+            <button
+                type="button"
+                id="create-circle-btn">
+                Create Circle
+            </button>
+
+
+            <h3>
+                Members
+            </h3>
+
+
+            <ul
+                id="circle-list"
+                aria-live="polite">
+
+                <li>
+                    No members loaded yet.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ROUTINE -->
+
+        <section class="card">
+
+            <h2>
+                My Daily Routine
+            </h2>
+
+            <p>
+                Set your preferred meal, rest, sleep,
+                and wake times.
+            </p>
+
+
+            <div class="routine-grid">
+
+                <div>
+
+                    <label for="wake-time">
+                        Wake Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="wake-time">
+
+                </div>
+
+
+                <div>
+
+                    <label for="breakfast-time">
+                        Breakfast
+                    </label>
+
+                    <input
+                        type="time"
+                        id="breakfast-time">
+
+                </div>
+
+
+                <div>
+
+                    <label for="lunch-time">
+                        Lunch
+                    </label>
+
+                    <input
+                        type="time"
+                        id="lunch-time">
+
+                </div>
+
+
+                <div>
+
+                    <label for="dinner-time">
+                        Dinner
+                    </label>
+
+                    <input
+                        type="time"
+                        id="dinner-time">
+
+                </div>
+
+
+                <div>
+
+                    <label for="rest-time">
+                        Rest Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="rest-time">
+
+                </div>
+
+
+                <div>
+
+                    <label for="bedtime">
+                        Bedtime
+                    </label>
+
+                    <input
+                        type="time"
+                        id="bedtime">
+
+                </div>
+
+            </div>
+
+
+            <label for="sleep-goal">
+                Sleep Goal (Hours)
+            </label>
+
+            <input
+                type="number"
+                id="sleep-goal"
+                min="1"
+                max="24"
+                step="0.5"
+                value="8">
+
+
+            <button
+                type="button"
+                id="save-routine-btn">
+                Save Routine
+            </button>
+
+
+            <p
+                id="routine-message"
+                class="status-message"
+                aria-live="polite">
+            </p>
+
+        </section>
+
+
+        <!-- RECOMMENDATION -->
+
+        <section class="card recommendation-card">
+
+            <h2>
+                CircleSync Recommendation
+            </h2>
+
+            <p
+                id="recommendation"
+                aria-live="polite">
+
+                Loading your recommendation...
+
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            CircleSync — Balance focus, food,
+            rest, and accountability.
+        </p>
+
+    </footer>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
+    <script src="app.js?v=10"></script>
+
+</body>
+
+</html>
+```
