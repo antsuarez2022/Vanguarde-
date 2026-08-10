@@ -1,21 +1,18 @@
-```javascript
 "use strict";
 
-
-// ==========================================================
-// CIRCLESYNC - COMPLETE APP.JS
-// ==========================================================
-
-
-// ==========================================================
-// 1. SUPABASE CONFIGURATION
-// ==========================================================
+console.log("CircleSync app.js loaded.");
 
 const SUPABASE_URL =
     "https://mkecbhmkvrtwltejwzua.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_hWxse_7flC8kSKS_xlVkYw_BRUwJ2d8-";
+    "sb_publishable_hWxse_7flC8kSKS_xlVkYw_BRUwJ2d8";
+
+if (!window.supabase) {
+    throw new Error(
+        "Supabase library failed to load."
+    );
+}
 
 const supabaseClient =
     window.supabase.createClient(
