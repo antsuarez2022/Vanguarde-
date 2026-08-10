@@ -10,10 +10,20 @@
         content="width=device-width, initial-scale=1.0">
 
     <meta
+        name="theme-color"
+        content="#210038">
+
+    <meta
         name="description"
         content="CircleSync healthy routine dashboard.">
 
-    <title>CircleSync | Dashboard</title>
+    <title>
+        CircleSync | Dashboard
+    </title>
+
+    <link
+        rel="manifest"
+        href="manifest.json">
 
     <link
         rel="stylesheet"
@@ -29,7 +39,9 @@
 
         <div>
 
-            <h1>CircleSync</h1>
+            <h1>
+                CircleSync
+            </h1>
 
             <p id="user-email">
                 Loading account...
@@ -53,7 +65,86 @@
     <main class="dashboard">
 
 
-        <!-- ENERGY -->
+        <!-- =================================================
+             SMART ROUTINE
+        ================================================== -->
+
+        <section class="card routine-now-card">
+
+            <div class="card-heading">
+
+                <span class="card-icon">
+                    ⏰
+                </span>
+
+                <div>
+
+                    <h2>
+                        Next Up
+                    </h2>
+
+                    <p>
+                        CircleSync automatically compares
+                        the current time with your routine.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="next-up-panel">
+
+                <p
+                    id="next-up-label"
+                    class="next-up-label">
+
+                    Loading your routine...
+
+                </p>
+
+
+                <h3 id="next-up-title">
+                    --
+                </h3>
+
+
+                <p id="next-up-countdown">
+                    --
+                </p>
+
+
+                <p
+                    id="routine-alert"
+                    class="routine-alert"
+                    aria-live="polite">
+                </p>
+
+            </div>
+
+
+            <button
+                id="notification-btn"
+                type="button"
+                class="secondary">
+
+                Enable Routine Notifications
+
+            </button>
+
+
+            <p
+                id="notification-status"
+                class="status"
+                aria-live="polite">
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             ENERGY
+        ================================================== -->
 
         <section class="card">
 
@@ -65,7 +156,9 @@
 
                 <div>
 
-                    <h2>Today's Energy</h2>
+                    <h2>
+                        Today's Energy
+                    </h2>
 
                     <p>
                         Your energy score stays private.
@@ -95,7 +188,6 @@
                 type="range"
                 min="1"
                 max="10"
-                step="1"
                 value="5">
 
 
@@ -123,8 +215,9 @@
         </section>
 
 
-
-        <!-- FOCUS -->
+        <!-- =================================================
+             FOCUS
+        ================================================== -->
 
         <section class="card">
 
@@ -136,7 +229,9 @@
 
                 <div>
 
-                    <h2>Focus Mode</h2>
+                    <h2>
+                        Focus Mode
+                    </h2>
 
                     <p>
                         Lock in while working or studying.
@@ -168,8 +263,9 @@
         </section>
 
 
-
-        <!-- QUICK CHECK-IN -->
+        <!-- =================================================
+             CHECK INS
+        ================================================== -->
 
         <section class="card">
 
@@ -181,10 +277,12 @@
 
                 <div>
 
-                    <h2>Quick Check-In</h2>
+                    <h2>
+                        Quick Check-In
+                    </h2>
 
                     <p>
-                        These check-ins are shared with your
+                        Check-ins are shared with your
                         active accountability circle.
                     </p>
 
@@ -198,63 +296,43 @@
                 <button
                     id="breakfast-btn"
                     type="button">
-
                     🍳 Breakfast
-
                 </button>
-
 
                 <button
                     id="lunch-btn"
                     type="button">
-
                     🥗 Lunch
-
                 </button>
-
 
                 <button
                     id="dinner-btn"
                     type="button">
-
                     🍽 Dinner
-
                 </button>
-
 
                 <button
                     id="rest-btn"
                     type="button">
-
                     😴 Rested
-
                 </button>
-
 
                 <button
                     id="working-btn"
                     type="button">
-
                     💻 Working
-
                 </button>
-
 
                 <button
                     id="sleep-btn"
                     type="button">
-
                     🌙 Going to Sleep
-
                 </button>
-
 
                 <button
                     id="wake-btn"
                     type="button">
-
                     ☀️ Woke Up
-
                 </button>
 
             </div>
@@ -262,8 +340,9 @@
         </section>
 
 
-
-        <!-- MY CIRCLE -->
+        <!-- =================================================
+             MY CIRCLE
+        ================================================== -->
 
         <section class="card">
 
@@ -275,7 +354,9 @@
 
                 <div>
 
-                    <h2>My Accountability Circle</h2>
+                    <h2>
+                        My Accountability Circle
+                    </h2>
 
                     <p>
                         Your currently active accountability group.
@@ -291,7 +372,6 @@
                 <h3 id="circle-name">
                     No Circle Selected
                 </h3>
-
 
                 <p id="circle-description">
                     Create or join an accountability circle.
@@ -318,8 +398,9 @@
         </section>
 
 
-
-        <!-- CIRCLE FEED -->
+        <!-- =================================================
+             CIRCLE FEED
+        ================================================== -->
 
         <section class="card">
 
@@ -331,11 +412,13 @@
 
                 <div>
 
-                    <h2>Circle Feed</h2>
+                    <h2>
+                        Circle Feed
+                    </h2>
 
                     <p>
-                        See messages and healthy check-ins
-                        from your accountability circle.
+                        Messages and shared healthy check-ins
+                        from your circle.
                     </p>
 
                 </div>
@@ -343,29 +426,25 @@
             </div>
 
 
-            <div class="message-compose">
-
-                <label for="circle-message">
-                    Send a Message
-                </label>
+            <label for="circle-message">
+                Send a Message
+            </label>
 
 
-                <textarea
-                    id="circle-message"
-                    rows="3"
-                    maxlength="1000"
-                    placeholder="Encourage your circle or share an update..."></textarea>
+            <textarea
+                id="circle-message"
+                rows="3"
+                maxlength="1000"
+                placeholder="Encourage your circle or share an update..."></textarea>
 
 
-                <button
-                    id="send-message-btn"
-                    type="button">
+            <button
+                id="send-message-btn"
+                type="button">
 
-                    Send Message
+                Send Message
 
-                </button>
-
-            </div>
+            </button>
 
 
             <button
@@ -373,15 +452,14 @@
                 type="button"
                 class="secondary">
 
-                ↻ Refresh Circle Feed
+                Refresh Circle Feed
 
             </button>
 
 
             <p
                 id="feed-message"
-                class="status"
-                aria-live="polite">
+                class="status">
             </p>
 
 
@@ -390,7 +468,7 @@
                 class="circle-feed">
 
                 <p>
-                    Loading circle activity...
+                    Loading activity...
                 </p>
 
             </div>
@@ -398,8 +476,9 @@
         </section>
 
 
-
-        <!-- DISCOVER GROUPS -->
+        <!-- =================================================
+             DISCOVER
+        ================================================== -->
 
         <section class="card">
 
@@ -411,11 +490,12 @@
 
                 <div>
 
-                    <h2>Discover Groups</h2>
+                    <h2>
+                        Discover Groups
+                    </h2>
 
                     <p>
-                        Browse accountability circles other
-                        CircleSync users have created.
+                        Browse public accountability circles.
                     </p>
 
                 </div>
@@ -438,7 +518,7 @@
                 class="discover-list">
 
                 <p>
-                    Loading available groups...
+                    Loading groups...
                 </p>
 
             </div>
@@ -446,8 +526,9 @@
         </section>
 
 
-
-        <!-- CREATE GROUP -->
+        <!-- =================================================
+             CREATE CIRCLE
+        ================================================== -->
 
         <section class="card">
 
@@ -459,10 +540,12 @@
 
                 <div>
 
-                    <h2>Create a Circle</h2>
+                    <h2>
+                        Create a Circle
+                    </h2>
 
                     <p>
-                        Start your own accountability community.
+                        Start your own accountability group.
                     </p>
 
                 </div>
@@ -478,8 +561,7 @@
             <input
                 id="new-circle-name"
                 type="text"
-                maxlength="100"
-                placeholder="Example: Study Wellness Group">
+                placeholder="Study Wellness Group">
 
 
             <label for="new-circle-description">
@@ -490,7 +572,7 @@
             <textarea
                 id="new-circle-description"
                 rows="3"
-                placeholder="What is this group for?"></textarea>
+                placeholder="What is this circle for?"></textarea>
 
 
             <button
@@ -504,8 +586,9 @@
         </section>
 
 
-
-        <!-- ROUTINE -->
+        <!-- =================================================
+             DAILY ROUTINE
+        ================================================== -->
 
         <section class="card">
 
@@ -517,11 +600,13 @@
 
                 <div>
 
-                    <h2>My Daily Routine</h2>
+                    <h2>
+                        My Daily Routine
+                    </h2>
 
                     <p>
-                        Set your preferred meal, rest,
-                        sleep, and wake times.
+                        These times control your Next Up
+                        reminders and notifications.
                     </p>
 
                 </div>
@@ -530,7 +615,6 @@
 
 
             <div class="routine-grid">
-
 
                 <div>
 
@@ -613,7 +697,7 @@
 
 
             <label for="sleep-goal">
-                Sleep Goal (Hours)
+                Sleep Goal
             </label>
 
 
@@ -637,15 +721,15 @@
 
             <p
                 id="routine-message"
-                class="status"
-                aria-live="polite">
+                class="status">
             </p>
 
         </section>
 
 
-
-        <!-- RECOMMENDATION -->
+        <!-- =================================================
+             RECOMMENDATION
+        ================================================== -->
 
         <section class="card recommendation">
 
@@ -682,10 +766,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="app.js?v=60"></script>
-
+    <script src="app.js?v=61"></script>
 
 </body>
 
 </html>
-
