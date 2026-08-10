@@ -13,9 +13,7 @@
         name="description"
         content="CircleSync healthy routine dashboard.">
 
-    <title>
-        CircleSync | Dashboard
-    </title>
+    <title>CircleSync | Dashboard</title>
 
     <link
         rel="stylesheet"
@@ -27,17 +25,11 @@
 <body id="dashboard-page">
 
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
     <header class="topbar">
 
         <div>
 
-            <h1>
-                CircleSync
-            </h1>
+            <h1>CircleSync</h1>
 
             <p id="user-email">
                 Loading account...
@@ -58,13 +50,10 @@
     </header>
 
 
-
     <main class="dashboard">
 
 
-        <!-- =================================================
-             ENERGY
-        ================================================== -->
+        <!-- ENERGY -->
 
         <section class="card">
 
@@ -76,12 +65,10 @@
 
                 <div>
 
-                    <h2>
-                        Today's Energy
-                    </h2>
+                    <h2>Today's Energy</h2>
 
                     <p>
-                        Check how you are feeling right now.
+                        Your energy score stays private.
                     </p>
 
                 </div>
@@ -137,9 +124,7 @@
 
 
 
-        <!-- =================================================
-             FOCUS
-        ================================================== -->
+        <!-- FOCUS -->
 
         <section class="card">
 
@@ -151,9 +136,7 @@
 
                 <div>
 
-                    <h2>
-                        Focus Mode
-                    </h2>
+                    <h2>Focus Mode</h2>
 
                     <p>
                         Lock in while working or studying.
@@ -186,9 +169,7 @@
 
 
 
-        <!-- =================================================
-             QUICK CHECK-IN
-        ================================================== -->
+        <!-- QUICK CHECK-IN -->
 
         <section class="card">
 
@@ -200,13 +181,11 @@
 
                 <div>
 
-                    <h2>
-                        Quick Check-In
-                    </h2>
+                    <h2>Quick Check-In</h2>
 
                     <p>
-                        Record healthy actions without
-                        interrupting your day.
+                        These check-ins are shared with your
+                        active accountability circle.
                     </p>
 
                 </div>
@@ -284,9 +263,7 @@
 
 
 
-        <!-- =================================================
-             MY ACCOUNTABILITY CIRCLE
-        ================================================== -->
+        <!-- MY CIRCLE -->
 
         <section class="card">
 
@@ -298,9 +275,7 @@
 
                 <div>
 
-                    <h2>
-                        My Accountability Circle
-                    </h2>
+                    <h2>My Accountability Circle</h2>
 
                     <p>
                         Your currently active accountability group.
@@ -316,6 +291,7 @@
                 <h3 id="circle-name">
                     No Circle Selected
                 </h3>
+
 
                 <p id="circle-description">
                     Create or join an accountability circle.
@@ -343,9 +319,87 @@
 
 
 
-        <!-- =================================================
-             DISCOVER GROUPS
-        ================================================== -->
+        <!-- CIRCLE FEED -->
+
+        <section class="card">
+
+            <div class="card-heading">
+
+                <span class="card-icon">
+                    💬
+                </span>
+
+                <div>
+
+                    <h2>Circle Feed</h2>
+
+                    <p>
+                        See messages and healthy check-ins
+                        from your accountability circle.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="message-compose">
+
+                <label for="circle-message">
+                    Send a Message
+                </label>
+
+
+                <textarea
+                    id="circle-message"
+                    rows="3"
+                    maxlength="1000"
+                    placeholder="Encourage your circle or share an update..."></textarea>
+
+
+                <button
+                    id="send-message-btn"
+                    type="button">
+
+                    Send Message
+
+                </button>
+
+            </div>
+
+
+            <button
+                id="refresh-feed-btn"
+                type="button"
+                class="secondary">
+
+                ↻ Refresh Circle Feed
+
+            </button>
+
+
+            <p
+                id="feed-message"
+                class="status"
+                aria-live="polite">
+            </p>
+
+
+            <div
+                id="circle-feed"
+                class="circle-feed">
+
+                <p>
+                    Loading circle activity...
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DISCOVER GROUPS -->
 
         <section class="card">
 
@@ -357,13 +411,11 @@
 
                 <div>
 
-                    <h2>
-                        Discover Groups
-                    </h2>
+                    <h2>Discover Groups</h2>
 
                     <p>
-                        Browse accountability circles that
-                        other CircleSync users have created.
+                        Browse accountability circles other
+                        CircleSync users have created.
                     </p>
 
                 </div>
@@ -395,9 +447,7 @@
 
 
 
-        <!-- =================================================
-             CREATE GROUP
-        ================================================== -->
+        <!-- CREATE GROUP -->
 
         <section class="card">
 
@@ -409,9 +459,7 @@
 
                 <div>
 
-                    <h2>
-                        Create a Circle
-                    </h2>
+                    <h2>Create a Circle</h2>
 
                     <p>
                         Start your own accountability community.
@@ -457,9 +505,7 @@
 
 
 
-        <!-- =================================================
-             ROUTINE
-        ================================================== -->
+        <!-- ROUTINE -->
 
         <section class="card">
 
@@ -471,9 +517,7 @@
 
                 <div>
 
-                    <h2>
-                        My Daily Routine
-                    </h2>
+                    <h2>My Daily Routine</h2>
 
                     <p>
                         Set your preferred meal, rest,
@@ -565,7 +609,6 @@
 
                 </div>
 
-
             </div>
 
 
@@ -602,9 +645,7 @@
 
 
 
-        <!-- =================================================
-             RECOMMENDATION
-        ================================================== -->
+        <!-- RECOMMENDATION -->
 
         <section class="card recommendation">
 
@@ -639,12 +680,12 @@
     </main>
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js?v=51"></script>
+
+    <script src="app.js?v=60"></script>
+
 
 </body>
 
 </html>
-
 
