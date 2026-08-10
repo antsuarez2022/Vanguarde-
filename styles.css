@@ -785,3 +785,102 @@ button:disabled {
 .join-group-btn {
     margin-top: 8px;
 }
+/* =========================================================
+   CIRCLE FEED
+========================================================= */
+
+.message-compose {
+    margin-bottom: 16px;
+}
+
+
+.circle-feed {
+    margin-top: 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.feed-item {
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17, 0, 32, 0.82),
+            rgba(56, 13, 86, 0.72)
+        );
+
+    border:
+        1px solid
+        rgba(141, 255, 104, 0.22);
+}
+
+
+.feed-item:hover {
+    border-color:
+        rgba(141, 255, 104, 0.55);
+
+    box-shadow:
+        0 5px 18px
+        rgba(141, 255, 104, 0.10);
+}
+
+
+.feed-item-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 8px;
+}
+
+
+.feed-item-top strong {
+    color:
+        var(--green-bright);
+}
+
+
+.feed-item-top span {
+    color:
+        #aa91bb;
+
+    font-size:
+        0.82rem;
+}
+
+
+.feed-item p {
+    margin: 0;
+
+    color:
+        #e8dcf0;
+}
+
+
+.message-compose textarea {
+    min-height: 90px;
+}
+
+
+@media (max-width: 600px) {
+
+    .feed-item-top {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 3px;
+    }
+}
