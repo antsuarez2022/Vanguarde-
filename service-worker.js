@@ -2,7 +2,7 @@
 
 
 const CACHE_NAME =
-    "circlesync-v61";
+    "circlesync-v70";
 
 
 const APP_FILES = [
@@ -110,39 +110,39 @@ self.addEventListener(
             fetch(
                 event.request
             )
-                .then(
-                    function (response) {
+            .then(
+                function (response) {
 
-                        const clone =
-                            response.clone();
-
-
-                        caches
-                            .open(
-                                CACHE_NAME
-                            )
-                            .then(
-                                function (cache) {
-
-                                    cache.put(
-                                        event.request,
-                                        clone
-                                    );
-                                }
-                            );
+                    const copy =
+                        response.clone();
 
 
-                        return response;
-                    }
-                )
-                .catch(
-                    function () {
+                    caches
+                        .open(
+                            CACHE_NAME
+                        )
+                        .then(
+                            function (cache) {
 
-                        return caches.match(
-                            event.request
+                                cache.put(
+                                    event.request,
+                                    copy
+                                );
+                            }
                         );
-                    }
-                )
+
+
+                    return response;
+                }
+            )
+            .catch(
+                function () {
+
+                    return caches.match(
+                        event.request
+                    );
+                }
+            )
 
         );
     }
@@ -158,8 +158,8 @@ self.addEventListener(
 
         event.waitUntil(
 
-            clients.matchAll(
-                {
+            clients
+                .matchAll({
 
                     type:
                         "window",
@@ -167,40 +167,30 @@ self.addEventListener(
                     includeUncontrolled:
                         true
 
-                }
-            )
-            .then(
-                function (
-                    clientList
-                ) {
+                })
+                .then(
+                    function (clientList) {
 
-                    for (
-                        const client
-                        of clientList
-                    ) {
-
-                        if (
-                            "focus" in client
+                        for (
+                            const client
+                            of clientList
                         ) {
 
-                            return client.focus();
+                            if (
+                                "focus"
+                                in client
+                            ) {
+
+                                return client.focus();
+                            }
                         }
-                    }
 
-
-                    if (
-                        clients.openWindow
-                    ) {
 
                         return clients.openWindow(
                             "./dashboard.html"
                         );
                     }
-
-
-                    return null;
-                }
-            )
+                )
 
         );
     }
