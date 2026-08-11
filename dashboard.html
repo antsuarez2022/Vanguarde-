@@ -23,11 +23,11 @@
 
     <link
         rel="manifest"
-        href="manifest.json">
+        href="./manifest.json">
 
     <link
         rel="stylesheet"
-        href="styles.css">
+        href="./styles.css">
 
 </head>
 
@@ -84,8 +84,8 @@
                     </h2>
 
                     <p>
-                        CircleSync automatically compares
-                        the current time with your routine.
+                        CircleSync compares your saved
+                        routine with the current time.
                     </p>
 
                 </div>
@@ -99,25 +99,19 @@
                     id="next-up-label"
                     class="next-up-label">
 
-                    Loading your routine...
+                    Loading routine...
 
                 </p>
-
 
                 <h3 id="next-up-title">
                     --
                 </h3>
 
-
                 <p id="next-up-countdown">
                     --
                 </p>
 
-
-                <p
-                    id="routine-alert"
-                    class="routine-alert"
-                    aria-live="polite">
+                <p id="routine-alert">
                 </p>
 
             </div>
@@ -128,15 +122,14 @@
                 type="button"
                 class="secondary">
 
-                Enable Routine Notifications
+                Enable Notifications
 
             </button>
 
 
             <p
                 id="notification-status"
-                class="status"
-                aria-live="polite">
+                class="status">
             </p>
 
         </section>
@@ -234,7 +227,7 @@
                     </h2>
 
                     <p>
-                        Lock in while working or studying.
+                        Lock in when working or studying.
                     </p>
 
                 </div>
@@ -253,8 +246,7 @@
 
             <p
                 id="focus-status"
-                class="status"
-                aria-live="polite">
+                class="status">
 
                 No focus session active.
 
@@ -264,7 +256,7 @@
 
 
         <!-- =================================================
-             CHECK INS
+             QUICK CHECK IN
         ================================================== -->
 
         <section class="card">
@@ -282,8 +274,8 @@
                     </h2>
 
                     <p>
-                        Check-ins are shared with your
-                        active accountability circle.
+                        Check-ins are shared with the
+                        circle you currently have open.
                     </p>
 
                 </div>
@@ -293,45 +285,31 @@
 
             <div class="button-grid">
 
-                <button
-                    id="breakfast-btn"
-                    type="button">
+                <button id="breakfast-btn" type="button">
                     🍳 Breakfast
                 </button>
 
-                <button
-                    id="lunch-btn"
-                    type="button">
+                <button id="lunch-btn" type="button">
                     🥗 Lunch
                 </button>
 
-                <button
-                    id="dinner-btn"
-                    type="button">
+                <button id="dinner-btn" type="button">
                     🍽 Dinner
                 </button>
 
-                <button
-                    id="rest-btn"
-                    type="button">
+                <button id="rest-btn" type="button">
                     😴 Rested
                 </button>
 
-                <button
-                    id="working-btn"
-                    type="button">
+                <button id="working-btn" type="button">
                     💻 Working
                 </button>
 
-                <button
-                    id="sleep-btn"
-                    type="button">
+                <button id="sleep-btn" type="button">
                     🌙 Going to Sleep
                 </button>
 
-                <button
-                    id="wake-btn"
-                    type="button">
+                <button id="wake-btn" type="button">
                     ☀️ Woke Up
                 </button>
 
@@ -341,10 +319,12 @@
 
 
         <!-- =================================================
-             MY CIRCLE
+             MY CIRCLES
         ================================================== -->
 
-        <section class="card">
+        <section
+            id="my-circle-card"
+            class="card">
 
             <div class="card-heading">
 
@@ -355,11 +335,12 @@
                 <div>
 
                     <h2>
-                        My Accountability Circle
+                        My Circles
                     </h2>
 
                     <p>
-                        Your currently active accountability group.
+                        Tap a circle to jump between
+                        the groups you belong to.
                     </p>
 
                 </div>
@@ -367,33 +348,107 @@
             </div>
 
 
-            <div class="subcard">
+            <div
+                id="my-circles-scroll"
+                class="circle-switcher">
 
-                <h3 id="circle-name">
-                    No Circle Selected
-                </h3>
-
-                <p id="circle-description">
-                    Create or join an accountability circle.
+                <p class="empty-text">
+                    Loading circles...
                 </p>
 
             </div>
 
 
-            <h3>
+            <div class="active-circle-box">
+
+                <div>
+
+                    <p class="mini-label">
+                        ACTIVE CIRCLE
+                    </p>
+
+                    <h3 id="circle-name">
+                        No Circle Selected
+                    </h3>
+
+                    <p id="circle-description">
+                        Create or join a circle.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="leave-circle-btn"
+                    class="danger-outline"
+                    type="button"
+                    hidden>
+
+                    Leave This Circle
+
+                </button>
+
+            </div>
+
+
+            <h3 class="section-title">
                 Members
             </h3>
 
 
             <ul
                 id="circle-list"
-                class="member-list">
+                class="member-list compact-scroll">
 
                 <li>
                     No members loaded yet.
                 </li>
 
             </ul>
+
+        </section>
+
+
+        <!-- =================================================
+             OWNER JOIN REQUESTS
+        ================================================== -->
+
+        <section
+            id="join-requests-card"
+            class="card owner-card"
+            hidden>
+
+            <div class="card-heading">
+
+                <span class="card-icon">
+                    🔔
+                </span>
+
+                <div>
+
+                    <h2>
+                        Join Requests
+                    </h2>
+
+                    <p>
+                        Only the creator of this circle
+                        can see and respond to these requests.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="join-requests-list"
+                class="join-request-scroll">
+
+                <p class="empty-text">
+                    No pending requests.
+                </p>
+
+            </div>
 
         </section>
 
@@ -417,8 +472,8 @@
                     </h2>
 
                     <p>
-                        Messages and shared healthy check-ins
-                        from your circle.
+                        Messages and check-ins from your
+                        active circle.
                     </p>
 
                 </div>
@@ -426,48 +481,51 @@
             </div>
 
 
-            <label for="circle-message">
-                Send a Message
-            </label>
+            <div class="message-compose">
+
+                <textarea
+                    id="circle-message"
+                    rows="2"
+                    maxlength="1000"
+                    placeholder="Send a quick message..."></textarea>
 
 
-            <textarea
-                id="circle-message"
-                rows="3"
-                maxlength="1000"
-                placeholder="Encourage your circle or share an update..."></textarea>
+                <button
+                    id="send-message-btn"
+                    type="button">
+
+                    Send
+
+                </button>
+
+            </div>
 
 
-            <button
-                id="send-message-btn"
-                type="button">
+            <div class="feed-toolbar">
 
-                Send Message
-
-            </button>
-
-
-            <button
-                id="refresh-feed-btn"
-                type="button"
-                class="secondary">
-
-                Refresh Circle Feed
-
-            </button>
+                <p
+                    id="feed-message"
+                    class="status">
+                </p>
 
 
-            <p
-                id="feed-message"
-                class="status">
-            </p>
+                <button
+                    id="refresh-feed-btn"
+                    class="secondary compact-btn"
+                    type="button">
+
+                    Refresh
+
+                </button>
+
+            </div>
 
 
             <div
                 id="circle-feed"
-                class="circle-feed">
+                class="circle-feed-scroll">
 
-                <p>
+                <p class="empty-text">
                     Loading activity...
                 </p>
 
@@ -495,7 +553,8 @@
                     </h2>
 
                     <p>
-                        Browse public accountability circles.
+                        Request access to accountability
+                        circles created by other users.
                     </p>
 
                 </div>
@@ -508,16 +567,16 @@
                 type="button"
                 class="secondary">
 
-                Refresh Available Groups
+                Refresh Groups
 
             </button>
 
 
             <div
                 id="discover-groups"
-                class="discover-list">
+                class="discover-scroll">
 
-                <p>
+                <p class="empty-text">
                     Loading groups...
                 </p>
 
@@ -557,10 +616,10 @@
                 Circle Name
             </label>
 
-
             <input
                 id="new-circle-name"
                 type="text"
+                maxlength="100"
                 placeholder="Study Wellness Group">
 
 
@@ -568,11 +627,11 @@
                 Description
             </label>
 
-
             <textarea
                 id="new-circle-description"
                 rows="3"
-                placeholder="What is this circle for?"></textarea>
+                maxlength="500"
+                placeholder="What is this circle about?"></textarea>
 
 
             <button
@@ -605,8 +664,8 @@
                     </h2>
 
                     <p>
-                        These times control your Next Up
-                        reminders and notifications.
+                        These times power your
+                        CircleSync reminders.
                     </p>
 
                 </div>
@@ -616,10 +675,11 @@
 
             <div class="routine-grid">
 
+
                 <div>
 
                     <label for="wake-time">
-                        Wake Time
+                        Wake
                     </label>
 
                     <input
@@ -671,7 +731,7 @@
                 <div>
 
                     <label for="rest-time">
-                        Rest Time
+                        Rest
                     </label>
 
                     <input
@@ -699,7 +759,6 @@
             <label for="sleep-goal">
                 Sleep Goal
             </label>
-
 
             <input
                 id="sleep-goal"
@@ -750,12 +809,8 @@
             </div>
 
 
-            <p
-                id="recommendation"
-                aria-live="polite">
-
+            <p id="recommendation">
                 Loading...
-
             </p>
 
         </section>
@@ -764,8 +819,9 @@
     </main>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./app.js?v=62"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="./app.js?v=70"></script>
 
 </body>
 
