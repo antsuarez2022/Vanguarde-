@@ -35,793 +35,762 @@
 <body id="dashboard-page">
 
 
-    <header class="topbar">
+<header class="topbar">
 
-        <div>
+    <div>
 
-            <h1>
-                CircleSync
-            </h1>
+        <h1>
+            CircleSync
+        </h1>
 
-            <p id="user-email">
-                Loading account...
+        <p id="user-email">
+            Loading account...
+        </p>
+
+    </div>
+
+
+    <button
+        id="logout-btn"
+        type="button"
+        class="danger small-btn">
+
+        Log Out
+
+    </button>
+
+</header>
+
+
+<main class="dashboard">
+
+
+    <!-- NEXT UP -->
+
+    <section class="card routine-now-card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                ⏰
+            </span>
+
+            <div>
+
+                <h2>
+                    Next Up
+                </h2>
+
+                <p>
+                    CircleSync monitors your saved routine.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="next-up-panel">
+
+            <p
+                id="next-up-label"
+                class="next-up-label">
+
+                Loading...
+
+            </p>
+
+            <h3 id="next-up-title">
+                --
+            </h3>
+
+            <p id="next-up-countdown">
+                --
+            </p>
+
+            <p id="routine-alert">
             </p>
 
         </div>
 
 
         <button
-            id="logout-btn"
+            id="notification-btn"
             type="button"
-            class="danger small-btn">
+            class="secondary">
 
-            Log Out
+            Enable Notifications
 
         </button>
 
-    </header>
+
+        <p
+            id="notification-status"
+            class="status"
+            aria-live="polite">
+        </p>
+
+    </section>
 
 
-    <main class="dashboard">
+    <!-- ENERGY -->
 
+    <section class="card">
 
-        <!-- =================================================
-             SMART ROUTINE
-        ================================================== -->
+        <div class="card-heading">
 
-        <section class="card routine-now-card">
+            <span class="card-icon">
+                ⚡
+            </span>
 
-            <div class="card-heading">
+            <div>
 
-                <span class="card-icon">
-                    ⏰
-                </span>
+                <h2>
+                    Today's Energy
+                </h2>
 
-                <div>
-
-                    <h2>
-                        Next Up
-                    </h2>
-
-                    <p>
-                        CircleSync compares your saved
-                        routine with the current time.
-                    </p>
-
-                </div>
+                <p>
+                    This information stays private.
+                </p>
 
             </div>
 
+        </div>
 
-            <div class="next-up-panel">
 
-                <p
-                    id="next-up-label"
-                    class="next-up-label">
+        <div
+            id="energy-score"
+            class="score">
 
-                    Loading routine...
+            --
 
+        </div>
+
+
+        <input
+            id="energy-input"
+            type="range"
+            min="1"
+            max="10"
+            value="5">
+
+
+        <p class="center">
+
+            Energy:
+
+            <strong id="energy-value">
+                5
+            </strong>
+
+            / 10
+
+        </p>
+
+
+        <button
+            id="save-energy"
+            type="button">
+
+            Save Energy
+
+        </button>
+
+    </section>
+
+
+    <!-- FOCUS -->
+
+    <section class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                🎯
+            </span>
+
+            <div>
+
+                <h2>
+                    Focus Mode
+                </h2>
+
+                <p>
+                    Focus while CircleSync watches your routine.
                 </p>
 
-                <h3 id="next-up-title">
-                    --
+            </div>
+
+        </div>
+
+
+        <button
+            id="focus-btn"
+            type="button">
+
+            Start Focus Session
+
+        </button>
+
+
+        <p
+            id="focus-status"
+            class="status">
+
+            No focus session active.
+
+        </p>
+
+    </section>
+
+
+    <!-- QUICK CHECK IN -->
+
+    <section class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                ✓
+            </span>
+
+            <div>
+
+                <h2>
+                    Quick Check-In
+                </h2>
+
+                <p>
+                    Completing one prevents the corresponding
+                    15-minute overdue warning.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="button-grid">
+
+            <button id="breakfast-btn" type="button">
+                🍳 Breakfast
+            </button>
+
+            <button id="lunch-btn" type="button">
+                🥗 Lunch
+            </button>
+
+            <button id="dinner-btn" type="button">
+                🍽 Dinner
+            </button>
+
+            <button id="rest-btn" type="button">
+                😴 Rested
+            </button>
+
+            <button id="working-btn" type="button">
+                💻 Working
+            </button>
+
+            <button id="sleep-btn" type="button">
+                🌙 Going to Sleep
+            </button>
+
+            <button id="wake-btn" type="button">
+                ☀️ Woke Up
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- MY CIRCLES -->
+
+    <section
+        id="my-circle-card"
+        class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                👥
+            </span>
+
+            <div>
+
+                <h2>
+                    My Circles
+                </h2>
+
+                <p>
+                    Switch between every circle you belong to.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="my-circles-scroll"
+            class="circle-switcher">
+
+            <p class="empty-text">
+                Loading circles...
+            </p>
+
+        </div>
+
+
+        <div class="active-circle-box">
+
+            <div>
+
+                <p class="mini-label">
+                    ACTIVE CIRCLE
+                </p>
+
+                <h3 id="circle-name">
+                    No Circle Selected
                 </h3>
 
-                <p id="next-up-countdown">
-                    --
-                </p>
-
-                <p id="routine-alert">
+                <p id="circle-description">
+                    Select a circle.
                 </p>
 
             </div>
 
 
             <button
-                id="notification-btn"
+                id="leave-circle-btn"
                 type="button"
-                class="secondary">
+                class="danger-outline"
+                hidden>
 
-                Enable Notifications
+                Leave Circle
 
             </button>
 
+        </div>
 
-            <p
-                id="notification-status"
-                class="status">
+
+        <h3 class="section-title">
+            Members
+        </h3>
+
+
+        <ul
+            id="circle-list"
+            class="member-list compact-scroll">
+
+            <li>
+                No members loaded.
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- JOIN REQUESTS - ALWAYS PRESENT -->
+
+    <section
+        id="join-requests-card"
+        class="card owner-card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                🔔
+            </span>
+
+            <div>
+
+                <h2>
+                    Join Requests
+                </h2>
+
+                <p>
+                    Requests for circles you created appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="join-requests-list"
+            class="join-request-scroll">
+
+            <p class="empty-text">
+                Checking for pending requests...
             </p>
 
-        </section>
+        </div>
 
+    </section>
 
-        <!-- =================================================
-             ENERGY
-        ================================================== -->
 
-        <section class="card">
+    <!-- CIRCLE FEED -->
 
-            <div class="card-heading">
+    <section class="card">
 
-                <span class="card-icon">
-                    ⚡
-                </span>
+        <div class="card-heading">
 
-                <div>
+            <span class="card-icon">
+                💬
+            </span>
 
-                    <h2>
-                        Today's Energy
-                    </h2>
+            <div>
 
-                    <p>
-                        Your energy score stays private.
-                    </p>
+                <h2>
+                    Circle Feed
+                </h2>
 
-                </div>
-
-            </div>
-
-
-            <div
-                id="energy-score"
-                class="score">
-
-                --
-
-            </div>
-
-
-            <label for="energy-input">
-                Energy Level
-            </label>
-
-
-            <input
-                id="energy-input"
-                type="range"
-                min="1"
-                max="10"
-                value="5">
-
-
-            <p class="center">
-
-                Energy:
-
-                <strong id="energy-value">
-                    5
-                </strong>
-
-                / 10
-
-            </p>
-
-
-            <button
-                id="save-energy"
-                type="button">
-
-                Save Energy Level
-
-            </button>
-
-        </section>
-
-
-        <!-- =================================================
-             FOCUS
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    🎯
-                </span>
-
-                <div>
-
-                    <h2>
-                        Focus Mode
-                    </h2>
-
-                    <p>
-                        Lock in when working or studying.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="focus-btn"
-                type="button">
-
-                Start Focus Session
-
-            </button>
-
-
-            <p
-                id="focus-status"
-                class="status">
-
-                No focus session active.
-
-            </p>
-
-        </section>
-
-
-        <!-- =================================================
-             QUICK CHECK IN
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    ✓
-                </span>
-
-                <div>
-
-                    <h2>
-                        Quick Check-In
-                    </h2>
-
-                    <p>
-                        Check-ins are shared with the
-                        circle you currently have open.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="button-grid">
-
-                <button id="breakfast-btn" type="button">
-                    🍳 Breakfast
-                </button>
-
-                <button id="lunch-btn" type="button">
-                    🥗 Lunch
-                </button>
-
-                <button id="dinner-btn" type="button">
-                    🍽 Dinner
-                </button>
-
-                <button id="rest-btn" type="button">
-                    😴 Rested
-                </button>
-
-                <button id="working-btn" type="button">
-                    💻 Working
-                </button>
-
-                <button id="sleep-btn" type="button">
-                    🌙 Going to Sleep
-                </button>
-
-                <button id="wake-btn" type="button">
-                    ☀️ Woke Up
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             MY CIRCLES
-        ================================================== -->
-
-        <section
-            id="my-circle-card"
-            class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    👥
-                </span>
-
-                <div>
-
-                    <h2>
-                        My Circles
-                    </h2>
-
-                    <p>
-                        Tap a circle to jump between
-                        the groups you belong to.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="my-circles-scroll"
-                class="circle-switcher">
-
-                <p class="empty-text">
-                    Loading circles...
+                <p>
+                    Messages and check-ins from your active circle.
                 </p>
 
             </div>
 
+        </div>
 
-            <div class="active-circle-box">
 
-                <div>
-
-                    <p class="mini-label">
-                        ACTIVE CIRCLE
-                    </p>
-
-                    <h3 id="circle-name">
-                        No Circle Selected
-                    </h3>
-
-                    <p id="circle-description">
-                        Create or join a circle.
-                    </p>
-
-                </div>
-
-
-                <button
-                    id="leave-circle-btn"
-                    class="danger-outline"
-                    type="button"
-                    hidden>
-
-                    Leave This Circle
-
-                </button>
-
-            </div>
-
-
-            <h3 class="section-title">
-                Members
-            </h3>
-
-
-            <ul
-                id="circle-list"
-                class="member-list compact-scroll">
-
-                <li>
-                    No members loaded yet.
-                </li>
-
-            </ul>
-
-        </section>
-
-
-        <!-- =================================================
-             OWNER JOIN REQUESTS
-        ================================================== -->
-
-        <section
-            id="join-requests-card"
-            class="card owner-card"
-            hidden>
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    🔔
-                </span>
-
-                <div>
-
-                    <h2>
-                        Join Requests
-                    </h2>
-
-                    <p>
-                        Only the creator of this circle
-                        can see and respond to these requests.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="join-requests-list"
-                class="join-request-scroll">
-
-                <p class="empty-text">
-                    No pending requests.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CIRCLE FEED
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    💬
-                </span>
-
-                <div>
-
-                    <h2>
-                        Circle Feed
-                    </h2>
-
-                    <p>
-                        Messages and check-ins from your
-                        active circle.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="message-compose">
-
-                <textarea
-                    id="circle-message"
-                    rows="2"
-                    maxlength="1000"
-                    placeholder="Send a quick message..."></textarea>
-
-
-                <button
-                    id="send-message-btn"
-                    type="button">
-
-                    Send
-
-                </button>
-
-            </div>
-
-
-            <div class="feed-toolbar">
-
-                <p
-                    id="feed-message"
-                    class="status">
-                </p>
-
-
-                <button
-                    id="refresh-feed-btn"
-                    class="secondary compact-btn"
-                    type="button">
-
-                    Refresh
-
-                </button>
-
-            </div>
-
-
-            <div
-                id="circle-feed"
-                class="circle-feed-scroll">
-
-                <p class="empty-text">
-                    Loading activity...
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             DISCOVER
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    🔎
-                </span>
-
-                <div>
-
-                    <h2>
-                        Discover Groups
-                    </h2>
-
-                    <p>
-                        Request access to accountability
-                        circles created by other users.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="refresh-groups-btn"
-                type="button"
-                class="secondary">
-
-                Refresh Groups
-
-            </button>
-
-
-            <div
-                id="discover-groups"
-                class="discover-scroll">
-
-                <p class="empty-text">
-                    Loading groups...
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CREATE CIRCLE
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    ➕
-                </span>
-
-                <div>
-
-                    <h2>
-                        Create a Circle
-                    </h2>
-
-                    <p>
-                        Start your own accountability group.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <label for="new-circle-name">
-                Circle Name
-            </label>
-
-            <input
-                id="new-circle-name"
-                type="text"
-                maxlength="100"
-                placeholder="Study Wellness Group">
-
-
-            <label for="new-circle-description">
-                Description
-            </label>
+        <div class="message-compose">
 
             <textarea
-                id="new-circle-description"
-                rows="3"
-                maxlength="500"
-                placeholder="What is this circle about?"></textarea>
+                id="circle-message"
+                rows="2"
+                maxlength="1000"
+                placeholder="Send a quick message..."></textarea>
 
 
             <button
-                id="create-circle-btn"
+                id="send-message-btn"
                 type="button">
 
-                Create Circle
+                Send
 
             </button>
 
-        </section>
+        </div>
 
 
-        <!-- =================================================
-             DAILY ROUTINE
-        ================================================== -->
-
-        <section class="card">
-
-            <div class="card-heading">
-
-                <span class="card-icon">
-                    🕒
-                </span>
-
-                <div>
-
-                    <h2>
-                        My Daily Routine
-                    </h2>
-
-                    <p>
-                        These times power your
-                        CircleSync reminders.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="routine-grid">
-
-
-                <div>
-
-                    <label for="wake-time">
-                        Wake
-                    </label>
-
-                    <input
-                        id="wake-time"
-                        type="time">
-
-                </div>
-
-
-                <div>
-
-                    <label for="breakfast-time">
-                        Breakfast
-                    </label>
-
-                    <input
-                        id="breakfast-time"
-                        type="time">
-
-                </div>
-
-
-                <div>
-
-                    <label for="lunch-time">
-                        Lunch
-                    </label>
-
-                    <input
-                        id="lunch-time"
-                        type="time">
-
-                </div>
-
-
-                <div>
-
-                    <label for="dinner-time">
-                        Dinner
-                    </label>
-
-                    <input
-                        id="dinner-time"
-                        type="time">
-
-                </div>
-
-
-                <div>
-
-                    <label for="rest-time">
-                        Rest
-                    </label>
-
-                    <input
-                        id="rest-time"
-                        type="time">
-
-                </div>
-
-
-                <div>
-
-                    <label for="bedtime">
-                        Bedtime
-                    </label>
-
-                    <input
-                        id="bedtime"
-                        type="time">
-
-                </div>
-
-            </div>
-
-
-            <label for="sleep-goal">
-                Sleep Goal
-            </label>
-
-            <input
-                id="sleep-goal"
-                type="number"
-                min="1"
-                max="24"
-                step="0.5"
-                value="8">
-
-
-            <button
-                id="save-routine-btn"
-                type="button">
-
-                Save Routine
-
-            </button>
-
+        <div class="feed-toolbar">
 
             <p
-                id="routine-message"
+                id="feed-message"
                 class="status">
             </p>
 
-        </section>
+
+            <button
+                id="refresh-feed-btn"
+                type="button"
+                class="secondary compact-btn">
+
+                Refresh
+
+            </button>
+
+        </div>
 
 
-        <!-- =================================================
-             RECOMMENDATION
-        ================================================== -->
+        <div
+            id="circle-feed"
+            class="circle-feed-scroll">
 
-        <section class="card recommendation">
+            <p class="empty-text">
+                Loading feed...
+            </p>
 
-            <div class="card-heading">
+        </div>
 
-                <span class="card-icon">
-                    ✦
-                </span>
+    </section>
 
-                <div>
 
-                    <h2>
-                        CircleSync Recommendation
-                    </h2>
+    <!-- DISCOVER -->
 
-                </div>
+    <section class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                🔎
+            </span>
+
+            <div>
+
+                <h2>
+                    Discover Groups
+                </h2>
+
+                <p>
+                    Request access to circles created by other users.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="refresh-groups-btn"
+            type="button"
+            class="secondary">
+
+            Refresh Groups
+
+        </button>
+
+
+        <div
+            id="discover-groups"
+            class="discover-scroll">
+
+            <p class="empty-text">
+                Loading groups...
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CREATE -->
+
+    <section class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                ➕
+            </span>
+
+            <div>
+
+                <h2>
+                    Create a Circle
+                </h2>
+
+                <p>
+                    Create your own accountability group.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <label for="new-circle-name">
+            Circle Name
+        </label>
+
+        <input
+            id="new-circle-name"
+            type="text"
+            maxlength="100"
+            placeholder="Study Wellness Group">
+
+
+        <label for="new-circle-description">
+            Description
+        </label>
+
+        <textarea
+            id="new-circle-description"
+            rows="3"
+            maxlength="500"
+            placeholder="What is this circle about?"></textarea>
+
+
+        <button
+            id="create-circle-btn"
+            type="button">
+
+            Create Circle
+
+        </button>
+
+    </section>
+
+
+    <!-- ROUTINE -->
+
+    <section class="card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                🕒
+            </span>
+
+            <div>
+
+                <h2>
+                    My Daily Routine
+                </h2>
+
+                <p>
+                    CircleSync reminds you 5 minutes before
+                    and again 15 minutes afterward if you
+                    have not checked in.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="routine-grid">
+
+            <div>
+
+                <label for="wake-time">
+                    Wake
+                </label>
+
+                <input
+                    id="wake-time"
+                    type="time">
 
             </div>
 
 
-            <p id="recommendation">
-                Loading...
-            </p>
+            <div>
 
-        </section>
+                <label for="breakfast-time">
+                    Breakfast
+                </label>
+
+                <input
+                    id="breakfast-time"
+                    type="time">
+
+            </div>
 
 
-    </main>
+            <div>
+
+                <label for="lunch-time">
+                    Lunch
+                </label>
+
+                <input
+                    id="lunch-time"
+                    type="time">
+
+            </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            <div>
 
-    <script src="./app.js?v=72"></script>
+                <label for="dinner-time">
+                    Dinner
+                </label>
+
+                <input
+                    id="dinner-time"
+                    type="time">
+
+            </div>
+
+
+            <div>
+
+                <label for="rest-time">
+                    Rest
+                </label>
+
+                <input
+                    id="rest-time"
+                    type="time">
+
+            </div>
+
+
+            <div>
+
+                <label for="bedtime">
+                    Bedtime
+                </label>
+
+                <input
+                    id="bedtime"
+                    type="time">
+
+            </div>
+
+        </div>
+
+
+        <label for="sleep-goal">
+            Sleep Goal
+        </label>
+
+        <input
+            id="sleep-goal"
+            type="number"
+            min="1"
+            max="24"
+            step="0.5"
+            value="8">
+
+
+        <button
+            id="save-routine-btn"
+            type="button">
+
+            Save Routine
+
+        </button>
+
+
+        <p
+            id="routine-message"
+            class="status">
+        </p>
+
+    </section>
+
+
+    <!-- RECOMMENDATION -->
+
+    <section class="card recommendation">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                ✦
+            </span>
+
+            <div>
+
+                <h2>
+                    CircleSync Recommendation
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <p id="recommendation">
+            Loading...
+        </p>
+
+    </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="./app.js?v=73"></script>
+
 
 </body>
 
