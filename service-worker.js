@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "circlesync-v73";
+const CACHE_NAME = "circlesync-v74";
 
 const APP_FILES = [
     "./",
