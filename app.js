@@ -1,6 +1,6 @@
 "use strict";
 
-console.log("CircleSync app.js v73 loaded");
+console.log("CircleSync app.js v74 loaded");
 
 
 const SUPABASE_URL =
@@ -16,7 +16,6 @@ const WEBSITE_SIGNIN_URL =
 
 
 if (!window.supabase) {
-
     throw new Error(
         "Supabase library failed to load."
     );
@@ -54,7 +53,7 @@ async function registerServiceWorker() {
 
         serviceWorkerRegistration =
             await navigator.serviceWorker.register(
-                "./service-worker.js?v=73"
+                "./service-worker.js?v=74"
             );
 
 
@@ -62,7 +61,7 @@ async function registerServiceWorker() {
 
 
         console.log(
-            "CircleSync service worker v73 ready."
+            "CircleSync service worker v74 ready."
         );
 
 
@@ -72,7 +71,7 @@ async function registerServiceWorker() {
     } catch (error) {
 
         console.error(
-            "Service worker error:",
+            "Service worker registration failed:",
             error
         );
 
@@ -83,7 +82,7 @@ async function registerServiceWorker() {
 
 
 // ==========================================================
-// APPLICATION START
+// START APP
 // ==========================================================
 
 document.addEventListener(
@@ -123,10 +122,7 @@ document.addEventListener(
 async function initAuthPage() {
 
     function get(id) {
-
-        return document.getElementById(
-            id
-        );
+        return document.getElementById(id);
     }
 
 
@@ -154,7 +150,7 @@ async function initAuthPage() {
 
     function showMessage(
         text,
-        error
+        isError
     ) {
 
         authMessage.textContent =
@@ -162,7 +158,7 @@ async function initAuthPage() {
 
 
         authMessage.className =
-            error
+            isError
                 ? "status error-message"
                 : "status success-message";
     }
@@ -245,15 +241,14 @@ async function initAuthPage() {
 
 
             const email =
-                get(
-                    "signin-email"
-                ).value.trim();
+                get("signin-email")
+                    .value
+                    .trim();
 
 
             const password =
-                get(
-                    "signin-password"
-                ).value;
+                get("signin-password")
+                    .value;
 
 
             if (
@@ -266,15 +261,12 @@ async function initAuthPage() {
                     true
                 );
 
-
                 return;
             }
 
 
             const button =
-                get(
-                    "login-btn"
-                );
+                get("login-btn");
 
 
             button.disabled =
@@ -315,7 +307,6 @@ async function initAuthPage() {
                     true
                 );
 
-
                 return;
             }
 
@@ -336,32 +327,27 @@ async function initAuthPage() {
 
 
             const email =
-                get(
-                    "signup-email"
-                ).value.trim();
+                get("signup-email")
+                    .value
+                    .trim();
 
 
             const password =
-                get(
-                    "signup-password"
-                ).value;
+                get("signup-password")
+                    .value;
 
 
             const confirmation =
-                get(
-                    "signup-confirm-password"
-                ).value;
+                get("signup-confirm-password")
+                    .value;
 
 
-            if (
-                !email
-            ) {
+            if (!email) {
 
                 showMessage(
                     "Enter an email.",
                     true
                 );
-
 
                 return;
             }
@@ -375,7 +361,6 @@ async function initAuthPage() {
                     "Password must contain at least 6 characters.",
                     true
                 );
-
 
                 return;
             }
@@ -391,15 +376,12 @@ async function initAuthPage() {
                     true
                 );
 
-
                 return;
             }
 
 
             const button =
-                get(
-                    "signup-btn"
-                );
+                get("signup-btn");
 
 
             button.disabled =
@@ -447,7 +429,6 @@ async function initAuthPage() {
                     true
                 );
 
-
                 return;
             }
 
@@ -469,10 +450,7 @@ async function initAuthPage() {
 async function initDashboardPage() {
 
     function get(id) {
-
-        return document.getElementById(
-            id
-        );
+        return document.getElementById(id);
     }
 
 
@@ -502,7 +480,7 @@ async function initDashboardPage() {
 
 
     // ======================================================
-    // AUTH SESSION
+    // SESSION
     // ======================================================
 
     const sessionResult =
@@ -518,7 +496,6 @@ async function initDashboardPage() {
         window.location.replace(
             "./index.html"
         );
-
 
         return;
     }
@@ -573,7 +550,7 @@ async function initDashboardPage() {
 
 
     // ======================================================
-    // NOTIFICATION PERMISSION
+    // NOTIFICATION DATABASE SETTING
     // ======================================================
 
     async function getNotificationPreference() {
@@ -602,7 +579,6 @@ async function initDashboardPage() {
                 result.error
             );
 
-
             return false;
         }
 
@@ -623,19 +599,27 @@ async function initDashboardPage() {
                 .from(
                     "notification_preferences"
                 )
-                .upsert({
+                .upsert(
+                    {
 
-                    user_id:
-                        currentUser.id,
+                        user_id:
+                            currentUser.id,
 
-                    routine_notifications:
-                        enabled,
+                        routine_notifications:
+                            enabled,
 
-                    updated_at:
-                        new Date()
-                            .toISOString()
+                        updated_at:
+                            new Date()
+                                .toISOString()
 
-                });
+                    },
+                    {
+
+                        onConflict:
+                            "user_id"
+
+                    }
+                );
 
 
         if (
@@ -643,141 +627,21 @@ async function initDashboardPage() {
         ) {
 
             console.error(
+                "Notification preference save error:",
                 result.error
             );
+
+            return false;
         }
+
+
+        return true;
     }
 
 
-    async function updateNotificationUI() {
-
-        const button =
-            get(
-                "notification-btn"
-            );
-
-
-        const status =
-            get(
-                "notification-status"
-            );
-
-
-        if (
-            !("Notification" in window)
-        ) {
-
-            button.disabled =
-                true;
-
-
-            status.textContent =
-                "This browser does not support notifications.";
-
-
-            return;
-        }
-
-
-        const databaseEnabled =
-            await getNotificationPreference();
-
-
-        if (
-            Notification.permission ===
-            "granted"
-
-            &&
-
-            databaseEnabled
-        ) {
-
-            button.textContent =
-                "Notifications Enabled ✓";
-
-
-            status.textContent =
-                "5-minute reminders and 15-minute overdue warnings are enabled.";
-
-
-            return;
-        }
-
-
-        if (
-            Notification.permission ===
-            "denied"
-        ) {
-
-            button.textContent =
-                "Notifications Blocked";
-
-
-            status.textContent =
-                "Chrome has blocked notifications for CircleSync. Allow notifications in the site's browser settings and reload the page.";
-
-
-            return;
-        }
-
-
-        button.textContent =
-            "Enable Notifications";
-
-
-        status.textContent =
-            "Enable notifications for routine reminders.";
-    }
-
-
-    get("notification-btn")
-        .addEventListener(
-            "click",
-            async function () {
-
-                if (
-                    !("Notification" in window)
-                ) {
-
-                    return;
-                }
-
-
-                const permission =
-                    await Notification
-                        .requestPermission();
-
-
-                if (
-                    permission ===
-                    "granted"
-                ) {
-
-                    await saveNotificationPreference(
-                        true
-                    );
-
-
-                    await showNotification(
-                        "CircleSync Notifications Enabled",
-                        "You will receive reminders 5 minutes before your routine and an overdue warning 15 minutes afterward if you do not check in.",
-                        "circlesync-enabled"
-                    );
-
-
-                } else {
-
-                    await saveNotificationPreference(
-                        false
-                    );
-                }
-
-
-                await updateNotificationUI();
-
-            }
-        );
-
+    // ======================================================
+    // SHOW NOTIFICATION
+    // ======================================================
 
     async function showNotification(
         title,
@@ -787,14 +651,18 @@ async function initDashboardPage() {
 
         if (
             !("Notification" in window)
+        ) {
 
-            ||
+            return false;
+        }
 
+
+        if (
             Notification.permission !==
             "granted"
         ) {
 
-            return;
+            return false;
         }
 
 
@@ -822,14 +690,21 @@ async function initDashboardPage() {
                         renotify:
                             false,
 
+                        requireInteraction:
+                            true,
+
                         data: {
 
                             url:
                                 "./dashboard.html"
+
                         }
 
                     }
                 );
+
+
+            return true;
 
 
         } catch (error) {
@@ -838,8 +713,283 @@ async function initDashboardPage() {
                 "Notification display error:",
                 error
             );
+
+
+            return false;
         }
     }
+
+
+    // ======================================================
+    // NOTIFICATION BUTTON UI
+    // ======================================================
+
+    async function updateNotificationUI() {
+
+        const button =
+            get(
+                "notification-btn"
+            );
+
+
+        const status =
+            get(
+                "notification-status"
+            );
+
+
+        if (
+            !("Notification" in window)
+        ) {
+
+            button.disabled =
+                true;
+
+
+            button.textContent =
+                "Notifications Unsupported";
+
+
+            status.textContent =
+                "This browser does not support web notifications.";
+
+
+            return;
+        }
+
+
+        const enabled =
+            await getNotificationPreference();
+
+
+        if (
+            Notification.permission ===
+            "denied"
+        ) {
+
+            button.textContent =
+                "Enable Notifications";
+
+
+            status.textContent =
+                "Chrome is blocking notifications. Click the site icon beside the address bar, open Site Settings, set Notifications to Allow, then reload CircleSync.";
+
+
+            return;
+        }
+
+
+        if (
+            Notification.permission ===
+            "granted"
+
+            &&
+
+            enabled
+        ) {
+
+            button.textContent =
+                "Disable Notifications";
+
+
+            status.textContent =
+                "Notifications are ON. CircleSync will remind you 5 minutes before a routine and warn you 15 minutes afterward if you have not checked in.";
+
+
+            return;
+        }
+
+
+        button.textContent =
+            "Enable Notifications";
+
+
+        status.textContent =
+            "Notifications are OFF.";
+    }
+
+
+    // ======================================================
+    // TRUE ON/OFF TOGGLE
+    // ======================================================
+
+    get("notification-btn")
+        .addEventListener(
+            "click",
+            async function () {
+
+                const button =
+                    get(
+                        "notification-btn"
+                    );
+
+
+                const status =
+                    get(
+                        "notification-status"
+                    );
+
+
+                button.disabled =
+                    true;
+
+
+                try {
+
+                    const currentlyEnabled =
+                        await getNotificationPreference();
+
+
+                    // --------------------------------------
+                    // TURN OFF
+                    // --------------------------------------
+
+                    if (
+                        currentlyEnabled
+                    ) {
+
+                        const saved =
+                            await saveNotificationPreference(
+                                false
+                            );
+
+
+                        if (
+                            saved
+                        ) {
+
+                            status.textContent =
+                                "CircleSync notifications have been turned off.";
+                        }
+
+
+                        await updateNotificationUI();
+
+
+                        return;
+                    }
+
+
+                    // --------------------------------------
+                    // TURN ON
+                    // --------------------------------------
+
+                    if (
+                        !("Notification" in window)
+                    ) {
+
+                        status.textContent =
+                            "Notifications are not supported by this browser.";
+
+
+                        return;
+                    }
+
+
+                    let permission =
+                        Notification.permission;
+
+
+                    if (
+                        permission ===
+                        "default"
+                    ) {
+
+                        permission =
+                            await Notification
+                                .requestPermission();
+                    }
+
+
+                    if (
+                        permission ===
+                        "denied"
+                    ) {
+
+                        status.textContent =
+                            "Chrome has blocked notifications. Open Site Settings for this website and change Notifications to Allow.";
+
+
+                        return;
+                    }
+
+
+                    if (
+                        permission !==
+                        "granted"
+                    ) {
+
+                        status.textContent =
+                            "Notification permission was not granted.";
+
+
+                        return;
+                    }
+
+
+                    const saved =
+                        await saveNotificationPreference(
+                            true
+                        );
+
+
+                    if (
+                        !saved
+                    ) {
+
+                        status.textContent =
+                            "CircleSync could not save your notification preference.";
+
+
+                        return;
+                    }
+
+
+                    const testShown =
+                        await showNotification(
+
+                            "CircleSync Notifications Are On ✅",
+
+                            "This is a test reminder. You will receive routine alerts 5 minutes before and overdue alerts 15 minutes afterward.",
+
+                            "circlesync-test-" +
+                            Date.now()
+
+                        );
+
+
+                    if (
+                        testShown
+                    ) {
+
+                        status.textContent =
+                            "Notifications enabled. A test notification was sent.";
+                    }
+
+
+                    await updateNotificationUI();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Notification toggle error:",
+                        error
+                    );
+
+
+                    status.textContent =
+                        "CircleSync could not change the notification setting.";
+
+
+                } finally {
+
+                    button.disabled =
+                        false;
+                }
+
+            }
+        );
 
 
     await updateNotificationUI();
@@ -859,7 +1009,10 @@ async function initDashboardPage() {
         const ids =
             Array.from(
                 new Set(
-                    userIds.filter(
+                    (
+                        userIds ||
+                        []
+                    ).filter(
                         Boolean
                     )
                 )
@@ -867,7 +1020,8 @@ async function initDashboardPage() {
 
 
         if (
-            ids.length === 0
+            ids.length ===
+            0
         ) {
 
             return map;
@@ -909,12 +1063,12 @@ async function initDashboardPage() {
 
 
     function displayName(
-        id,
+        userId,
         profileMap
     ) {
 
         if (
-            id ===
+            userId ===
             currentUser.id
         ) {
 
@@ -923,7 +1077,7 @@ async function initDashboardPage() {
 
 
         return (
-            profileMap[id]
+            profileMap[userId]
             ||
             "CircleSync User"
         );
@@ -931,7 +1085,7 @@ async function initDashboardPage() {
 
 
     // ======================================================
-    // CIRCLES
+    // CIRCLE DATA
     // ======================================================
 
     async function getMemberships() {
@@ -948,6 +1102,19 @@ async function initDashboardPage() {
                     "user_id",
                     currentUser.id
                 );
+
+
+        if (
+            result.error
+        ) {
+
+            console.error(
+                result.error
+            );
+
+
+            return [];
+        }
 
 
         return (
@@ -970,10 +1137,25 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
+
                         ascending:
                             false
+
                     }
                 );
+
+
+        if (
+            result.error
+        ) {
+
+            console.error(
+                result.error
+            );
+
+
+            return [];
+        }
 
 
         return (
@@ -1029,12 +1211,19 @@ async function initDashboardPage() {
                             membershipMap.has(
                                 circle.id
                             )
+
                         );
 
                     }
                 )
                 .map(
                     function (circle) {
+
+                        const membership =
+                            membershipMap.get(
+                                circle.id
+                            );
+
 
                         return {
 
@@ -1046,9 +1235,9 @@ async function initDashboardPage() {
 
                                     ? "owner"
 
-                                    : membershipMap.get(
-                                        circle.id
-                                    ).role
+                                    : membership
+                                        ? membership.role
+                                        : "member"
 
                         };
 
@@ -1062,7 +1251,7 @@ async function initDashboardPage() {
             );
 
 
-        const previousActiveId =
+        const previousId =
             activeCircle
                 ? activeCircle.id
                 : savedId;
@@ -1074,18 +1263,14 @@ async function initDashboardPage() {
 
                     return (
                         circle.id ===
-                        previousActiveId
+                        previousId
                     );
 
                 }
             )
-
             ||
-
             myCircles[0]
-
             ||
-
             null;
 
 
@@ -1120,7 +1305,8 @@ async function initDashboardPage() {
 
 
         if (
-            myCircles.length === 0
+            myCircles.length ===
+            0
         ) {
 
             container.innerHTML =
@@ -1138,6 +1324,10 @@ async function initDashboardPage() {
                     document.createElement(
                         "button"
                     );
+
+
+                button.type =
+                    "button";
 
 
                 button.className =
@@ -1295,6 +1485,7 @@ async function initDashboardPage() {
                     function (member) {
 
                         return member.user_id;
+
                     }
                 )
             );
@@ -1308,6 +1499,19 @@ async function initDashboardPage() {
 
         list.innerHTML =
             "";
+
+
+        if (
+            members.length ===
+            0
+        ) {
+
+            list.innerHTML =
+                "<li>No members.</li>";
+
+
+            return;
+        }
 
 
         members.forEach(
@@ -1454,8 +1658,10 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
+
                             ascending:
                                 false
+
                         }
                     )
 
@@ -1468,12 +1674,13 @@ async function initDashboardPage() {
                     function (membership) {
 
                         return membership.circle_id;
+
                     }
                 )
             );
 
 
-        const requests =
+        const requestMap =
             new Map();
 
 
@@ -1484,12 +1691,12 @@ async function initDashboardPage() {
             function (request) {
 
                 if (
-                    !requests.has(
+                    !requestMap.has(
                         request.circle_id
                     )
                 ) {
 
-                    requests.set(
+                    requestMap.set(
                         request.circle_id,
                         request
                     );
@@ -1514,6 +1721,7 @@ async function initDashboardPage() {
                 function (circle) {
 
                     return circle.is_public;
+
                 }
             )
             .forEach(
@@ -1556,6 +1764,10 @@ async function initDashboardPage() {
                         );
 
 
+                    button.type =
+                        "button";
+
+
                     const owner =
                         circle.created_by ===
                         currentUser.id;
@@ -1568,7 +1780,7 @@ async function initDashboardPage() {
 
 
                     const request =
-                        requests.get(
+                        requestMap.get(
                             circle.id
                         );
 
@@ -1611,6 +1823,7 @@ async function initDashboardPage() {
                                                 item.id ===
                                                 circle.id
                                             );
+
                                         }
                                     );
 
@@ -1684,11 +1897,6 @@ async function initDashboardPage() {
                                     result.error
                                 ) {
 
-                                    console.error(
-                                        result.error
-                                    );
-
-
                                     button.disabled =
                                         false;
 
@@ -1725,17 +1933,9 @@ async function initDashboardPage() {
                     }
 
 
-                    card.appendChild(
-                        title
-                    );
-
-
-                    card.appendChild(
-                        description
-                    );
-
-
-                    card.appendChild(
+                    card.append(
+                        title,
+                        description,
                         button
                     );
 
@@ -1757,13 +1957,7 @@ async function initDashboardPage() {
 
 
     // ======================================================
-    // CREATOR JOIN REQUESTS
-    // ======================================================
-    //
-    // IMPORTANT:
-    // Loads pending requests for EVERY circle owned by user.
-    //
-    // The SECTION NEVER disappears.
+    // OWNER REQUESTS
     // ======================================================
 
     async function loadOwnerRequests() {
@@ -1782,6 +1976,7 @@ async function initDashboardPage() {
                         circle.created_by ===
                         currentUser.id
                     );
+
                 }
             );
 
@@ -1791,11 +1986,12 @@ async function initDashboardPage() {
 
 
         if (
-            ownedCircles.length === 0
+            ownedCircles.length ===
+            0
         ) {
 
             container.innerHTML =
-                '<p class="empty-text">Create a circle to begin receiving join requests.</p>';
+                '<p class="empty-text">Create a circle to receive join requests.</p>';
 
 
             return;
@@ -1807,6 +2003,7 @@ async function initDashboardPage() {
                 function (circle) {
 
                     return circle.id;
+
                 }
             );
 
@@ -1830,8 +2027,10 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
+
                         ascending:
                             true
+
                     }
                 );
 
@@ -1841,7 +2040,7 @@ async function initDashboardPage() {
         ) {
 
             console.error(
-                "Join request query error:",
+                "Owner join request error:",
                 result.error
             );
 
@@ -1860,7 +2059,8 @@ async function initDashboardPage() {
 
 
         if (
-            requests.length === 0
+            requests.length ===
+            0
         ) {
 
             container.innerHTML =
@@ -1877,6 +2077,7 @@ async function initDashboardPage() {
                     function (request) {
 
                         return request.requester_id;
+
                     }
                 )
             );
@@ -1893,6 +2094,7 @@ async function initDashboardPage() {
                                 item.id ===
                                 request.circle_id
                             );
+
                         }
                     );
 
@@ -1907,7 +2109,7 @@ async function initDashboardPage() {
                     "request-row";
 
 
-                const information =
+                const info =
                     document.createElement(
                         "div"
                     );
@@ -1942,12 +2144,8 @@ async function initDashboardPage() {
                     );
 
 
-                information.appendChild(
-                    person
-                );
-
-
-                information.appendChild(
+                info.append(
+                    person,
                     circleText
                 );
 
@@ -1968,6 +2166,10 @@ async function initDashboardPage() {
                     );
 
 
+                accept.type =
+                    "button";
+
+
                 accept.className =
                     "compact-btn";
 
@@ -1980,6 +2182,10 @@ async function initDashboardPage() {
                     document.createElement(
                         "button"
                     );
+
+
+                decline.type =
+                    "button";
 
 
                 decline.className =
@@ -2018,22 +2224,14 @@ async function initDashboardPage() {
                 );
 
 
-                actions.appendChild(
-                    accept
-                );
-
-
-                actions.appendChild(
+                actions.append(
+                    accept,
                     decline
                 );
 
 
-                row.appendChild(
-                    information
-                );
-
-
-                row.appendChild(
+                row.append(
+                    info,
                     actions
                 );
 
@@ -2086,11 +2284,6 @@ async function initDashboardPage() {
             result.error
         ) {
 
-            console.error(
-                result.error
-            );
-
-
             recommend(
                 result.error.message
             );
@@ -2113,9 +2306,6 @@ async function initDashboardPage() {
             return;
         }
 
-
-        // ONLY THE REQUEST ROW DISAPPEARS.
-        // THE JOIN REQUEST CARD STAYS ON SCREEN.
 
         row.remove();
 
@@ -2150,15 +2340,15 @@ async function initDashboardPage() {
             async function () {
 
                 const name =
-                    get(
-                        "new-circle-name"
-                    ).value.trim();
+                    get("new-circle-name")
+                        .value
+                        .trim();
 
 
                 const description =
-                    get(
-                        "new-circle-description"
-                    ).value.trim();
+                    get("new-circle-description")
+                        .value
+                        .trim();
 
 
                 if (
@@ -2219,10 +2409,6 @@ async function initDashboardPage() {
                 get("new-circle-description")
                     .value =
                     "";
-
-
-                activeCircle =
-                    result.data;
 
 
                 await Promise.all([
@@ -2383,8 +2569,10 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
+
                         ascending:
                             false
+
                     }
                 )
                 .limit(
@@ -2560,9 +2748,7 @@ async function initDashboardPage() {
 
                 const minutes =
                     Math.max(
-
                         1,
-
                         Math.round(
                             (
                                 Date.now() -
@@ -2729,8 +2915,7 @@ async function initDashboardPage() {
 
 
         return (
-            labels[type]
-            ||
+            labels[type] ||
             "✓ Check-in"
         );
     }
@@ -2776,8 +2961,10 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
+
                             ascending:
                                 false
+
                         }
                     )
                     .limit(
@@ -2802,8 +2989,10 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
+
                             ascending:
                                 false
+
                         }
                     )
                     .limit(
@@ -2827,19 +3016,21 @@ async function initDashboardPage() {
             await getProfileMap([
 
                 ...messages.map(
-                    item =>
-                        item.user_id
+                    function (item) {
+                        return item.user_id;
+                    }
                 ),
 
                 ...checkIns.map(
-                    item =>
-                        item.user_id
+                    function (item) {
+                        return item.user_id;
+                    }
                 )
 
             ]);
 
 
-        const feedItems = [
+        const items = [
 
             ...messages.map(
                 function (message) {
@@ -2857,6 +3048,7 @@ async function initDashboardPage() {
                             message.created_at
 
                     };
+
                 }
             ),
 
@@ -2877,13 +3069,14 @@ async function initDashboardPage() {
                             checkIn.created_at
 
                     };
+
                 }
             )
 
         ];
 
 
-        feedItems.sort(
+        items.sort(
             function (a, b) {
 
                 return (
@@ -2905,7 +3098,8 @@ async function initDashboardPage() {
 
 
         if (
-            feedItems.length === 0
+            items.length ===
+            0
         ) {
 
             feed.innerHTML =
@@ -2916,7 +3110,7 @@ async function initDashboardPage() {
         }
 
 
-        feedItems.forEach(
+        items.forEach(
             function (item) {
 
                 const row =
@@ -3085,6 +3279,7 @@ async function initDashboardPage() {
                         5
                     )
                     : "";
+
         }
 
 
@@ -3140,51 +3335,53 @@ async function initDashboardPage() {
                         .from(
                             "routines"
                         )
-                        .upsert({
+                        .upsert(
+                            {
 
-                            user_id:
-                                currentUser.id,
+                                user_id:
+                                    currentUser.id,
 
-                            wake_time:
-                                routineElements.wake.value ||
-                                null,
+                                wake_time:
+                                    routineElements.wake.value ||
+                                    null,
 
-                            breakfast_time:
-                                routineElements.breakfast.value ||
-                                null,
+                                breakfast_time:
+                                    routineElements.breakfast.value ||
+                                    null,
 
-                            lunch_time:
-                                routineElements.lunch.value ||
-                                null,
+                                lunch_time:
+                                    routineElements.lunch.value ||
+                                    null,
 
-                            dinner_time:
-                                routineElements.dinner.value ||
-                                null,
+                                dinner_time:
+                                    routineElements.dinner.value ||
+                                    null,
 
-                            rest_start_time:
-                                routineElements.rest.value ||
-                                null,
+                                rest_start_time:
+                                    routineElements.rest.value ||
+                                    null,
 
-                            bedtime:
-                                routineElements.sleep.value ||
-                                null,
+                                bedtime:
+                                    routineElements.sleep.value ||
+                                    null,
 
-                            sleep_goal_hours:
-                                Number(
-                                    routineElements.goal.value
-                                ),
+                                sleep_goal_hours:
+                                    Number(
+                                        routineElements.goal.value
+                                    ),
 
-                            updated_at:
-                                new Date()
-                                    .toISOString()
+                                updated_at:
+                                    new Date()
+                                        .toISOString()
 
-                        },
-                        {
+                            },
+                            {
 
-                            onConflict:
-                                "user_id"
+                                onConflict:
+                                    "user_id"
 
-                        })
+                            }
+                        )
                         .select()
                         .single();
 
@@ -3221,10 +3418,6 @@ async function initDashboardPage() {
             }
         );
 
-
-    // ======================================================
-    // TODAY CHECK-INS
-    // ======================================================
 
     async function completedToday() {
 
@@ -3273,14 +3466,19 @@ async function initDashboardPage() {
                 result.data ||
                 []
             ).map(
-                item =>
-                    item.check_in_type
+                function (item) {
+
+                    return item.check_in_type;
+
+                }
             )
         );
     }
 
 
-    function timeToday(value) {
+    function timeToday(
+        value
+    ) {
 
         if (
             !value
@@ -3290,11 +3488,10 @@ async function initDashboardPage() {
         }
 
 
-        const [
-            hour,
-            minute
-        ] =
-            value.split(":");
+        const parts =
+            value.split(
+                ":"
+            );
 
 
         const now =
@@ -3309,9 +3506,13 @@ async function initDashboardPage() {
 
             now.getDate(),
 
-            Number(hour),
+            Number(
+                parts[0]
+            ),
 
-            Number(minute),
+            Number(
+                parts[1]
+            ),
 
             0,
 
@@ -3376,10 +3577,13 @@ async function initDashboardPage() {
             }
 
         ].filter(
-            item =>
-                Boolean(
+            function (item) {
+
+                return Boolean(
                     item.time
-                )
+                );
+
+            }
         );
     }
 
@@ -3394,34 +3598,22 @@ async function initDashboardPage() {
             new Date();
 
 
-        const year =
-            now.getFullYear();
-
-
-        const month =
+        return [
+            now.getFullYear(),
             String(
                 now.getMonth() + 1
             ).padStart(
                 2,
                 "0"
-            );
-
-
-        const day =
+            ),
             String(
                 now.getDate()
             ).padStart(
                 2,
                 "0"
-            );
-
-
-        return (
-            year +
-            "-" +
-            month +
-            "-" +
-            day
+            )
+        ].join(
+            "-"
         );
     }
 
@@ -3469,46 +3661,71 @@ async function initDashboardPage() {
         stage
     ) {
 
-        await supabaseClient
-            .from(
-                "routine_notification_log"
-            )
-            .upsert({
+        const result =
+            await supabaseClient
+                .from(
+                    "routine_notification_log"
+                )
+                .upsert(
+                    {
 
-                user_id:
-                    currentUser.id,
+                        user_id:
+                            currentUser.id,
 
-                routine_date:
-                    todayString(),
+                        routine_date:
+                            todayString(),
 
-                routine_type:
-                    type,
+                        routine_type:
+                            type,
 
-                notification_stage:
-                    stage
+                        notification_stage:
+                            stage
 
-            },
-            {
+                    },
+                    {
 
-                onConflict:
-                    "user_id,routine_date,routine_type,notification_stage"
+                        onConflict:
+                            "user_id,routine_date,routine_type,notification_stage"
 
-            });
+                    }
+                );
 
+
+        if (
+            result.error
+        ) {
+
+            console.error(
+                "Notification log error:",
+                result.error
+            );
+        }
     }
 
 
     // ======================================================
-    // 5-MINUTE + 15-MINUTE NOTIFICATIONS
+    // ROUTINE NOTIFICATIONS
     // ======================================================
 
     async function checkRoutineNotifications() {
 
         if (
             !currentRoutine
+        ) {
 
-            ||
+            return;
+        }
 
+
+        if (
+            !("Notification" in window)
+        ) {
+
+            return;
+        }
+
+
+        if (
             Notification.permission !==
             "granted"
         ) {
@@ -3568,22 +3785,19 @@ async function initDashboardPage() {
                 60000;
 
 
-            // ----------------------------------------------
+            // ==================================================
             // FIVE MINUTES BEFORE
-            //
-            // Fires between 5:59 and 4:00 minutes before
-            // to tolerate timer/browser scheduling drift.
-            // ----------------------------------------------
+            // ==================================================
 
             if (
-                differenceMinutes <= 5.99
+                differenceMinutes <= 5.25
 
                 &&
 
-                differenceMinutes >= 4
+                differenceMinutes >= 4.25
             ) {
 
-                const alreadySent =
+                const sent =
                     await notificationAlreadySent(
                         item.type,
                         "five-minute"
@@ -3591,7 +3805,7 @@ async function initDashboardPage() {
 
 
                 if (
-                    !alreadySent
+                    !sent
                 ) {
 
                     await showNotification(
@@ -3601,12 +3815,15 @@ async function initDashboardPage() {
                         item.title +
                         " in 5 minutes",
 
-                        getUpcomingNotificationText(
+                        upcomingMessage(
                             item.type
                         ),
 
-                        "routine-five-" +
-                        item.type
+                        "five-minute-" +
+                        item.type +
+                        "-" +
+                        todayString()
+
                     );
 
 
@@ -3618,21 +3835,15 @@ async function initDashboardPage() {
             }
 
 
-            // ----------------------------------------------
+            // ==================================================
             // FIFTEEN MINUTES AFTER
-            //
-            // A negative difference means scheduled time
-            // has already passed.
-            //
-            // At -15 minutes or later, warn if the user
-            // STILL has no matching quick check-in.
-            // ----------------------------------------------
+            // ==================================================
 
             if (
                 differenceMinutes <= -15
             ) {
 
-                const alreadySent =
+                const sent =
                     await notificationAlreadySent(
                         item.type,
                         "overdue"
@@ -3640,19 +3851,15 @@ async function initDashboardPage() {
 
 
                 if (
-                    !alreadySent
+                    !sent
                 ) {
 
-                    // Recheck immediately before warning
-                    // in case the check-in happened while
-                    // this routine was processing.
-
-                    const latestCompleted =
+                    const latest =
                         await completedToday();
 
 
                     if (
-                        !latestCompleted.has(
+                        !latest.has(
                             item.type
                         )
                     ) {
@@ -3662,14 +3869,17 @@ async function initDashboardPage() {
                             item.icon +
                             " " +
                             item.title +
-                            " needs attention",
+                            " is overdue",
 
-                            getOverdueNotificationText(
+                            overdueMessage(
                                 item.type
                             ),
 
-                            "routine-overdue-" +
-                            item.type
+                            "overdue-" +
+                            item.type +
+                            "-" +
+                            todayString()
+
                         );
 
 
@@ -3684,29 +3894,29 @@ async function initDashboardPage() {
     }
 
 
-    function getUpcomingNotificationText(
+    function upcomingMessage(
         type
     ) {
 
         const messages = {
 
             breakfast:
-                "Breakfast is in 5 minutes. Finish what you're doing and make time to eat.",
+                "Breakfast is in 5 minutes. Get ready to eat before your schedule gets busy.",
 
             lunch:
-                "Lunch is in 5 minutes. Get ready to step away and eat.",
+                "Lunch is in 5 minutes. Finish what you're doing and make time to eat.",
 
             dinner:
-                "Dinner is in 5 minutes. Wrap up what you're doing so you can eat on time.",
+                "Dinner is in 5 minutes. Start wrapping up so you can eat on time.",
 
             rest:
-                "Your planned rest begins in 5 minutes. Prepare to take a short break.",
+                "Your rest break starts in 5 minutes. Prepare to step away for a moment.",
 
             sleep:
                 "Bedtime is in 5 minutes. Start winding down for the night.",
 
             wake:
-                "Your scheduled wake time is in 5 minutes."
+                "Your scheduled wake-up time is in 5 minutes."
 
         };
 
@@ -3714,12 +3924,12 @@ async function initDashboardPage() {
         return (
             messages[type]
             ||
-            "Your next routine activity starts in 5 minutes."
+            "Your next routine starts in 5 minutes."
         );
     }
 
 
-    function getOverdueNotificationText(
+    function overdueMessage(
         type
     ) {
 
@@ -3729,7 +3939,7 @@ async function initDashboardPage() {
                 "You have not checked in for breakfast. Your breakfast time passed 15 minutes ago.",
 
             lunch:
-                "You have not checked in for lunch. Take time to eat instead of pushing lunch further back.",
+                "You have not checked in for lunch. Your scheduled lunch time passed 15 minutes ago.",
 
             dinner:
                 "You have not checked in for dinner. Your scheduled dinner time passed 15 minutes ago.",
@@ -3741,7 +3951,7 @@ async function initDashboardPage() {
                 "You have not checked in for bedtime. Your scheduled bedtime passed 15 minutes ago.",
 
             wake:
-                "You have not checked in as awake. Your scheduled wake time passed 15 minutes ago."
+                "You have not checked in as awake. Your wake-up time passed 15 minutes ago."
 
         };
 
@@ -3755,7 +3965,7 @@ async function initDashboardPage() {
 
 
     // ======================================================
-    // NEXT UP
+    // NEXT UP ENGINE
     // ======================================================
 
     async function updateRoutineEngine() {
@@ -3806,6 +4016,7 @@ async function initDashboardPage() {
                                 )
 
                         };
+
                     }
                 )
                 .sort(
@@ -3815,6 +4026,7 @@ async function initDashboardPage() {
                             a.scheduled -
                             b.scheduled
                         );
+
                     }
                 );
 
@@ -3850,6 +4062,7 @@ async function initDashboardPage() {
                         item.scheduled >
                         now
                     );
+
                 }
             );
 
@@ -3988,9 +4201,6 @@ async function initDashboardPage() {
         checkRoutineNotifications();
 
 
-        // Check every 30 seconds so the 5-minute notification
-        // has a better chance of firing close to the target.
-
         routineTimer =
             setInterval(
                 async function () {
@@ -4001,13 +4211,13 @@ async function initDashboardPage() {
                     await checkRoutineNotifications();
 
                 },
-                30000
+                15000
             );
     }
 
 
     // ======================================================
-    // SUPABASE REALTIME
+    // REALTIME
     // ======================================================
 
     function startRealtime() {
@@ -4025,12 +4235,10 @@ async function initDashboardPage() {
         realtimeChannel =
             supabaseClient
                 .channel(
-                    "circlesync-v73-" +
+                    "circlesync-v74-" +
                     currentUser.id
                 )
 
-
-                // JOIN REQUESTS
 
                 .on(
                     "postgres_changes",
@@ -4046,19 +4254,7 @@ async function initDashboardPage() {
                             "circle_join_requests"
 
                     },
-
-                    async function (
-                        payload
-                    ) {
-
-                        console.log(
-                            "Join request realtime:",
-                            payload
-                        );
-
-
-                        // The card remains on screen.
-                        // Only rows inside it change.
+                    async function () {
 
                         await loadOwnerRequests();
 
@@ -4071,8 +4267,6 @@ async function initDashboardPage() {
                     }
                 )
 
-
-                // MEMBERSHIPS
 
                 .on(
                     "postgres_changes",
@@ -4088,7 +4282,6 @@ async function initDashboardPage() {
                             "circle_members"
 
                     },
-
                     async function () {
 
                         await loadMyCircles();
@@ -4102,8 +4295,6 @@ async function initDashboardPage() {
                     }
                 )
 
-
-                // MESSAGES
 
                 .on(
                     "postgres_changes",
@@ -4119,7 +4310,6 @@ async function initDashboardPage() {
                             "circle_messages"
 
                     },
-
                     async function () {
 
                         await loadCircleFeed();
@@ -4127,8 +4317,6 @@ async function initDashboardPage() {
                     }
                 )
 
-
-                // CHECK INS
 
                 .on(
                     "postgres_changes",
@@ -4144,7 +4332,6 @@ async function initDashboardPage() {
                             "check_ins"
 
                     },
-
                     async function () {
 
                         await loadCircleFeed();
@@ -4163,6 +4350,7 @@ async function initDashboardPage() {
                             "CircleSync Realtime:",
                             status
                         );
+
                     }
                 );
     }
@@ -4205,6 +4393,6 @@ async function initDashboardPage() {
 
 
     console.log(
-        "CircleSync dashboard v73 ready"
+        "CircleSync dashboard v74 ready."
     );
 }
