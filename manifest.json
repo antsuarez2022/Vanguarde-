@@ -1,10 +1,10 @@
 {
     "name": "CircleSync",
     "short_name": "CircleSync",
-    "description": "Build healthier routines with accountability.",
+    "description": "Healthy routines with accountability circles.",
     "start_url": "./index.html",
     "scope": "./",
     "display": "standalone",
-    "background_color": "#130020",
+    "background_color": "#12001f",
     "theme_color": "#210038"
 }
