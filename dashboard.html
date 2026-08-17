@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -17,9 +16,7 @@
         name="description"
         content="CircleSync healthy routine and accountability dashboard.">
 
-    <title>
-        CircleSync | Dashboard
-    </title>
+    <title>CircleSync | Dashboard</title>
 
     <link
         rel="manifest"
@@ -28,24 +25,24 @@
     <link
         rel="stylesheet"
         href="./styles.css">
-
 </head>
 
 
 <body id="dashboard-page">
 
 
-<!-- =======================================================
-     FLOATING ROUTINE ALARM
-     ======================================================= -->
+<!-- =========================================================
+     FLOATING COUNTDOWN
+     DISPLAY ONLY — NO BUTTON HERE
+     ========================================================= -->
 
 <aside
     id="routine-alarm-widget"
     class="routine-alarm-widget"
-    aria-live="assertive">
+    aria-live="polite">
 
     <div class="alarm-icon">
-        ⏱
+        ⏰
     </div>
 
     <div class="alarm-info">
@@ -53,9 +50,7 @@
         <span
             id="alarm-label"
             class="alarm-label">
-
             Next Alert
-
         </span>
 
         <strong id="alarm-title">
@@ -68,40 +63,28 @@
 
     </div>
 
-    <button
-        id="alarm-toggle-btn"
-        type="button"
-        class="alarm-toggle-btn">
-
-        Enable Alarms
-
-    </button>
-
 </aside>
 
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 
 <header class="topbar">
 
     <div>
-
-        <h1>
-            CircleSync
-        </h1>
+        <h1>CircleSync</h1>
 
         <p id="user-email">
             Loading account...
         </p>
-
     </div>
-
 
     <button
         id="logout-btn"
         type="button"
         class="danger">
-
         Log Out
-
     </button>
 
 </header>
@@ -123,15 +106,11 @@
             </span>
 
             <div>
-
-                <h2>
-                    Next Up
-                </h2>
+                <h2>Next Up</h2>
 
                 <p>
                     CircleSync monitors your saved routine.
                 </p>
-
             </div>
 
         </div>
@@ -142,21 +121,16 @@
             <p
                 id="next-up-label"
                 class="mini-label">
-
                 Loading...
-
             </p>
-
 
             <h3 id="next-up-title">
                 --
             </h3>
 
-
             <p id="next-up-countdown">
                 --
             </p>
-
 
             <p id="routine-alert">
             </p>
@@ -164,30 +138,27 @@
         </div>
 
 
+        <!-- ONLY ALARM CONTROL -->
+
         <button
             id="alarm-settings-btn"
             type="button"
             class="secondary">
-
             Enable Routine Alarms
-
         </button>
-
 
         <p
             id="alarm-status"
             class="status"
             aria-live="polite">
-
             Routine alarms are currently off.
-
         </p>
 
     </section>
 
 
     <!-- =====================================================
-         RECOMMENDATION - MOVED TO TOP
+         RECOMMENDATION — NEAR TOP
          ===================================================== -->
 
     <section class="card recommendation-card">
@@ -199,7 +170,6 @@
             </span>
 
             <div>
-
                 <h2>
                     CircleSync Recommendation
                 </h2>
@@ -207,16 +177,12 @@
                 <p>
                     Guidance based on your routine and check-ins.
                 </p>
-
             </div>
 
         </div>
 
-
         <p id="recommendation">
-
             Reviewing your routine...
-
         </p>
 
     </section>
@@ -235,15 +201,11 @@
             </span>
 
             <div>
-
-                <h2>
-                    Today's Energy
-                </h2>
+                <h2>Today's Energy</h2>
 
                 <p>
                     This information stays private.
                 </p>
-
             </div>
 
         </div>
@@ -252,9 +214,7 @@
         <div
             id="energy-score"
             class="score">
-
             50
-
         </div>
 
 
@@ -267,31 +227,23 @@
 
 
         <p class="center">
-
             Energy:
-
-            <strong id="energy-value">
-                5
-            </strong>
-
+            <strong id="energy-value">5</strong>
             / 10
-
         </p>
 
 
         <button
             id="save-energy"
             type="button">
-
             Save Energy
-
         </button>
 
     </section>
 
 
     <!-- =====================================================
-         FOCUS MODE
+         FOCUS
          ===================================================== -->
 
     <section class="card">
@@ -303,15 +255,11 @@
             </span>
 
             <div>
-
-                <h2>
-                    Focus Mode
-                </h2>
+                <h2>Focus Mode</h2>
 
                 <p>
                     Stay productive without forgetting yourself.
                 </p>
-
             </div>
 
         </div>
@@ -320,18 +268,13 @@
         <button
             id="focus-btn"
             type="button">
-
             Start Focus Session
-
         </button>
-
 
         <p
             id="focus-status"
             class="status">
-
             No focus session active.
-
         </p>
 
     </section>
@@ -342,8 +285,8 @@
          ===================================================== -->
 
     <section
-        class="card"
-        id="quick-checkin-card">
+        id="quick-checkin-card"
+        class="card">
 
         <div class="card-heading">
 
@@ -352,16 +295,12 @@
             </span>
 
             <div>
-
-                <h2>
-                    Quick Check-In
-                </h2>
+                <h2>Quick Check-In</h2>
 
                 <p>
-                    A matching check-in stops its routine alarm and prevents
-                    the 40-minute overdue alert.
+                    A matching check-in stops its alarm and prevents
+                    its 40-minute follow-up.
                 </p>
-
             </div>
 
         </div>
@@ -372,63 +311,43 @@
             <button
                 id="breakfast-btn"
                 type="button">
-
                 🍳 Breakfast
-
             </button>
-
 
             <button
                 id="lunch-btn"
                 type="button">
-
                 🥗 Lunch
-
             </button>
-
 
             <button
                 id="dinner-btn"
                 type="button">
-
                 🍽 Dinner
-
             </button>
-
 
             <button
                 id="rest-btn"
                 type="button">
-
                 😴 Rested
-
             </button>
-
 
             <button
                 id="working-btn"
                 type="button">
-
                 💻 Working
-
             </button>
-
 
             <button
                 id="sleep-btn"
                 type="button">
-
                 🌙 Going to Sleep
-
             </button>
-
 
             <button
                 id="wake-btn"
                 type="button">
-
                 ☀️ Woke Up
-
             </button>
 
         </div>
@@ -449,7 +368,6 @@
             </span>
 
             <div>
-
                 <h2>
                     My Accountability Circles
                 </h2>
@@ -457,7 +375,6 @@
                 <p>
                     Switch between groups you created or joined.
                 </p>
-
             </div>
 
         </div>
@@ -477,28 +394,23 @@
         <div class="active-circle-box">
 
             <p class="mini-label">
-                ACTIVE CIRCLE
+                Active Circle
             </p>
-
 
             <h3 id="circle-name">
                 No Circle Selected
             </h3>
 
-
             <p id="circle-description">
                 Select or join a circle.
             </p>
-
 
             <button
                 id="leave-circle-btn"
                 type="button"
                 class="danger-outline"
                 hidden>
-
                 Leave Circle
-
             </button>
 
         </div>
@@ -537,7 +449,6 @@
             </span>
 
             <div>
-
                 <h2>
                     Circle Management
                 </h2>
@@ -545,7 +456,6 @@
                 <p>
                     Handle membership requests or create a circle.
                 </p>
-
             </div>
 
         </div>
@@ -558,17 +468,14 @@
             <button
                 id="join-requests-tab"
                 type="button"
-                class="management-tab active-management-tab"
-                aria-selected="true">
+                class="management-tab active-management-tab">
 
                 🔔 Join Requests
 
                 <span
                     id="request-count"
                     class="tab-count">
-
                     0
-
                 </span>
 
             </button>
@@ -577,15 +484,14 @@
             <button
                 id="create-circle-tab"
                 type="button"
-                class="management-tab"
-                aria-selected="false">
-
+                class="management-tab">
                 ➕ Create Circle
-
             </button>
 
         </div>
 
+
+        <!-- JOIN REQUESTS -->
 
         <div
             id="join-requests-panel"
@@ -617,6 +523,8 @@
         </div>
 
 
+        <!-- CREATE CIRCLE -->
+
         <div
             id="create-circle-panel"
             class="management-panel"
@@ -629,8 +537,8 @@
                 </h3>
 
                 <p>
-                    Start an accountability group with friends,
-                    classmates, coworkers, or family.
+                    Start a group with friends, classmates,
+                    coworkers, or family.
                 </p>
 
             </div>
@@ -639,7 +547,6 @@
             <label for="new-circle-name">
                 Circle Name
             </label>
-
 
             <input
                 id="new-circle-name"
@@ -652,7 +559,6 @@
                 Description
             </label>
 
-
             <textarea
                 id="new-circle-description"
                 rows="3"
@@ -663,11 +569,8 @@
             <button
                 id="create-circle-btn"
                 type="button">
-
                 Create Circle
-
             </button>
-
 
             <p
                 id="create-circle-message"
@@ -692,15 +595,11 @@
             </span>
 
             <div>
-
-                <h2>
-                    Circle Feed
-                </h2>
+                <h2>Circle Feed</h2>
 
                 <p>
                     Messages and shared Quick Check-Ins.
                 </p>
-
             </div>
 
         </div>
@@ -718,9 +617,7 @@
             <button
                 id="send-message-btn"
                 type="button">
-
                 Send
-
             </button>
 
         </div>
@@ -733,14 +630,11 @@
                 class="status">
             </p>
 
-
             <button
                 id="refresh-feed-btn"
                 type="button"
                 class="secondary compact-btn">
-
                 Refresh Feed
-
             </button>
 
         </div>
@@ -772,15 +666,11 @@
             </span>
 
             <div>
-
-                <h2>
-                    Discover Groups
-                </h2>
+                <h2>Discover Groups</h2>
 
                 <p>
                     Request access to other accountability circles.
                 </p>
-
             </div>
 
         </div>
@@ -790,9 +680,7 @@
             id="refresh-groups-btn"
             type="button"
             class="secondary">
-
             Refresh Groups
-
         </button>
 
 
@@ -822,17 +710,13 @@
             </span>
 
             <div>
-
-                <h2>
-                    My Daily Routine
-                </h2>
+                <h2>My Daily Routine</h2>
 
                 <p>
-                    CircleSync alerts you 5 minutes before each scheduled
-                    activity and again 40 minutes afterward only when the
-                    matching Quick Check-In has not been completed.
+                    CircleSync alerts you 5 minutes before a routine
+                    and 40 minutes afterward only when you have not
+                    completed its matching check-in.
                 </p>
-
             </div>
 
         </div>
@@ -841,7 +725,6 @@
         <div class="routine-grid">
 
             <div>
-
                 <label for="wake-time">
                     Wake
                 </label>
@@ -849,12 +732,10 @@
                 <input
                     id="wake-time"
                     type="time">
-
             </div>
 
 
             <div>
-
                 <label for="breakfast-time">
                     Breakfast
                 </label>
@@ -862,12 +743,10 @@
                 <input
                     id="breakfast-time"
                     type="time">
-
             </div>
 
 
             <div>
-
                 <label for="lunch-time">
                     Lunch
                 </label>
@@ -875,12 +754,10 @@
                 <input
                     id="lunch-time"
                     type="time">
-
             </div>
 
 
             <div>
-
                 <label for="dinner-time">
                     Dinner
                 </label>
@@ -888,12 +765,10 @@
                 <input
                     id="dinner-time"
                     type="time">
-
             </div>
 
 
             <div>
-
                 <label for="rest-time">
                     Rest
                 </label>
@@ -901,12 +776,10 @@
                 <input
                     id="rest-time"
                     type="time">
-
             </div>
 
 
             <div>
-
                 <label for="bedtime">
                     Bedtime
                 </label>
@@ -914,7 +787,6 @@
                 <input
                     id="bedtime"
                     type="time">
-
             </div>
 
         </div>
@@ -923,7 +795,6 @@
         <label for="sleep-goal">
             Sleep Goal
         </label>
-
 
         <input
             id="sleep-goal"
@@ -937,11 +808,8 @@
         <button
             id="save-routine-btn"
             type="button">
-
             Save Routine
-
         </button>
-
 
         <p
             id="routine-message"
@@ -954,13 +822,8 @@
 </main>
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-
-<script src="./app.js?v=78"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./app.js?v=79"></script>
 
 </body>
-
 </html>
