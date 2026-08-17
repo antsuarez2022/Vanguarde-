@@ -35,6 +35,51 @@
 <body id="dashboard-page">
 
 
+<!-- =======================================================
+     FLOATING ROUTINE ALARM
+     ======================================================= -->
+
+<aside
+    id="routine-alarm-widget"
+    class="routine-alarm-widget"
+    aria-live="assertive">
+
+    <div class="alarm-icon">
+        ⏱
+    </div>
+
+    <div class="alarm-info">
+
+        <span
+            id="alarm-label"
+            class="alarm-label">
+
+            Next Alert
+
+        </span>
+
+        <strong id="alarm-title">
+            Loading routine...
+        </strong>
+
+        <span id="alarm-countdown">
+            --:--
+        </span>
+
+    </div>
+
+    <button
+        id="alarm-toggle-btn"
+        type="button"
+        class="alarm-toggle-btn">
+
+        Enable Alarms
+
+    </button>
+
+</aside>
+
+
 <header class="topbar">
 
     <div>
@@ -120,21 +165,57 @@
 
 
         <button
-            id="notification-btn"
+            id="alarm-settings-btn"
             type="button"
             class="secondary">
 
-            Enable Notifications
+            Enable Routine Alarms
 
         </button>
 
 
         <p
-            id="notification-status"
+            id="alarm-status"
             class="status"
             aria-live="polite">
 
-            Checking notification status...
+            Routine alarms are currently off.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOMMENDATION - MOVED TO TOP
+         ===================================================== -->
+
+    <section class="card recommendation-card">
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                ✦
+            </span>
+
+            <div>
+
+                <h2>
+                    CircleSync Recommendation
+                </h2>
+
+                <p>
+                    Guidance based on your routine and check-ins.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p id="recommendation">
+
+            Reviewing your routine...
 
         </p>
 
@@ -260,7 +341,9 @@
          QUICK CHECK-IN
          ===================================================== -->
 
-    <section class="card">
+    <section
+        class="card"
+        id="quick-checkin-card">
 
         <div class="card-heading">
 
@@ -275,7 +358,8 @@
                 </h2>
 
                 <p>
-                    Record healthy actions without interrupting your day.
+                    A matching check-in stops its routine alarm and prevents
+                    the 40-minute overdue alert.
                 </p>
 
             </div>
@@ -353,7 +437,7 @@
 
 
     <!-- =====================================================
-         MY ACCOUNTABILITY CIRCLES
+         MY CIRCLES
          ===================================================== -->
 
     <section class="card">
@@ -371,7 +455,7 @@
                 </h2>
 
                 <p>
-                    Switch between groups you have created or joined.
+                    Switch between groups you created or joined.
                 </p>
 
             </div>
@@ -440,7 +524,6 @@
 
     <!-- =====================================================
          CIRCLE MANAGEMENT
-         NEW TABBED DESIGN
          ===================================================== -->
 
     <section
@@ -460,7 +543,7 @@
                 </h2>
 
                 <p>
-                    Handle membership requests or create a new circle.
+                    Handle membership requests or create a circle.
                 </p>
 
             </div>
@@ -470,16 +553,13 @@
 
         <div
             class="management-tabs"
-            role="tablist"
-            aria-label="Circle management">
+            role="tablist">
 
             <button
                 id="join-requests-tab"
                 type="button"
                 class="management-tab active-management-tab"
-                role="tab"
-                aria-selected="true"
-                aria-controls="join-requests-panel">
+                aria-selected="true">
 
                 🔔 Join Requests
 
@@ -498,9 +578,7 @@
                 id="create-circle-tab"
                 type="button"
                 class="management-tab"
-                role="tab"
-                aria-selected="false"
-                aria-controls="create-circle-panel">
+                aria-selected="false">
 
                 ➕ Create Circle
 
@@ -509,12 +587,9 @@
         </div>
 
 
-        <!-- JOIN REQUESTS -->
-
         <div
             id="join-requests-panel"
-            class="management-panel"
-            role="tabpanel">
+            class="management-panel">
 
             <div class="management-panel-header">
 
@@ -523,8 +598,7 @@
                 </h3>
 
                 <p>
-                    Requests for every accountability circle you created
-                    appear here.
+                    Requests for every circle you created appear here.
                 </p>
 
             </div>
@@ -543,12 +617,9 @@
         </div>
 
 
-        <!-- CREATE CIRCLE -->
-
         <div
             id="create-circle-panel"
             class="management-panel"
-            role="tabpanel"
             hidden>
 
             <div class="management-panel-header">
@@ -586,7 +657,7 @@
                 id="new-circle-description"
                 rows="3"
                 maxlength="500"
-                placeholder="What is the purpose of this accountability circle?"></textarea>
+                placeholder="What is the goal of this accountability circle?"></textarea>
 
 
             <button
@@ -600,8 +671,7 @@
 
             <p
                 id="create-circle-message"
-                class="status"
-                aria-live="polite">
+                class="status">
             </p>
 
         </div>
@@ -628,7 +698,7 @@
                 </h2>
 
                 <p>
-                    See messages and shared Quick Check-Ins.
+                    Messages and shared Quick Check-Ins.
                 </p>
 
             </div>
@@ -690,7 +760,7 @@
 
 
     <!-- =====================================================
-         DISCOVER GROUPS
+         DISCOVER
          ===================================================== -->
 
     <section class="card">
@@ -708,8 +778,7 @@
                 </h2>
 
                 <p>
-                    Request access to accountability circles created by
-                    other CircleSync users.
+                    Request access to other accountability circles.
                 </p>
 
             </div>
@@ -741,7 +810,7 @@
 
 
     <!-- =====================================================
-         DAILY ROUTINE
+         ROUTINE
          ===================================================== -->
 
     <section class="card">
@@ -759,8 +828,9 @@
                 </h2>
 
                 <p>
-                    Tell CircleSync when you normally want to wake,
-                    eat, rest, and sleep.
+                    CircleSync alerts you 5 minutes before each scheduled
+                    activity and again 40 minutes afterward only when the
+                    matching Quick Check-In has not been completed.
                 </p>
 
             </div>
@@ -875,44 +945,7 @@
 
         <p
             id="routine-message"
-            class="status"
-            aria-live="polite">
-        </p>
-
-    </section>
-
-
-    <!-- =====================================================
-         RECOMMENDATION
-         ===================================================== -->
-
-    <section class="card recommendation-card">
-
-        <div class="card-heading">
-
-            <span class="card-icon">
-                ✦
-            </span>
-
-            <div>
-
-                <h2>
-                    CircleSync Recommendation
-                </h2>
-
-                <p>
-                    Guidance based on your routine and check-ins.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <p id="recommendation">
-
-            Reviewing your routine...
-
+            class="status">
         </p>
 
     </section>
@@ -925,7 +958,7 @@
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
 
-<script src="./app.js?v=77"></script>
+<script src="./app.js?v=78"></script>
 
 
 </body>
