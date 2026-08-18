@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -15,7 +16,7 @@
 
     <meta
         name="description"
-        content="CircleSync healthy routine and accountability dashboard.">
+        content="CircleSync routine and accountability dashboard.">
 
     <title>
         CircleSync | Dashboard
@@ -35,18 +36,20 @@
 <body id="dashboard-page">
 
 
-<!-- =======================================================
+<!-- =========================================================
      24/7 FLOATING ROUTINE CLOCK
-     ======================================================= -->
+     ========================================================= -->
 
 <aside
     id="routine-alarm-widget"
     class="routine-alarm-widget"
     aria-live="polite">
 
+
     <div class="alarm-icon">
         ⏰
     </div>
+
 
     <div class="alarm-info">
 
@@ -54,15 +57,17 @@
             id="alarm-label"
             class="alarm-label">
 
-            Next Alert
+            Next Up
 
         </span>
+
 
         <strong id="alarm-title">
 
             Loading routine...
 
         </strong>
+
 
         <span id="alarm-countdown">
 
@@ -72,10 +77,16 @@
 
     </div>
 
+
 </aside>
 
 
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
 <header class="topbar">
+
 
     <div>
 
@@ -83,8 +94,9 @@
             CircleSync
         </h1>
 
-        <p id="user-email">
-            Loading account...
+
+        <p id="user-username">
+            Loading profile...
         </p>
 
     </div>
@@ -99,17 +111,19 @@
 
     </button>
 
+
 </header>
 
 
 <main class="dashboard">
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          NEXT UP
-         =================================================== -->
+         ===================================================== -->
 
     <section class="card next-up-card">
+
 
         <div class="card-heading">
 
@@ -117,16 +131,17 @@
                 ⏰
             </span>
 
+
             <div>
 
                 <h2>
                     Next Up
                 </h2>
 
+
                 <p>
-                    CircleSync follows your routine 24/7:
-                    Wake → Breakfast → Lunch → Rest → Dinner → Bedtime →
-                    next day's Wake.
+                    Wake → Breakfast → Lunch → Rest → Dinner →
+                    Bedtime → next day's Wake.
                 </p>
 
             </div>
@@ -180,14 +195,16 @@
 
         </p>
 
+
     </section>
 
 
-    <!-- ===================================================
-         RECOMMENDATIONS
-         =================================================== -->
+    <!-- =====================================================
+         RECOMMENDATION
+         ===================================================== -->
 
     <section class="card recommendation-card">
+
 
         <div class="card-heading">
 
@@ -195,11 +212,13 @@
                 ✦
             </span>
 
+
             <div>
 
                 <h2>
                     CircleSync Recommendation
                 </h2>
+
 
                 <p>
                     Guidance based on your routine and check-ins.
@@ -216,14 +235,94 @@
 
         </p>
 
+
     </section>
 
 
-    <!-- ===================================================
-         ENERGY
-         =================================================== -->
+    <!-- =====================================================
+         PROFILE / USERNAME
+         ===================================================== -->
 
     <section class="card">
+
+
+        <div class="card-heading">
+
+            <span class="card-icon">
+                👤
+            </span>
+
+
+            <div>
+
+                <h2>
+                    Profile
+                </h2>
+
+
+                <p>
+                    Your username is shown to other CircleSync users.
+                    Your email stays private.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p>
+
+            Current Username:
+
+            <strong id="profile-current-username">
+                Loading...
+            </strong>
+
+        </p>
+
+
+        <label for="profile-username-input">
+
+            Change Username
+
+        </label>
+
+
+        <input
+            id="profile-username-input"
+            type="text"
+            minlength="3"
+            maxlength="24"
+            pattern="[A-Za-z0-9_]+"
+            autocomplete="username"
+            placeholder="New username">
+
+
+        <button
+            id="save-username-btn"
+            type="button">
+
+            Save Username
+
+        </button>
+
+
+        <p
+            id="profile-message"
+            class="status"
+            aria-live="polite">
+        </p>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         ENERGY
+         ===================================================== -->
+
+    <section class="card">
+
 
         <div class="card-heading">
 
@@ -231,14 +330,16 @@
                 ⚡
             </span>
 
+
             <div>
 
                 <h2>
                     Today's Energy
                 </h2>
 
+
                 <p>
-                    This information stays private.
+                    Your energy score stays private.
                 </p>
 
             </div>
@@ -284,14 +385,16 @@
 
         </button>
 
+
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          FOCUS
-         =================================================== -->
+         ===================================================== -->
 
     <section class="card">
+
 
         <div class="card-heading">
 
@@ -299,11 +402,13 @@
                 🎯
             </span>
 
+
             <div>
 
                 <h2>
                     Focus Mode
                 </h2>
+
 
                 <p>
                     Stay productive without losing track of your routine.
@@ -331,17 +436,18 @@
 
         </p>
 
+
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          QUICK CHECK-IN
-         EXACT SAME ORDER AS ROUTINE
-         =================================================== -->
+         ===================================================== -->
 
     <section
         id="quick-checkin-card"
         class="card">
+
 
         <div class="card-heading">
 
@@ -349,15 +455,17 @@
                 ✓
             </span>
 
+
             <div>
 
                 <h2>
                     Quick Check-In
                 </h2>
 
+
                 <p>
-                    Checking in clears that routine occurrence and stops
-                    its repeating 10-minute alarms.
+                    A matching check-in stops the active alarm and
+                    prevents later reminders for that routine occurrence.
                 </p>
 
             </div>
@@ -433,14 +541,16 @@
 
         </div>
 
+
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          MY CIRCLES
-         =================================================== -->
+         ===================================================== -->
 
     <section class="card">
+
 
         <div class="card-heading">
 
@@ -448,14 +558,16 @@
                 👥
             </span>
 
+
             <div>
 
                 <h2>
                     My Accountability Circles
                 </h2>
 
+
                 <p>
-                    Switch between groups you created or joined.
+                    Switch between any circles you created or joined.
                 </p>
 
             </div>
@@ -468,13 +580,14 @@
             class="circle-switcher">
 
             <p class="empty-text">
-                Loading your circles...
+                Loading circles...
             </p>
 
         </div>
 
 
         <div class="active-circle-box">
+
 
             <p class="mini-label">
                 ACTIVE CIRCLE
@@ -490,7 +603,7 @@
 
             <p id="circle-description">
 
-                Select or join a circle.
+                Create or join a circle.
 
             </p>
 
@@ -504,6 +617,7 @@
                 Leave Circle
 
             </button>
+
 
         </div>
 
@@ -523,16 +637,16 @@
 
         </ul>
 
+
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          CIRCLE MANAGEMENT
-         =================================================== -->
+         ===================================================== -->
 
-    <section
-        id="circle-management-card"
-        class="card">
+    <section class="card">
+
 
         <div class="card-heading">
 
@@ -540,14 +654,16 @@
                 🛠
             </span>
 
+
             <div>
 
                 <h2>
                     Circle Management
                 </h2>
 
+
                 <p>
-                    Manage join requests or create a new accountability circle.
+                    Review requests or create a new circle.
                 </p>
 
             </div>
@@ -589,9 +705,12 @@
         </div>
 
 
+        <!-- JOIN REQUESTS -->
+
         <div
             id="join-requests-panel"
             class="management-panel">
+
 
             <div class="management-panel-header">
 
@@ -599,8 +718,9 @@
                     Join Requests
                 </h3>
 
+
                 <p>
-                    Requests for circles you created appear here.
+                    Only requests for circles you created appear here.
                 </p>
 
             </div>
@@ -616,13 +736,17 @@
 
             </div>
 
+
         </div>
 
+
+        <!-- CREATE CIRCLE -->
 
         <div
             id="create-circle-panel"
             class="management-panel"
             hidden>
+
 
             <div class="management-panel-header">
 
@@ -630,15 +754,18 @@
                     Create a Circle
                 </h3>
 
+
                 <p>
-                    Start an accountability group.
+                    Start a new accountability group.
                 </p>
 
             </div>
 
 
             <label for="new-circle-name">
+
                 Circle Name
+
             </label>
 
 
@@ -650,7 +777,9 @@
 
 
             <label for="new-circle-description">
+
                 Description
+
             </label>
 
 
@@ -658,7 +787,7 @@
                 id="new-circle-description"
                 rows="3"
                 maxlength="500"
-                placeholder="What is the goal of this accountability circle?"></textarea>
+                placeholder="What is the goal of your circle?"></textarea>
 
 
             <button
@@ -675,16 +804,19 @@
                 class="status">
             </p>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          CIRCLE FEED
-         =================================================== -->
+         ===================================================== -->
 
     <section class="card">
+
 
         <div class="card-heading">
 
@@ -692,14 +824,17 @@
                 💬
             </span>
 
+
             <div>
 
                 <h2>
                     Circle Feed
                 </h2>
 
+
                 <p>
-                    Messages and shared Quick Check-Ins.
+                    Messages and shared Quick Check-Ins use usernames,
+                    never email addresses.
                 </p>
 
             </div>
@@ -708,6 +843,7 @@
 
 
         <div class="message-compose">
+
 
             <textarea
                 id="circle-message"
@@ -724,10 +860,12 @@
 
             </button>
 
+
         </div>
 
 
         <div class="feed-toolbar">
+
 
             <p
                 id="feed-message"
@@ -744,6 +882,7 @@
 
             </button>
 
+
         </div>
 
 
@@ -757,14 +896,16 @@
 
         </div>
 
+
     </section>
 
 
-    <!-- ===================================================
-         DISCOVER GROUPS
-         =================================================== -->
+    <!-- =====================================================
+         DISCOVER
+         ===================================================== -->
 
     <section class="card">
+
 
         <div class="card-heading">
 
@@ -772,14 +913,16 @@
                 🔎
             </span>
 
+
             <div>
 
                 <h2>
                     Discover Groups
                 </h2>
 
+
                 <p>
-                    Request access to other accountability circles.
+                    Request access to public accountability circles.
                 </p>
 
             </div>
@@ -807,15 +950,16 @@
 
         </div>
 
+
     </section>
 
 
-    <!-- ===================================================
+    <!-- =====================================================
          DAILY ROUTINE
-         ORDER IS INTENTIONAL
-         =================================================== -->
+         ===================================================== -->
 
     <section class="card">
+
 
         <div class="card-heading">
 
@@ -823,16 +967,17 @@
                 🕒
             </span>
 
+
             <div>
 
                 <h2>
                     My Daily Routine
                 </h2>
 
+
                 <p>
-                    Your schedule repeats every day. Bedtime can occur
-                    after midnight and CircleSync will still connect it
-                    correctly to your next Wake time.
+                    CircleSync continuously cycles through this schedule
+                    every day.
                 </p>
 
             </div>
@@ -949,7 +1094,9 @@
 
 
         <label for="sleep-goal">
+
             Sleep Goal
+
         </label>
 
 
@@ -977,14 +1124,18 @@
             aria-live="polite">
         </p>
 
+
     </section>
 
 
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./app.js?v=83"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+<script src="./app.js?v=84"></script>
 
 
 </body>
