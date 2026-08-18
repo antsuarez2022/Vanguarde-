@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -15,7 +16,7 @@
 
     <meta
         name="description"
-        content="CircleSync helps users build healthier eating, sleeping, rest, and focus routines.">
+        content="CircleSync helps users build healthier routines with accountability circles.">
 
     <title>
         CircleSync | Sign In
@@ -34,197 +35,244 @@
 
 <body id="auth-page">
 
-    <main class="auth-shell">
 
-        <section class="auth-card">
+<main class="auth-shell">
+
+    <section class="auth-card">
 
 
-            <div class="brand">
+        <div class="brand">
 
-                <div
-                    class="brand-icon"
-                    aria-hidden="true">
-
-                    ◉
-
-                </div>
-
-                <h1>
-                    CircleSync
-                </h1>
-
-                <p>
-                    Build healthier routines together.
-                </p>
-
+            <div class="brand-icon">
+                ◉
             </div>
 
 
-            <div class="auth-tabs">
+            <h1>
+                CircleSync
+            </h1>
+
+
+            <p>
+                Build healthier routines together.
+            </p>
+
+        </div>
+
+
+        <div class="auth-tabs">
+
+            <button
+                id="show-signin-btn"
+                type="button"
+                class="active-tab">
+
+                Sign In
+
+            </button>
+
+
+            <button
+                id="show-signup-btn"
+                type="button"
+                class="secondary">
+
+                Create Account
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             SIGN IN
+             ================================================= -->
+
+        <section id="signin-section">
+
+            <h2>
+                Welcome Back
+            </h2>
+
+
+            <p>
+                Sign in with the email and password connected to
+                your CircleSync account.
+            </p>
+
+
+            <form id="signin-form">
+
+
+                <label for="signin-email">
+
+                    Email
+
+                </label>
+
+
+                <input
+                    id="signin-email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required>
+
+
+                <label for="signin-password">
+
+                    Password
+
+                </label>
+
+
+                <input
+                    id="signin-password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Your password"
+                    required>
+
 
                 <button
-                    id="show-signin-btn"
-                    class="auth-tab active-tab"
-                    type="button">
+                    id="login-btn"
+                    type="submit">
 
                     Sign In
 
                 </button>
 
 
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             SIGN UP
+             ================================================= -->
+
+        <section
+            id="signup-section"
+            hidden>
+
+            <h2>
+                Create Your Account
+            </h2>
+
+
+            <p>
+                Your email stays private. Other CircleSync users
+                will identify you by your username.
+            </p>
+
+
+            <form id="signup-form">
+
+
+                <label for="signup-username">
+
+                    Username
+
+                </label>
+
+
+                <input
+                    id="signup-username"
+                    type="text"
+                    minlength="3"
+                    maxlength="24"
+                    pattern="[A-Za-z0-9_]+"
+                    autocomplete="username"
+                    placeholder="Example: antonio_s"
+                    required>
+
+
+                <p class="status">
+                    3–24 characters. Letters, numbers and underscores only.
+                </p>
+
+
+                <label for="signup-email">
+
+                    Email
+
+                </label>
+
+
+                <input
+                    id="signup-email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required>
+
+
+                <label for="signup-password">
+
+                    Create Password
+
+                </label>
+
+
+                <input
+                    id="signup-password"
+                    type="password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="At least 6 characters"
+                    required>
+
+
+                <label for="signup-confirm-password">
+
+                    Confirm Password
+
+                </label>
+
+
+                <input
+                    id="signup-confirm-password"
+                    type="password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="Enter your password again"
+                    required>
+
+
                 <button
-                    id="show-signup-btn"
-                    class="auth-tab"
-                    type="button">
+                    id="signup-btn"
+                    type="submit">
 
                     Create Account
 
                 </button>
 
-            </div>
 
-
-            <section id="signin-section">
-
-                <div class="auth-copy">
-
-                    <h2>
-                        Welcome Back
-                    </h2>
-
-                    <p>
-                        Sign in with your CircleSync
-                        email and password.
-                    </p>
-
-                </div>
-
-
-                <form
-                    id="signin-form"
-                    novalidate>
-
-                    <label for="signin-email">
-                        Email
-                    </label>
-
-                    <input
-                        id="signin-email"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="you@example.com"
-                        required>
-
-
-                    <label for="signin-password">
-                        Password
-                    </label>
-
-                    <input
-                        id="signin-password"
-                        type="password"
-                        autocomplete="current-password"
-                        placeholder="Enter your password"
-                        required>
-
-
-                    <button
-                        id="login-btn"
-                        type="submit">
-
-                        Sign In
-
-                    </button>
-
-                </form>
-
-            </section>
-
-
-            <section
-                id="signup-section"
-                hidden>
-
-                <div class="auth-copy">
-
-                    <h2>
-                        Create Your Account
-                    </h2>
-
-                    <p>
-                        Choose a password you will use
-                        every time you sign in.
-                    </p>
-
-                </div>
-
-
-                <form
-                    id="signup-form"
-                    novalidate>
-
-                    <label for="signup-email">
-                        Email
-                    </label>
-
-                    <input
-                        id="signup-email"
-                        type="email"
-                        autocomplete="email"
-                        placeholder="you@example.com"
-                        required>
-
-
-                    <label for="signup-password">
-                        Create Password
-                    </label>
-
-                    <input
-                        id="signup-password"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="6"
-                        placeholder="At least 6 characters"
-                        required>
-
-
-                    <label for="signup-confirm-password">
-                        Confirm Password
-                    </label>
-
-                    <input
-                        id="signup-confirm-password"
-                        type="password"
-                        autocomplete="new-password"
-                        minlength="6"
-                        placeholder="Enter the password again"
-                        required>
-
-
-                    <button
-                        id="signup-btn"
-                        type="submit">
-
-                        Create Account
-
-                    </button>
-
-                </form>
-
-            </section>
-
-
-            <p
-                id="auth-message"
-                class="status"
-                aria-live="polite">
-            </p>
+            </form>
 
         </section>
 
-    </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./app.js?v=83"></script>
+
+        <p
+            id="auth-message"
+            class="status"
+            aria-live="polite">
+        </p>
+
+
+    </section>
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+<script src="./app.js?v=84"></script>
+
+
 </body>
 
 </html>
