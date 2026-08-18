@@ -1,6 +1,6 @@
 "use strict";
 
-console.log("CircleSync app.js v81 loaded");
+console.log("CircleSync app.js v82 loaded");
 
 
 /* ==========================================================
@@ -10,17 +10,14 @@ console.log("CircleSync app.js v81 loaded");
 const SUPABASE_URL =
     "https://mkecbhmkvrtwltejwzua.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_hWxse_7flC8kSKS_xlVkYw_BRUwJ2d8";
-
 
 const WEBSITE_SIGNIN_URL =
     "https://antsuarez2022.github.io/Vanguarde-/";
 
 
 if (!window.supabase) {
-
     throw new Error(
         "Supabase library failed to load."
     );
@@ -35,31 +32,21 @@ const supabaseClient =
 
 
 /* ==========================================================
-   START
+   START APP
    ========================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
-        if (
-            document.body.id ===
-            "auth-page"
-        ) {
-
+        if (document.body.id === "auth-page") {
             await initAuthPage();
             return;
         }
 
-
-        if (
-            document.body.id ===
-            "dashboard-page"
-        ) {
-
+        if (document.body.id === "dashboard-page") {
             await initDashboardPage();
         }
-
     }
 );
 
@@ -71,7 +58,6 @@ document.addEventListener(
 async function initAuthPage() {
 
     function get(id) {
-
         return document.getElementById(id);
     }
 
@@ -104,14 +90,11 @@ async function initAuthPage() {
     ) {
 
         if (!authMessage) {
-
             return;
         }
 
-
         authMessage.textContent =
             message;
-
 
         authMessage.className =
             error
@@ -124,22 +107,21 @@ async function initAuthPage() {
         "click",
         function () {
 
-            signinSection.hidden =
-                false;
+            if (signinSection) {
+                signinSection.hidden = false;
+            }
 
-            signupSection.hidden =
-                true;
-
+            if (signupSection) {
+                signupSection.hidden = true;
+            }
 
             signinTab.classList.add(
                 "active-tab"
             );
 
-
             signupTab?.classList.remove(
                 "active-tab"
             );
-
         }
     );
 
@@ -148,22 +130,21 @@ async function initAuthPage() {
         "click",
         function () {
 
-            signinSection.hidden =
-                true;
+            if (signinSection) {
+                signinSection.hidden = true;
+            }
 
-            signupSection.hidden =
-                false;
-
+            if (signupSection) {
+                signupSection.hidden = false;
+            }
 
             signupTab.classList.add(
                 "active-tab"
             );
 
-
             signinTab?.classList.remove(
                 "active-tab"
             );
-
         }
     );
 
@@ -194,14 +175,12 @@ async function initAuthPage() {
 
             const email =
                 get("signin-email")
-                    .value
+                    ?.value
                     .trim();
-
 
             const password =
                 get("signin-password")
-                    .value;
-
+                    ?.value;
 
             const button =
                 get("login-btn");
@@ -221,38 +200,29 @@ async function initAuthPage() {
             }
 
 
-            button.disabled =
-                true;
-
-
-            button.textContent =
-                "Signing In...";
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Signing In...";
+            }
 
 
             const result =
                 await supabaseClient.auth
                     .signInWithPassword({
 
-                        email:
-                            email,
-
-                        password:
-                            password
+                        email,
+                        password
 
                     });
 
 
-            button.disabled =
-                false;
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Sign In";
+            }
 
 
-            button.textContent =
-                "Sign In";
-
-
-            if (
-                result.error
-            ) {
+            if (result.error) {
 
                 showMessage(
                     result.error.message,
@@ -266,7 +236,6 @@ async function initAuthPage() {
             window.location.replace(
                 "./dashboard.html"
             );
-
         }
     );
 
@@ -280,27 +249,22 @@ async function initAuthPage() {
 
             const email =
                 get("signup-email")
-                    .value
+                    ?.value
                     .trim();
-
 
             const password =
                 get("signup-password")
-                    .value;
-
+                    ?.value;
 
             const confirmation =
                 get("signup-confirm-password")
-                    .value;
-
+                    ?.value;
 
             const button =
                 get("signup-btn");
 
 
-            if (
-                !email
-            ) {
+            if (!email) {
 
                 showMessage(
                     "Enter an email address.",
@@ -312,6 +276,7 @@ async function initAuthPage() {
 
 
             if (
+                !password ||
                 password.length < 6
             ) {
 
@@ -338,23 +303,18 @@ async function initAuthPage() {
             }
 
 
-            button.disabled =
-                true;
-
-
-            button.textContent =
-                "Creating Account...";
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Creating Account...";
+            }
 
 
             const result =
                 await supabaseClient.auth
                     .signUp({
 
-                        email:
-                            email,
-
-                        password:
-                            password,
+                        email,
+                        password,
 
                         options: {
 
@@ -366,17 +326,13 @@ async function initAuthPage() {
                     });
 
 
-            button.disabled =
-                false;
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Create Account";
+            }
 
 
-            button.textContent =
-                "Create Account";
-
-
-            if (
-                result.error
-            ) {
+            if (result.error) {
 
                 showMessage(
                     result.error.message,
@@ -403,7 +359,6 @@ async function initAuthPage() {
                 "Account created. You can now sign in.",
                 false
             );
-
         }
     );
 }
@@ -416,7 +371,6 @@ async function initAuthPage() {
 async function initDashboardPage() {
 
     function get(id) {
-
         return document.getElementById(id);
     }
 
@@ -429,20 +383,14 @@ async function initDashboardPage() {
         const element =
             get(id);
 
-
-        if (
-            element
-        ) {
-
+        if (element) {
             element.textContent =
                 value;
         }
     }
 
 
-    function recommend(
-        message
-    ) {
+    function recommend(message) {
 
         setText(
             "recommendation",
@@ -452,150 +400,96 @@ async function initDashboardPage() {
 
 
     /* ======================================================
-       STATE
+       APP STATE
        ====================================================== */
 
     let currentUser =
         null;
 
-
     let currentRoutine =
         null;
-
 
     let latestEnergy =
         null;
 
-
     let focusActive =
         false;
-
 
     let focusStartedAt =
         null;
 
-
     let activeCircle =
         null;
-
 
     let myCircles =
         [];
 
-
     let realtimeChannel =
         null;
 
-
-    /*
-     * These are actual check-in rows with timestamps.
-     *
-     * We DO NOT simply store:
-     *
-     * breakfast = completed
-     *
-     * because tomorrow has another breakfast.
-     */
-
     let recentCheckIns =
         [];
-
 
     let lastCheckInRefresh =
         0;
 
 
     /* ======================================================
-       ROUTINE DEFINITION
+       ROUTINE ORDER
 
-       NEVER change the order here unless you intentionally
-       want to change the entire CircleSync routine.
+       ALWAYS:
+
+       Wake
+       Breakfast
+       Lunch
+       Rest
+       Dinner
+       Bedtime
+       Next Wake
        ====================================================== */
 
     const ROUTINE_ORDER = [
 
         {
-            type:
-                "wake",
-
-            title:
-                "☀️ Wake Up",
-
-            shortTitle:
-                "Wake",
-
-            field:
-                "wake_time"
+            type: "wake",
+            title: "☀️ Wake Up",
+            shortTitle: "Wake",
+            field: "wake_time"
         },
 
         {
-            type:
-                "breakfast",
-
-            title:
-                "🍳 Breakfast",
-
-            shortTitle:
-                "Breakfast",
-
-            field:
-                "breakfast_time"
+            type: "breakfast",
+            title: "🍳 Breakfast",
+            shortTitle: "Breakfast",
+            field: "breakfast_time"
         },
 
         {
-            type:
-                "lunch",
-
-            title:
-                "🥗 Lunch",
-
-            shortTitle:
-                "Lunch",
-
-            field:
-                "lunch_time"
+            type: "lunch",
+            title: "🥗 Lunch",
+            shortTitle: "Lunch",
+            field: "lunch_time"
         },
 
         {
-            type:
-                "rest",
-
-            title:
-                "😴 Rest",
-
-            shortTitle:
-                "Rest",
-
-            field:
-                "rest_start_time"
+            type: "rest",
+            title: "😴 Rest",
+            shortTitle: "Rest",
+            field: "rest_start_time"
         },
 
         {
-            type:
-                "dinner",
-
-            title:
-                "🍽 Dinner",
-
-            shortTitle:
-                "Dinner",
-
-            field:
-                "dinner_time"
+            type: "dinner",
+            title: "🍽 Dinner",
+            shortTitle: "Dinner",
+            field: "dinner_time"
         },
 
         {
-            type:
-                "sleep",
-
-            title:
-                "🌙 Bedtime",
-
-            shortTitle:
-                "Bedtime",
-
-            field:
-                "bedtime"
+            type: "sleep",
+            title: "🌙 Bedtime",
+            shortTitle: "Bedtime",
+            field: "bedtime"
         }
 
     ];
@@ -610,29 +504,21 @@ async function initDashboardPage() {
             "circlesync-alarms-enabled"
         ) === "true";
 
-
     let audioContext =
         null;
-
 
     let activeAlarm =
         null;
 
-
     let alarmRepeatTimer =
         null;
-
-
-    /*
-     * Alarm events already triggered in this browser session.
-     */
 
     const firedAlarmKeys =
         new Set();
 
 
     /* ======================================================
-       SESSION
+       USER SESSION
        ====================================================== */
 
     const sessionResult =
@@ -664,7 +550,7 @@ async function initDashboardPage() {
 
 
     /* ======================================================
-       LOGOUT
+       LOG OUT
        ====================================================== */
 
     get("logout-btn")
@@ -675,9 +561,7 @@ async function initDashboardPage() {
                 stopAlarm();
 
 
-                if (
-                    realtimeChannel
-                ) {
+                if (realtimeChannel) {
 
                     await supabaseClient
                         .removeChannel(
@@ -693,9 +577,1110 @@ async function initDashboardPage() {
                 window.location.replace(
                     "./index.html"
                 );
-
             }
         );
+
+
+    /* ======================================================
+       DATE HELPERS
+       ====================================================== */
+
+    function startOfDay(date) {
+
+        return new Date(
+
+            date.getFullYear(),
+
+            date.getMonth(),
+
+            date.getDate(),
+
+            0,
+
+            0,
+
+            0,
+
+            0
+
+        );
+    }
+
+
+    function addDays(
+        date,
+        days
+    ) {
+
+        const result =
+            new Date(date);
+
+        result.setDate(
+            result.getDate() +
+            days
+        );
+
+        return result;
+    }
+
+
+    function parseClock(clock) {
+
+        if (!clock) {
+            return null;
+        }
+
+
+        const parts =
+            clock.split(":");
+
+
+        return {
+
+            hours:
+                Number(parts[0]),
+
+            minutes:
+                Number(parts[1])
+
+        };
+    }
+
+
+    function dateAtClock(
+        baseDate,
+        clock
+    ) {
+
+        const parsed =
+            parseClock(clock);
+
+
+        if (!parsed) {
+            return null;
+        }
+
+
+        return new Date(
+
+            baseDate.getFullYear(),
+
+            baseDate.getMonth(),
+
+            baseDate.getDate(),
+
+            parsed.hours,
+
+            parsed.minutes,
+
+            0,
+
+            0
+
+        );
+    }
+
+
+    function formatDateKey(date) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        return (
+            year +
+            "-" +
+            month +
+            "-" +
+            day
+        );
+    }
+
+
+    /* ======================================================
+       BUILD ONE ROUTINE CYCLE
+
+       BEDTIME AFTER MIDNIGHT IS HANDLED AUTOMATICALLY.
+       ====================================================== */
+
+    function buildCycle(baseDate) {
+
+        if (!currentRoutine) {
+            return [];
+        }
+
+
+        let workingDate =
+            startOfDay(baseDate);
+
+        let previousTime =
+            null;
+
+        const cycle =
+            [];
+
+
+        for (
+            const definition
+            of ROUTINE_ORDER
+        ) {
+
+            const clock =
+                currentRoutine[
+                    definition.field
+                ];
+
+
+            if (!clock) {
+                continue;
+            }
+
+
+            let scheduled =
+                dateAtClock(
+                    workingDate,
+                    clock
+                );
+
+
+            /*
+             * If the clock moves backward,
+             * this event belongs to the next calendar day.
+             *
+             * Example:
+             * Dinner 9:30 PM
+             * Bedtime 12:30 AM
+             */
+
+            if (
+                previousTime &&
+                scheduled <= previousTime
+            ) {
+
+                workingDate =
+                    addDays(
+                        workingDate,
+                        1
+                    );
+
+
+                scheduled =
+                    dateAtClock(
+                        workingDate,
+                        clock
+                    );
+            }
+
+
+            const cycleKey =
+                formatDateKey(
+                    baseDate
+                );
+
+
+            cycle.push({
+
+                ...definition,
+
+                scheduled,
+
+                cycleDate:
+                    cycleKey,
+
+                id:
+                    cycleKey +
+                    "|" +
+                    definition.type +
+                    "|" +
+                    scheduled.toISOString()
+
+            });
+
+
+            previousTime =
+                scheduled;
+        }
+
+
+        return cycle;
+    }
+
+
+    /* ======================================================
+       CONTINUOUS 24/7 SCHEDULE
+       ====================================================== */
+
+    function buildContinuousSchedule() {
+
+        if (!currentRoutine) {
+            return [];
+        }
+
+
+        const today =
+            startOfDay(
+                new Date()
+            );
+
+
+        const schedule =
+            [];
+
+
+        /*
+         * Generate several routine cycles around today.
+         *
+         * That means the clock never reaches a real
+         * "end of routine."
+         */
+
+        for (
+            let offset = -2;
+            offset <= 4;
+            offset += 1
+        ) {
+
+            schedule.push(
+                ...buildCycle(
+                    addDays(
+                        today,
+                        offset
+                    )
+                )
+            );
+        }
+
+
+        schedule.sort(
+            function (
+                first,
+                second
+            ) {
+
+                return (
+                    first.scheduled -
+                    second.scheduled
+                );
+            }
+        );
+
+
+        return schedule;
+    }
+
+
+    /* ======================================================
+       CHECK-IN DATA
+       ====================================================== */
+
+    async function refreshRecentCheckIns() {
+
+        const now =
+            new Date();
+
+
+        const start =
+            addDays(
+                startOfDay(now),
+                -2
+            );
+
+
+        const end =
+            addDays(
+                startOfDay(now),
+                4
+            );
+
+
+        const result =
+            await supabaseClient
+                .from(
+                    "check_ins"
+                )
+                .select(
+                    "check_in_type, created_at"
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+                .gte(
+                    "created_at",
+                    start.toISOString()
+                )
+                .lt(
+                    "created_at",
+                    end.toISOString()
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: true
+                    }
+                );
+
+
+        if (result.error) {
+
+            console.error(
+                "Check-in refresh error:",
+                result.error
+            );
+
+            return;
+        }
+
+
+        recentCheckIns =
+            result.data || [];
+
+
+        lastCheckInRefresh =
+            Date.now();
+
+
+        /*
+         * If the user checked in while an alarm
+         * was sounding, stop it.
+         */
+
+        if (activeAlarm) {
+
+            const schedule =
+                buildContinuousSchedule();
+
+
+            const occurrence =
+                schedule.find(
+                    function (item) {
+
+                        return (
+                            item.id ===
+                            activeAlarm.occurrenceId
+                        );
+                    }
+                );
+
+
+            if (
+                occurrence &&
+                isOccurrenceCompleted(
+                    occurrence,
+                    schedule
+                )
+            ) {
+
+                stopAlarm(
+                    occurrence.type
+                );
+            }
+        }
+    }
+
+
+    /* ======================================================
+       COMPLETION WINDOW
+       ====================================================== */
+
+    function getNextOccurrenceOfType(
+        occurrence,
+        schedule
+    ) {
+
+        return (
+            schedule.find(
+                function (candidate) {
+
+                    return (
+
+                        candidate.type ===
+                            occurrence.type
+
+                        &&
+
+                        candidate.scheduled >
+                            occurrence.scheduled
+
+                    );
+                }
+            )
+            ||
+            null
+        );
+    }
+
+
+    function isOccurrenceCompleted(
+        occurrence,
+        schedule
+    ) {
+
+        /*
+         * Check-in may occur up to 10 minutes before
+         * scheduled time.
+         */
+
+        const windowStart =
+            new Date(
+                occurrence.scheduled.getTime()
+                -
+                10 *
+                60 *
+                1000
+            );
+
+
+        const nextSameType =
+            getNextOccurrenceOfType(
+                occurrence,
+                schedule
+            );
+
+
+        const windowEnd =
+            nextSameType
+
+                ? new Date(
+                    nextSameType.scheduled.getTime()
+                    -
+                    10 *
+                    60 *
+                    1000
+                )
+
+                : new Date(
+                    occurrence.scheduled.getTime()
+                    +
+                    24 *
+                    60 *
+                    60 *
+                    1000
+                );
+
+
+        return recentCheckIns.some(
+            function (checkIn) {
+
+                if (
+                    checkIn.check_in_type !==
+                    occurrence.type
+                ) {
+
+                    return false;
+                }
+
+
+                const checkTime =
+                    new Date(
+                        checkIn.created_at
+                    );
+
+
+                return (
+
+                    checkTime >=
+                        windowStart
+
+                    &&
+
+                    checkTime <
+                        windowEnd
+
+                );
+            }
+        );
+    }
+
+
+    /* ======================================================
+       COUNTDOWN FORMAT
+       ====================================================== */
+
+    function formatCountdown(
+        milliseconds
+    ) {
+
+        const totalSeconds =
+            Math.max(
+                0,
+                Math.floor(
+                    milliseconds /
+                    1000
+                )
+            );
+
+
+        const days =
+            Math.floor(
+                totalSeconds /
+                86400
+            );
+
+
+        const hours =
+            Math.floor(
+                (
+                    totalSeconds %
+                    86400
+                ) /
+                3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (
+                    totalSeconds %
+                    3600
+                ) /
+                60
+            );
+
+
+        const seconds =
+            totalSeconds %
+            60;
+
+
+        if (days > 0) {
+
+            return (
+
+                days +
+                "d " +
+
+                String(hours)
+                    .padStart(
+                        2,
+                        "0"
+                    )
+
+                +
+
+                ":"
+
+                +
+
+                String(minutes)
+                    .padStart(
+                        2,
+                        "0"
+                    )
+
+                +
+
+                ":"
+
+                +
+
+                String(seconds)
+                    .padStart(
+                        2,
+                        "0"
+                    )
+
+            );
+        }
+
+
+        return (
+
+            String(hours)
+                .padStart(
+                    2,
+                    "0"
+                )
+
+            +
+
+            ":"
+
+            +
+
+            String(minutes)
+                .padStart(
+                    2,
+                    "0"
+                )
+
+            +
+
+            ":"
+
+            +
+
+            String(seconds)
+                .padStart(
+                    2,
+                    "0"
+                )
+
+        );
+    }
+
+
+    function formatScheduledTime(date) {
+
+        const now =
+            new Date();
+
+        const today =
+            startOfDay(now);
+
+        const tomorrow =
+            addDays(
+                today,
+                1
+            );
+
+
+        if (
+            date >= tomorrow &&
+            date < addDays(
+                tomorrow,
+                1
+            )
+        ) {
+
+            return (
+                "Tomorrow at " +
+                date.toLocaleTimeString(
+                    [],
+                    {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    }
+                )
+            );
+        }
+
+
+        if (
+            formatDateKey(date) !==
+            formatDateKey(now)
+        ) {
+
+            return (
+                date.toLocaleDateString(
+                    [],
+                    {
+                        weekday: "short",
+                        month: "short",
+                        day: "numeric"
+                    }
+                )
+                +
+                " at "
+                +
+                date.toLocaleTimeString(
+                    [],
+                    {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    }
+                )
+            );
+        }
+
+
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+    }
+
+
+    /* ======================================================
+       SINGLE SHARED ROUTINE TARGET
+
+       THIS IS THE MAIN V82 FIX.
+
+       BOTH:
+       - Next Up card
+       - Floating clock
+
+       use this SAME target.
+
+       They can no longer disagree.
+       ====================================================== */
+
+    function getCurrentRoutineTarget() {
+
+        if (!currentRoutine) {
+
+            return {
+                state: "none",
+                occurrence: null
+            };
+        }
+
+
+        const schedule =
+            buildContinuousSchedule();
+
+
+        const now =
+            new Date();
+
+
+        /*
+         * Find a recent missed occurrence first.
+         *
+         * Only keep overdue items relevant for six hours.
+         * This prevents something missed yesterday from
+         * blocking today's entire routine.
+         */
+
+        const overdueLimit =
+            6 *
+            60 *
+            60 *
+            1000;
+
+
+        const overdue =
+            schedule.find(
+                function (occurrence) {
+
+                    const age =
+                        now -
+                        occurrence.scheduled;
+
+
+                    return (
+
+                        age >= 0
+
+                        &&
+
+                        age <= overdueLimit
+
+                        &&
+
+                        !isOccurrenceCompleted(
+                            occurrence,
+                            schedule
+                        )
+
+                    );
+                }
+            );
+
+
+        if (overdue) {
+
+            return {
+
+                state:
+                    "overdue",
+
+                occurrence:
+                    overdue,
+
+                difference:
+                    now -
+                    overdue.scheduled
+
+            };
+        }
+
+
+        /*
+         * Otherwise show next scheduled routine.
+         */
+
+        const next =
+            schedule.find(
+                function (occurrence) {
+
+                    return (
+                        occurrence.scheduled >
+                        now
+                    );
+                }
+            );
+
+
+        if (next) {
+
+            return {
+
+                state:
+                    "upcoming",
+
+                occurrence:
+                    next,
+
+                difference:
+                    next.scheduled -
+                    now
+
+            };
+        }
+
+
+        return {
+
+            state:
+                "none",
+
+            occurrence:
+                null
+
+        };
+    }
+
+
+    /* ======================================================
+       RENDER BOTH CLOCKS FROM SAME TARGET
+       ====================================================== */
+
+    function updateRoutineDisplays() {
+
+        if (!currentRoutine) {
+
+            setText(
+                "alarm-label",
+                "No Routine"
+            );
+
+            setText(
+                "alarm-title",
+                "Save your routine"
+            );
+
+            setText(
+                "alarm-countdown",
+                "--:--"
+            );
+
+
+            setText(
+                "next-up-label",
+                "No Routine"
+            );
+
+            setText(
+                "next-up-title",
+                "Save your routine below"
+            );
+
+            setText(
+                "next-up-countdown",
+                ""
+            );
+
+            setText(
+                "next-up-time",
+                ""
+            );
+
+
+            return;
+        }
+
+
+        /*
+         * While an actual alarm is actively sounding,
+         * keep the floating widget in ALARM mode.
+         *
+         * Next Up still displays its associated routine.
+         */
+
+        const target =
+            getCurrentRoutineTarget();
+
+
+        if (
+            !target.occurrence
+        ) {
+
+            return;
+        }
+
+
+        const occurrence =
+            target.occurrence;
+
+
+        /* --------------------------------------------------
+           UPCOMING ROUTINE
+           -------------------------------------------------- */
+
+        if (
+            target.state ===
+            "upcoming"
+        ) {
+
+            /*
+             * NEXT UP CARD
+             */
+
+            setText(
+                "next-up-label",
+                "Next Up"
+            );
+
+
+            setText(
+                "next-up-title",
+                occurrence.title
+            );
+
+
+            setText(
+                "next-up-countdown",
+                "In " +
+                formatCountdown(
+                    occurrence.scheduled -
+                    new Date()
+                )
+            );
+
+
+            setText(
+                "next-up-time",
+                formatScheduledTime(
+                    occurrence.scheduled
+                )
+            );
+
+
+            /*
+             * FLOATING CLOCK
+             *
+             * SAME EVENT.
+             * SAME COUNTDOWN.
+             */
+
+            if (!activeAlarm) {
+
+                setText(
+                    "alarm-label",
+                    "Next Up"
+                );
+
+
+                setText(
+                    "alarm-title",
+                    occurrence.title
+                );
+
+
+                setText(
+                    "alarm-countdown",
+                    formatCountdown(
+                        occurrence.scheduled -
+                        new Date()
+                    )
+                );
+            }
+
+
+            return;
+        }
+
+
+        /* --------------------------------------------------
+           OVERDUE ROUTINE
+           -------------------------------------------------- */
+
+        if (
+            target.state ===
+            "overdue"
+        ) {
+
+            const overdueMilliseconds =
+                new Date() -
+                occurrence.scheduled;
+
+
+            const overdueText =
+                formatCountdown(
+                    overdueMilliseconds
+                );
+
+
+            /*
+             * NEXT UP
+             */
+
+            setText(
+                "next-up-label",
+                "Needs Attention"
+            );
+
+
+            setText(
+                "next-up-title",
+                occurrence.title
+            );
+
+
+            setText(
+                "next-up-countdown",
+                overdueText +
+                " overdue"
+            );
+
+
+            setText(
+                "next-up-time",
+                "Scheduled " +
+                formatScheduledTime(
+                    occurrence.scheduled
+                )
+            );
+
+
+            /*
+             * FLOATING CLOCK
+             *
+             * Again, SAME EVENT.
+             */
+
+            if (!activeAlarm) {
+
+                setText(
+                    "alarm-label",
+                    "Needs Attention"
+                );
+
+
+                setText(
+                    "alarm-title",
+                    occurrence.title
+                );
+
+
+                setText(
+                    "alarm-countdown",
+                    overdueText +
+                    " overdue"
+                );
+            }
+        }
+    }
 
 
     /* ======================================================
@@ -709,9 +1694,7 @@ async function initDashboardPage() {
             window.webkitAudioContext;
 
 
-        if (
-            !AudioContextClass
-        ) {
+        if (!AudioContextClass) {
 
             throw new Error(
                 "This browser does not support Web Audio."
@@ -719,9 +1702,7 @@ async function initDashboardPage() {
         }
 
 
-        if (
-            !audioContext
-        ) {
+        if (!audioContext) {
 
             audioContext =
                 new AudioContextClass();
@@ -847,14 +1828,13 @@ async function initDashboardPage() {
                     1.5 +
                     index * 0.18
                 );
-
             }
         );
     }
 
 
     /* ======================================================
-       ENABLE / DISABLE ALARMS
+       ALARM CONTROL
        ====================================================== */
 
     function updateAlarmButton() {
@@ -865,17 +1845,12 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !button
-        ) {
-
+        if (!button) {
             return;
         }
 
 
-        if (
-            alarmsEnabled
-        ) {
+        if (alarmsEnabled) {
 
             button.textContent =
                 "Disable Routine Alarms";
@@ -890,7 +1865,6 @@ async function initDashboardPage() {
                 "alarm-status",
                 "Routine alarms are ON 24/7. CircleSync alerts 10 minutes before Wake, Breakfast, Lunch, Rest, Dinner and Bedtime. If a matching check-in is missing, a follow-up sounds every 10 minutes."
             );
-
 
         } else {
 
@@ -935,7 +1909,7 @@ async function initDashboardPage() {
 
 
             recommend(
-                "Routine alarms are enabled 24/7. CircleSync will continuously cycle through Wake, Breakfast, Lunch, Rest, Dinner, Bedtime and then the next day's Wake."
+                "Routine alarms are enabled. CircleSync will continuously cycle through Wake, Breakfast, Lunch, Rest, Dinner, Bedtime and the next day's Wake."
             );
 
 
@@ -961,7 +1935,7 @@ async function initDashboardPage() {
 
 
             recommend(
-                "CircleSync could not start the alarm sound. Interact with the page once and press Enable Routine Alarms again."
+                "CircleSync could not start the alarm sound. Click the page once and press Enable Routine Alarms again."
             );
         }
     }
@@ -985,8 +1959,11 @@ async function initDashboardPage() {
         updateAlarmButton();
 
 
+        updateRoutineDisplays();
+
+
         recommend(
-            "Routine alarms are off. Your schedule and check-ins are still saved."
+            "Routine alarms are off. Your routine and check-ins remain saved."
         );
     }
 
@@ -996,9 +1973,7 @@ async function initDashboardPage() {
             "click",
             async function () {
 
-                if (
-                    alarmsEnabled
-                ) {
+                if (alarmsEnabled) {
 
                     disableAlarms();
 
@@ -1006,7 +1981,6 @@ async function initDashboardPage() {
 
                     await enableAlarms();
                 }
-
             }
         );
 
@@ -1024,10 +1998,7 @@ async function initDashboardPage() {
         alarmKey
     ) {
 
-        if (
-            !alarmsEnabled
-        ) {
-
+        if (!alarmsEnabled) {
             return;
         }
 
@@ -1086,11 +2057,6 @@ async function initDashboardPage() {
         playSoftChime();
 
 
-        /*
-         * Keep gently reminding every 12 seconds
-         * while the current alert is actively sounding.
-         */
-
         alarmRepeatTimer =
             setInterval(
                 playSoftChime,
@@ -1106,17 +2072,14 @@ async function initDashboardPage() {
         if (
             type &&
             activeAlarm &&
-            activeAlarm.type !==
-                type
+            activeAlarm.type !== type
         ) {
 
             return;
         }
 
 
-        if (
-            alarmRepeatTimer
-        ) {
+        if (alarmRepeatTimer) {
 
             clearInterval(
                 alarmRepeatTimer
@@ -1137,943 +2100,28 @@ async function initDashboardPage() {
             .remove(
                 "alarm-active"
             );
-    }
 
 
-    /* ======================================================
-       DATE HELPERS
-       ====================================================== */
-
-    function startOfDay(
-        date
-    ) {
-
-        return new Date(
-
-            date.getFullYear(),
-
-            date.getMonth(),
-
-            date.getDate(),
-
-            0,
-
-            0,
-
-            0,
-
-            0
-
-        );
-    }
-
-
-    function addDays(
-        date,
-        days
-    ) {
-
-        const result =
-            new Date(
-                date
-            );
-
-
-        result.setDate(
-            result.getDate() +
-            days
-        );
-
-
-        return result;
-    }
-
-
-    function parseClock(
-        clock
-    ) {
-
-        if (
-            !clock
-        ) {
-
-            return null;
-        }
-
-
-        const parts =
-            clock.split(
-                ":"
-            );
-
-
-        return {
-
-            hours:
-                Number(
-                    parts[0]
-                ),
-
-            minutes:
-                Number(
-                    parts[1]
-                )
-
-        };
-    }
-
-
-    function dateAtClock(
-        baseDate,
-        clock
-    ) {
-
-        const parsed =
-            parseClock(
-                clock
-            );
-
-
-        if (
-            !parsed
-        ) {
-
-            return null;
-        }
-
-
-        return new Date(
-
-            baseDate.getFullYear(),
-
-            baseDate.getMonth(),
-
-            baseDate.getDate(),
-
-            parsed.hours,
-
-            parsed.minutes,
-
-            0,
-
-            0
-
-        );
-    }
-
-
-    function formatDateKey(
-        date
-    ) {
-
-        const year =
-            date.getFullYear();
-
-
-        const month =
-            String(
-                date.getMonth() +
-                1
-            )
-            .padStart(
-                2,
-                "0"
-            );
-
-
-        const day =
-            String(
-                date.getDate()
-            )
-            .padStart(
-                2,
-                "0"
-            );
-
-
-        return (
-            year +
-            "-" +
-            month +
-            "-" +
-            day
-        );
-    }
-
-
-    /* ======================================================
-       BUILD ONE ROUTINE CYCLE
-
-       baseDate is the date assigned to WAKE.
-
-       The six events are always generated IN ORDER.
-
-       If a later clock time rolls backward, such as:
-
-       Dinner 9:30 PM
-       Bedtime 12:30 AM
-
-       Bedtime automatically moves to the following date.
-       ====================================================== */
-
-    function buildCycle(
-        baseDate
-    ) {
-
-        if (
-            !currentRoutine
-        ) {
-
-            return [];
-        }
-
-
-        let workingDate =
-            startOfDay(
-                baseDate
-            );
-
-
-        let previousTime =
-            null;
-
-
-        const cycle =
-            [];
-
-
-        for (
-            const definition
-            of ROUTINE_ORDER
-        ) {
-
-            const clock =
-                currentRoutine[
-                    definition.field
-                ];
-
-
-            if (
-                !clock
-            ) {
-
-                continue;
-            }
-
-
-            let scheduled =
-                dateAtClock(
-                    workingDate,
-                    clock
-                );
-
-
-            /*
-             * Clock went backward.
-             *
-             * Example:
-             *
-             * Dinner 21:30
-             * Bedtime 00:30
-             *
-             * 00:30 belongs to tomorrow.
-             */
-
-            if (
-                previousTime &&
-                scheduled <=
-                previousTime
-            ) {
-
-                workingDate =
-                    addDays(
-                        workingDate,
-                        1
-                    );
-
-
-                scheduled =
-                    dateAtClock(
-                        workingDate,
-                        clock
-                    );
-            }
-
-
-            const cycleKey =
-                formatDateKey(
-                    baseDate
-                );
-
-
-            cycle.push({
-
-                ...definition,
-
-                scheduled:
-                    scheduled,
-
-                cycleDate:
-                    cycleKey,
-
-                id:
-                    cycleKey +
-                    "|" +
-                    definition.type +
-                    "|" +
-                    scheduled.toISOString()
-
-            });
-
-
-            previousTime =
-                scheduled;
-        }
-
-
-        return cycle;
-    }
-
-
-    /* ======================================================
-       BUILD CONTINUOUS 24/7 TIMELINE
-
-       Yesterday
-       Today
-       Tomorrow
-       Day after tomorrow
-
-       This prevents the app from ever reaching
-       a permanent "routine complete" state.
-       ====================================================== */
-
-    function buildContinuousSchedule() {
-
-        if (
-            !currentRoutine
-        ) {
-
-            return [];
-        }
-
-
-        const today =
-            startOfDay(
-                new Date()
-            );
-
-
-        const schedule =
-            [];
-
-
-        for (
-            let offset = -2;
-            offset <= 3;
-            offset += 1
-        ) {
-
-            const cycleDate =
-                addDays(
-                    today,
-                    offset
-                );
-
-
-            schedule.push(
-                ...buildCycle(
-                    cycleDate
-                )
-            );
-        }
-
-
-        /*
-         * Sort by ACTUAL timestamp.
-         *
-         * Because each individual cycle was generated in
-         * Wake → Breakfast → Lunch → Rest → Dinner → Bedtime
-         * order, this still respects the sequence while
-         * correctly handling midnight.
-         */
-
-        schedule.sort(
-            function (
-                first,
-                second
-            ) {
-
-                return (
-                    first.scheduled -
-                    second.scheduled
-                );
-            }
-        );
-
-
-        return schedule;
-    }
-
-
-    /* ======================================================
-       CHECK-INS FROM SUPABASE
-       ====================================================== */
-
-    async function refreshRecentCheckIns() {
-
-        const now =
-            new Date();
-
-
-        const start =
-            addDays(
-                startOfDay(
-                    now
-                ),
-                -2
-            );
-
-
-        const end =
-            addDays(
-                startOfDay(
-                    now
-                ),
-                3
-            );
-
-
-        const result =
-            await supabaseClient
-                .from(
-                    "check_ins"
-                )
-                .select(
-                    "check_in_type, created_at"
-                )
-                .eq(
-                    "user_id",
-                    currentUser.id
-                )
-                .gte(
-                    "created_at",
-                    start.toISOString()
-                )
-                .lt(
-                    "created_at",
-                    end.toISOString()
-                )
-                .order(
-                    "created_at",
-                    {
-
-                        ascending:
-                            true
-
-                    }
-                );
-
-
-        if (
-            result.error
-        ) {
-
-            console.error(
-                "Check-in refresh error:",
-                result.error
-            );
-
-
-            return;
-        }
-
-
-        recentCheckIns =
-            result.data ||
-            [];
-
-
-        lastCheckInRefresh =
-            Date.now();
-
-
-        /*
-         * Also stop a currently sounding alarm
-         * when its occurrence is now complete.
-         */
-
-        if (
-            activeAlarm
-        ) {
-
-            const schedule =
-                buildContinuousSchedule();
-
-
-            const occurrence =
-                schedule.find(
-                    function (item) {
-
-                        return (
-                            item.id ===
-                            activeAlarm.occurrenceId
-                        );
-                    }
-                );
-
-
-            if (
-                occurrence &&
-                isOccurrenceCompleted(
-                    occurrence,
-                    schedule
-                )
-            ) {
-
-                stopAlarm(
-                    occurrence.type
-                );
-            }
-        }
-    }
-
-
-    /* ======================================================
-       COMPLETION WINDOW
-
-       A check-in only counts for the appropriate occurrence.
-
-       It does NOT mean:
-       "The user checked Lunch once, therefore every Lunch
-       forever is complete."
-
-       Window:
-       10 minutes before scheduled occurrence
-       until immediately before the NEXT occurrence
-       of the same routine type.
-       ====================================================== */
-
-    function getNextOccurrenceOfType(
-        occurrence,
-        schedule
-    ) {
-
-        return schedule.find(
-            function (candidate) {
-
-                return (
-
-                    candidate.type ===
-                        occurrence.type
-
-                    &&
-
-                    candidate.scheduled >
-                        occurrence.scheduled
-
-                );
-            }
-        ) || null;
-    }
-
-
-    function isOccurrenceCompleted(
-        occurrence,
-        schedule
-    ) {
-
-        const windowStart =
-            new Date(
-                occurrence.scheduled.getTime() -
-                10 *
-                60 *
-                1000
-            );
-
-
-        const nextSameType =
-            getNextOccurrenceOfType(
-                occurrence,
-                schedule
-            );
-
-
-        const windowEnd =
-            nextSameType
-
-                ? new Date(
-                    nextSameType.scheduled.getTime() -
-                    10 *
-                    60 *
-                    1000
-                )
-
-                : new Date(
-                    occurrence.scheduled.getTime() +
-                    24 *
-                    60 *
-                    60 *
-                    1000
-                );
-
-
-        return recentCheckIns.some(
-            function (checkIn) {
-
-                if (
-                    checkIn.check_in_type !==
-                    occurrence.type
-                ) {
-
-                    return false;
-                }
-
-
-                const checkTime =
-                    new Date(
-                        checkIn.created_at
-                    );
-
-
-                return (
-
-                    checkTime >=
-                        windowStart
-
-                    &&
-
-                    checkTime <
-                        windowEnd
-
-                );
-            }
-        );
-    }
-
-
-    /* ======================================================
-       FORMAT COUNTDOWN
-       ====================================================== */
-
-    function formatCountdown(
-        milliseconds
-    ) {
-
-        const totalSeconds =
-            Math.max(
-                0,
-                Math.floor(
-                    milliseconds /
-                    1000
-                )
-            );
-
-
-        const days =
-            Math.floor(
-                totalSeconds /
-                86400
-            );
-
-
-        const hours =
-            Math.floor(
-                (
-                    totalSeconds %
-                    86400
-                ) /
-                3600
-            );
-
-
-        const minutes =
-            Math.floor(
-                (
-                    totalSeconds %
-                    3600
-                ) /
-                60
-            );
-
-
-        const seconds =
-            totalSeconds %
-            60;
-
-
-        if (
-            days > 0
-        ) {
-
-            return (
-
-                days +
-                "d " +
-
-                String(hours)
-                    .padStart(
-                        2,
-                        "0"
-                    )
-
-                +
-
-                ":"
-
-                +
-
-                String(minutes)
-                    .padStart(
-                        2,
-                        "0"
-                    )
-
-                +
-
-                ":"
-
-                +
-
-                String(seconds)
-                    .padStart(
-                        2,
-                        "0"
-                    )
-
-            );
-        }
-
-
-        return (
-
-            String(hours)
-                .padStart(
-                    2,
-                    "0"
-                )
-
-            +
-
-            ":"
-
-            +
-
-            String(minutes)
-                .padStart(
-                    2,
-                    "0"
-                )
-
-            +
-
-            ":"
-
-            +
-
-            String(seconds)
-                .padStart(
-                    2,
-                    "0"
-                )
-
-        );
-    }
-
-
-    function formatScheduledTime(
-        date
-    ) {
-
-        const now =
-            new Date();
-
-
-        const tomorrow =
-            addDays(
-                startOfDay(
-                    now
-                ),
-                1
-            );
-
-
-        let dayText =
-            "";
-
-
-        if (
-            date >= tomorrow &&
-            date <
-            addDays(
-                tomorrow,
-                1
-            )
-        ) {
-
-            dayText =
-                "Tomorrow at ";
-
-        } else if (
-            formatDateKey(
-                date
-            ) !==
-            formatDateKey(
-                now
-            )
-        ) {
-
-            dayText =
-                date.toLocaleDateString(
-                    [],
-                    {
-
-                        weekday:
-                            "short",
-
-                        month:
-                            "short",
-
-                        day:
-                            "numeric"
-
-                    }
-                )
-                +
-                " at ";
-        }
-
-
-        return (
-
-            dayText
-
-            +
-
-            date.toLocaleTimeString(
-                [],
-                {
-
-                    hour:
-                        "numeric",
-
-                    minute:
-                        "2-digit"
-
-                }
-            )
-
-        );
-    }
-
-
-    /* ======================================================
-       NEXT ROUTINE OCCURRENCE
-
-       This always looks FORWARD indefinitely through the
-       generated daily cycles.
-       ====================================================== */
-
-    function getNextScheduledOccurrence() {
-
-        const schedule =
-            buildContinuousSchedule();
-
-
-        const now =
-            new Date();
-
-
-        return (
-            schedule.find(
-                function (occurrence) {
-
-                    return (
-                        occurrence.scheduled >
-                        now
-                    );
-                }
-            )
-            ||
-            null
-        );
-    }
-
-
-    /* ======================================================
-       NEXT UNCOMPLETED OVERDUE OCCURRENCE
-
-       Only look back a limited amount so that an old missed
-       event doesn't permanently block the entire app.
-       ====================================================== */
-
-    function getImportantOverdueOccurrence() {
-
-        const schedule =
-            buildContinuousSchedule();
-
-
-        const now =
-            new Date();
-
-
-        const maximumAge =
-            6 *
-            60 *
-            60 *
-            1000;
-
-
-        const overdue =
-            schedule.filter(
-                function (occurrence) {
-
-                    const age =
-                        now -
-                        occurrence.scheduled;
-
-
-                    return (
-
-                        age >= 0
-
-                        &&
-
-                        age <= maximumAge
-
-                        &&
-
-                        !isOccurrenceCompleted(
-                            occurrence,
-                            schedule
-                        )
-
-                    );
-                }
-            );
-
-
-        return (
-            overdue[0] ||
-            null
-        );
+        updateRoutineDisplays();
     }
 
 
     /* ======================================================
        ALARM EVENTS
 
-       For EVERY occurrence:
+       EACH ROUTINE GETS:
 
-       -10 minutes
-       +10
-       +20
-       +30
-       +40
-       +50...
-       until next day's same routine occurrence.
+       10 minutes BEFORE
 
-       Follow-ups only remain eligible while that occurrence
-       has no matching check-in.
+       then if unchecked:
+
+       10 minutes AFTER
+       20 minutes AFTER
+       30 minutes AFTER
+       40 minutes AFTER
+       etc.
+
+       until its next daily occurrence.
        ====================================================== */
 
     function buildAlarmEvents() {
@@ -2092,13 +2140,12 @@ async function initDashboardPage() {
         ) {
 
             /*
-             * 10 MINUTES BEFORE
+             * BEFORE ALERT
              */
 
             events.push({
 
-                occurrence:
-                    occurrence,
+                occurrence,
 
                 kind:
                     "before",
@@ -2108,7 +2155,8 @@ async function initDashboardPage() {
 
                 time:
                     new Date(
-                        occurrence.scheduled.getTime() -
+                        occurrence.scheduled.getTime()
+                        -
                         10 *
                         60 *
                         1000
@@ -2118,8 +2166,7 @@ async function initDashboardPage() {
 
 
             /*
-             * Find next same type so reminders don't overlap
-             * forever into the following day's occurrence.
+             * REPEATED FOLLOW-UPS
              */
 
             const nextSame =
@@ -2133,7 +2180,8 @@ async function initDashboardPage() {
                 nextSame
                     ? nextSame.scheduled
                     : new Date(
-                        occurrence.scheduled.getTime() +
+                        occurrence.scheduled.getTime()
+                        +
                         24 *
                         60 *
                         60 *
@@ -2147,7 +2195,8 @@ async function initDashboardPage() {
 
             let reminderTime =
                 new Date(
-                    occurrence.scheduled.getTime() +
+                    occurrence.scheduled.getTime()
+                    +
                     10 *
                     60 *
                     1000
@@ -2161,14 +2210,12 @@ async function initDashboardPage() {
 
                 events.push({
 
-                    occurrence:
-                        occurrence,
+                    occurrence,
 
                     kind:
                         "after",
 
-                    sequence:
-                        sequence,
+                    sequence,
 
                     time:
                         new Date(
@@ -2178,13 +2225,13 @@ async function initDashboardPage() {
                 });
 
 
-                sequence +=
-                    1;
+                sequence += 1;
 
 
                 reminderTime =
                     new Date(
-                        occurrence.scheduled.getTime() +
+                        occurrence.scheduled.getTime()
+                        +
                         sequence *
                         10 *
                         60 *
@@ -2212,9 +2259,7 @@ async function initDashboardPage() {
     }
 
 
-    function alarmKey(
-        event
-    ) {
+    function alarmKey(event) {
 
         return (
 
@@ -2241,189 +2286,10 @@ async function initDashboardPage() {
 
 
     /* ======================================================
-       24/7 FLOATING CLOCK
-
-       IMPORTANT:
-       This NEVER displays "Routine Complete."
-
-       After Bedtime it moves to tomorrow's Wake.
-       ====================================================== */
-
-    function updateFloatingCountdown() {
-
-        if (
-            !currentRoutine
-        ) {
-
-            setText(
-                "alarm-label",
-                "No Routine"
-            );
-
-
-            setText(
-                "alarm-title",
-                "Save your routine"
-            );
-
-
-            setText(
-                "alarm-countdown",
-                "--:--"
-            );
-
-
-            return;
-        }
-
-
-        if (
-            activeAlarm
-        ) {
-
-            return;
-        }
-
-
-        const events =
-            buildAlarmEvents();
-
-
-        const schedule =
-            buildContinuousSchedule();
-
-
-        const now =
-            new Date();
-
-
-        /*
-         * Skip future AFTER-reminders whose occurrence is
-         * already completed.
-         */
-
-        const nextEvent =
-            events.find(
-                function (event) {
-
-                    if (
-                        event.time <=
-                        now
-                    ) {
-
-                        return false;
-                    }
-
-
-                    if (
-                        event.kind ===
-                        "after" &&
-                        isOccurrenceCompleted(
-                            event.occurrence,
-                            schedule
-                        )
-                    ) {
-
-                        return false;
-                    }
-
-
-                    return true;
-                }
-            );
-
-
-        if (
-            !nextEvent
-        ) {
-
-            /*
-             * Defensive fallback.
-             *
-             * Normally impossible because several future
-             * routine cycles are generated.
-             */
-
-            const nextOccurrence =
-                getNextScheduledOccurrence();
-
-
-            if (
-                nextOccurrence
-            ) {
-
-                setText(
-                    "alarm-label",
-                    "Next Routine"
-                );
-
-
-                setText(
-                    "alarm-title",
-                    nextOccurrence.title
-                );
-
-
-                setText(
-                    "alarm-countdown",
-                    formatCountdown(
-                        nextOccurrence.scheduled -
-                        now
-                    )
-                );
-            }
-
-
-            return;
-        }
-
-
-        if (
-            nextEvent.kind ===
-            "before"
-        ) {
-
-            setText(
-                "alarm-label",
-                "Next 10-Min Alert"
-            );
-
-
-        } else {
-
-            setText(
-                "alarm-label",
-                "Next Follow-Up"
-            );
-        }
-
-
-        setText(
-            "alarm-title",
-            nextEvent.occurrence.title
-        );
-
-
-        setText(
-            "alarm-countdown",
-            formatCountdown(
-                nextEvent.time -
-                now
-            )
-        );
-    }
-
-
-    /* ======================================================
-       CHECK FOR ACTUAL ALARM
+       ALARM ENGINE
        ====================================================== */
 
     async function checkForDueAlarm() {
-
-        /*
-         * Refresh check-ins periodically so the alarm knows
-         * whether another tab/device completed a routine.
-         */
 
         if (
             Date.now() -
@@ -2456,11 +2322,6 @@ async function initDashboardPage() {
             new Date();
 
 
-        /*
-         * A one-minute tolerance means the browser does not
-         * have to execute at the exact millisecond.
-         */
-
         const dueEvent =
             events.find(
                 function (event) {
@@ -2469,6 +2330,11 @@ async function initDashboardPage() {
                         now -
                         event.time;
 
+
+                    /*
+                     * Event must have occurred during
+                     * the previous 65 seconds.
+                     */
 
                     if (
                         elapsed < 0 ||
@@ -2481,9 +2347,7 @@ async function initDashboardPage() {
 
                     if (
                         firedAlarmKeys.has(
-                            alarmKey(
-                                event
-                            )
+                            alarmKey(event)
                         )
                     ) {
 
@@ -2492,11 +2356,8 @@ async function initDashboardPage() {
 
 
                     /*
-                     * BEFORE alert can happen even if the
-                     * occurrence isn't completed yet.
-                     *
-                     * AFTER alert ONLY happens when the
-                     * matching occurrence remains incomplete.
+                     * A follow-up alarm only fires if
+                     * the routine still has no check-in.
                      */
 
                     if (
@@ -2517,16 +2378,14 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !dueEvent
-        ) {
-
+        if (!dueEvent) {
             return;
         }
 
 
         /*
-         * Recheck Supabase immediately before an AFTER alert.
+         * Final Supabase check immediately before
+         * a repeated follow-up.
          */
 
         if (
@@ -2578,7 +2437,7 @@ async function initDashboardPage() {
 
             recommend(
                 dueEvent.occurrence.title +
-                " is coming up in 10 minutes. Begin wrapping up your current activity so you can follow the routine you planned."
+                " is coming up in 10 minutes. Start wrapping up what you are doing so you can stay on schedule."
             );
 
 
@@ -2605,199 +2464,7 @@ async function initDashboardPage() {
                 dueEvent.occurrence.title +
                 " is " +
                 minutesLate +
-                " minutes past its scheduled time and its matching Quick Check-In is still missing. Check in when you complete it to stop further reminders."
-            );
-        }
-    }
-
-
-    /* ======================================================
-       NEXT UP CARD
-       ====================================================== */
-
-    function updateNextUp() {
-
-        if (
-            !currentRoutine
-        ) {
-
-            setText(
-                "next-up-label",
-                "No Routine"
-            );
-
-
-            setText(
-                "next-up-title",
-                "Save your routine below"
-            );
-
-
-            setText(
-                "next-up-countdown",
-                ""
-            );
-
-
-            setText(
-                "next-up-time",
-                ""
-            );
-
-
-            recommend(
-                "Save Wake, Breakfast, Lunch, Rest, Dinner and Bedtime so CircleSync can create your continuous 24/7 routine."
-            );
-
-
-            return;
-        }
-
-
-        const now =
-            new Date();
-
-
-        const schedule =
-            buildContinuousSchedule();
-
-
-        const overdue =
-            getImportantOverdueOccurrence();
-
-
-        if (
-            overdue
-        ) {
-
-            const minutesLate =
-                Math.floor(
-                    (
-                        now -
-                        overdue.scheduled
-                    ) /
-                    60000
-                );
-
-
-            setText(
-                "next-up-label",
-                "Needs Attention"
-            );
-
-
-            setText(
-                "next-up-title",
-                overdue.title
-            );
-
-
-            setText(
-                "next-up-countdown",
-                minutesLate +
-                " minutes overdue"
-            );
-
-
-            setText(
-                "next-up-time",
-                "Scheduled " +
-                formatScheduledTime(
-                    overdue.scheduled
-                )
-            );
-
-
-            if (
-                minutesLate >= 10
-            ) {
-
-                recommend(
-                    overdue.title +
-                    " has not been checked in yet. If routine alarms are enabled, CircleSync will continue reminding you every 10 minutes."
-                );
-            }
-
-
-            return;
-        }
-
-
-        const next =
-            schedule.find(
-                function (occurrence) {
-
-                    return (
-                        occurrence.scheduled >
-                        now
-                    );
-                }
-            );
-
-
-        if (
-            !next
-        ) {
-
-            return;
-        }
-
-
-        setText(
-            "next-up-label",
-            "Next Up"
-        );
-
-
-        setText(
-            "next-up-title",
-            next.title
-        );
-
-
-        setText(
-            "next-up-countdown",
-            "In " +
-            formatCountdown(
-                next.scheduled -
-                now
-            )
-        );
-
-
-        setText(
-            "next-up-time",
-            formatScheduledTime(
-                next.scheduled
-            )
-        );
-
-
-        const minutesUntil =
-            (
-                next.scheduled -
-                now
-            ) /
-            60000;
-
-
-        if (
-            minutesUntil <= 20
-        ) {
-
-            recommend(
-                next.title +
-                " is approaching. Start creating a natural stopping point so your current activity does not push your routine aside."
-            );
-
-
-        } else if (
-            latestEnergy !== null &&
-            latestEnergy <= 3
-        ) {
-
-            recommend(
-                "Your latest energy check-in is low. Protect your next scheduled meal or rest period."
+                " minutes past its scheduled time and its matching Quick Check-In is still missing. Check in when finished to stop further reminders."
             );
         }
     }
@@ -2848,9 +2515,7 @@ async function initDashboardPage() {
                 .maybeSingle();
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
                 "Routine load error:",
@@ -2866,10 +2531,7 @@ async function initDashboardPage() {
             null;
 
 
-        if (
-            !currentRoutine
-        ) {
-
+        if (!currentRoutine) {
             return;
         }
 
@@ -2879,10 +2541,7 @@ async function initDashboardPage() {
             value
         ) {
 
-            if (
-                !element
-            ) {
-
+            if (!element) {
                 return;
             }
 
@@ -2933,9 +2592,7 @@ async function initDashboardPage() {
         );
 
 
-        if (
-            routineElements.goal
-        ) {
+        if (routineElements.goal) {
 
             routineElements.goal.value =
                 currentRoutine.sleep_goal_hours ||
@@ -2955,12 +2612,14 @@ async function initDashboardPage() {
                     );
 
 
-                button.disabled =
-                    true;
+                if (button) {
 
+                    button.disabled =
+                        true;
 
-                button.textContent =
-                    "Saving...";
+                    button.textContent =
+                        "Saving...";
+                }
 
 
                 const result =
@@ -2975,46 +2634,40 @@ async function initDashboardPage() {
                                     currentUser.id,
 
                                 wake_time:
-                                    routineElements
-                                        .wake
-                                        .value ||
+                                    routineElements.wake
+                                        ?.value ||
                                     null,
 
                                 breakfast_time:
-                                    routineElements
-                                        .breakfast
-                                        .value ||
+                                    routineElements.breakfast
+                                        ?.value ||
                                     null,
 
                                 lunch_time:
-                                    routineElements
-                                        .lunch
-                                        .value ||
+                                    routineElements.lunch
+                                        ?.value ||
                                     null,
 
                                 rest_start_time:
-                                    routineElements
-                                        .rest
-                                        .value ||
+                                    routineElements.rest
+                                        ?.value ||
                                     null,
 
                                 dinner_time:
-                                    routineElements
-                                        .dinner
-                                        .value ||
+                                    routineElements.dinner
+                                        ?.value ||
                                     null,
 
                                 bedtime:
-                                    routineElements
-                                        .bedtime
-                                        .value ||
+                                    routineElements.bedtime
+                                        ?.value ||
                                     null,
 
                                 sleep_goal_hours:
                                     Number(
-                                        routineElements
-                                            .goal
-                                            .value
+                                        routineElements.goal
+                                            ?.value ||
+                                        8
                                     ),
 
                                 updated_at:
@@ -3033,17 +2686,17 @@ async function initDashboardPage() {
                         .single();
 
 
-                button.disabled =
-                    false;
+                if (button) {
+
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        "Save Routine";
+                }
 
 
-                button.textContent =
-                    "Save Routine";
-
-
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     setText(
                         "routine-message",
@@ -3063,39 +2716,25 @@ async function initDashboardPage() {
 
                 setText(
                     "routine-message",
-                    "Routine saved. Your 24/7 alarm timeline has been updated."
+                    "Routine saved. Your 24/7 routine clock has been updated."
                 );
 
 
                 recommend(
-                    "Your schedule is updated. CircleSync will continuously cycle through Wake, Breakfast, Lunch, Rest, Dinner, Bedtime and then tomorrow's Wake."
+                    "Your schedule has been updated. CircleSync will continuously follow Wake, Breakfast, Lunch, Rest, Dinner, Bedtime, then the next day's Wake."
                 );
 
 
-                updateFloatingCountdown();
-
-
-                updateNextUp();
-
+                updateRoutineDisplays();
             }
         );
 
 
     /* ======================================================
-       FIND OCCURRENCE TO COMPLETE
-
-       When the user presses a Quick Check-In button,
-       determine which scheduled occurrence that button
-       belongs to.
-
-       Preference:
-       1. Most recent occurrence of this type
-       2. If it hasn't happened yet, the next occurrence
+       FIND CHECK-IN OCCURRENCE
        ====================================================== */
 
-    function findCheckInOccurrence(
-        type
-    ) {
+    function findCheckInOccurrence(type) {
 
         const schedule =
             buildContinuousSchedule();
@@ -3133,12 +2772,9 @@ async function initDashboardPage() {
             past.length > 0
         ) {
 
-            return (
-                past[
-                    past.length -
-                    1
-                ]
-            );
+            return past[
+                past.length - 1
+            ];
         }
 
 
@@ -3157,12 +2793,6 @@ async function initDashboardPage() {
         type,
         successMessage
     ) {
-
-        const occurrence =
-            findCheckInOccurrence(
-                type
-            );
-
 
         const result =
             await supabaseClient
@@ -3190,9 +2820,7 @@ async function initDashboardPage() {
                 });
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             recommend(
                 "Check-in failed: " +
@@ -3205,8 +2833,7 @@ async function initDashboardPage() {
 
 
         /*
-         * Update locally immediately instead of waiting
-         * for the next Supabase request.
+         * Update immediately in memory.
          */
 
         recentCheckIns.push({
@@ -3221,9 +2848,7 @@ async function initDashboardPage() {
         });
 
 
-        stopAlarm(
-            type
-        );
+        stopAlarm(type);
 
 
         recommend(
@@ -3231,18 +2856,11 @@ async function initDashboardPage() {
         );
 
 
-        updateFloatingCountdown();
-
-
-        updateNextUp();
+        updateRoutineDisplays();
 
 
         await loadCircleFeed();
 
-
-        /*
-         * Refresh database copy too.
-         */
 
         await refreshRecentCheckIns();
 
@@ -3256,7 +2874,7 @@ async function initDashboardPage() {
         [
             "wake-btn",
             "wake",
-            "Wake-up recorded. The wake alarm for this routine cycle has been cleared."
+            "Wake-up recorded. Wake reminders for this routine cycle have been cleared."
         ],
 
         [
@@ -3286,13 +2904,13 @@ async function initDashboardPage() {
         [
             "sleep-btn",
             "sleep",
-            "Bedtime recorded. Bedtime reminders are cleared and CircleSync will continue toward your next Wake alarm."
+            "Bedtime recorded. Bedtime reminders are cleared and CircleSync will continue toward your next Wake."
         ],
 
         [
             "working-btn",
             "focus",
-            "Working status recorded. Your 24/7 routine clock will continue running while you focus."
+            "Working status recorded. Your 24/7 routine clock will continue running."
         ]
 
     ];
@@ -3338,10 +2956,8 @@ async function initDashboardPage() {
 
                     button.disabled =
                         false;
-
                 }
             );
-
         }
     );
 
@@ -3351,9 +2967,7 @@ async function initDashboardPage() {
        ====================================================== */
 
     const energyInput =
-        get(
-            "energy-input"
-        );
+        get("energy-input");
 
 
     energyInput?.addEventListener(
@@ -3364,7 +2978,6 @@ async function initDashboardPage() {
                 "energy-value",
                 energyInput.value
             );
-
         }
     );
 
@@ -3376,7 +2989,8 @@ async function initDashboardPage() {
 
                 const level =
                     Number(
-                        energyInput.value
+                        energyInput?.value ||
+                        5
                     );
 
 
@@ -3405,9 +3019,7 @@ async function initDashboardPage() {
                         });
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     recommend(
                         result.error.message
@@ -3424,37 +3036,31 @@ async function initDashboardPage() {
                 setText(
                     "energy-score",
                     String(
-                        level *
-                        10
+                        level * 10
                     )
                 );
 
 
-                if (
-                    level <= 3
-                ) {
+                if (level <= 3) {
 
                     recommend(
                         "Your energy is low. Protect your next meal, rest period, or sleep opportunity."
                     );
-
 
                 } else if (
                     level <= 6
                 ) {
 
                     recommend(
-                        "Your energy is moderate. Keep your next routine event protected."
+                        "Your energy is moderate. Keep your upcoming routine protected."
                     );
-
 
                 } else {
 
                     recommend(
-                        "Your energy is strong. Use it productively while keeping your routine clock visible."
+                        "Your energy is strong. Use it productively while keeping the CircleSync routine clock visible."
                     );
                 }
-
             }
         );
 
@@ -3481,22 +3087,14 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
-
-                        ascending:
-                            false
-
+                        ascending: false
                     }
                 )
-                .limit(
-                    1
-                )
+                .limit(1)
                 .maybeSingle();
 
 
-        if (
-            !result.data
-        ) {
-
+        if (!result.data) {
             return;
         }
 
@@ -3507,25 +3105,28 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            energyInput
-        ) {
+        if (energyInput) {
 
             energyInput.value =
-                latestEnergy;
+                String(
+                    latestEnergy
+                );
         }
 
 
         setText(
             "energy-value",
-            latestEnergy
+            String(
+                latestEnergy
+            )
         );
 
 
         setText(
             "energy-score",
-            latestEnergy *
-            10
+            String(
+                latestEnergy * 10
+            )
         );
     }
 
@@ -3540,14 +3141,10 @@ async function initDashboardPage() {
             async function () {
 
                 const button =
-                    get(
-                        "focus-btn"
-                    );
+                    get("focus-btn");
 
 
-                if (
-                    !focusActive
-                ) {
+                if (!focusActive) {
 
                     focusActive =
                         true;
@@ -3557,8 +3154,11 @@ async function initDashboardPage() {
                         new Date();
 
 
-                    button.textContent =
-                        "End Focus Session";
+                    if (button) {
+
+                        button.textContent =
+                            "End Focus Session";
+                    }
 
 
                     setText(
@@ -3597,8 +3197,11 @@ async function initDashboardPage() {
                     null;
 
 
-                button.textContent =
-                    "Start Focus Session";
+                if (button) {
+
+                    button.textContent =
+                        "Start Focus Session";
+                }
 
 
                 setText(
@@ -3611,39 +3214,27 @@ async function initDashboardPage() {
 
                 await saveCheckIn(
                     "focus",
-                    "Focus session complete. Check your Next Up routine before starting another long task."
+                    "Focus session complete. Check Next Up before starting another long task."
                 );
-
             }
         );
 
 
     /* ======================================================
-       CIRCLE MANAGEMENT TABS
+       CIRCLE TABS
        ====================================================== */
 
     const joinRequestsTab =
-        get(
-            "join-requests-tab"
-        );
-
+        get("join-requests-tab");
 
     const createCircleTab =
-        get(
-            "create-circle-tab"
-        );
-
+        get("create-circle-tab");
 
     const joinRequestsPanel =
-        get(
-            "join-requests-panel"
-        );
-
+        get("join-requests-panel");
 
     const createCirclePanel =
-        get(
-            "create-circle-panel"
-        );
+        get("create-circle-panel");
 
 
     function showJoinRequests() {
@@ -3659,7 +3250,6 @@ async function initDashboardPage() {
 
         joinRequestsPanel.hidden =
             false;
-
 
         createCirclePanel.hidden =
             true;
@@ -3693,7 +3283,6 @@ async function initDashboardPage() {
 
         joinRequestsPanel.hidden =
             true;
-
 
         createCirclePanel.hidden =
             false;
@@ -3729,7 +3318,7 @@ async function initDashboardPage() {
 
 
     /* ======================================================
-       CIRCLE DATABASE HELPERS
+       CIRCLE HELPERS
        ====================================================== */
 
     async function getMemberships() {
@@ -3748,11 +3337,10 @@ async function initDashboardPage() {
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
+                "Membership error:",
                 result.error
             );
 
@@ -3760,10 +3348,7 @@ async function initDashboardPage() {
         }
 
 
-        return (
-            result.data ||
-            []
-        );
+        return result.data || [];
     }
 
 
@@ -3780,19 +3365,15 @@ async function initDashboardPage() {
                 .order(
                     "created_at",
                     {
-
-                        ascending:
-                            false
-
+                        ascending: false
                     }
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
+                "Circle error:",
                 result.error
             );
 
@@ -3800,16 +3381,9 @@ async function initDashboardPage() {
         }
 
 
-        return (
-            result.data ||
-            []
-        );
+        return result.data || [];
     }
 
-
-    /* ======================================================
-       MY CIRCLES
-       ====================================================== */
 
     async function loadMyCircles() {
 
@@ -3837,14 +3411,12 @@ async function initDashboardPage() {
                     membership.circle_id,
                     membership
                 );
-
             }
         );
 
 
         myCircles =
             circles
-
                 .filter(
                     function (circle) {
 
@@ -3862,7 +3434,6 @@ async function initDashboardPage() {
                         );
                     }
                 )
-
                 .map(
                     function (circle) {
 
@@ -3882,7 +3453,6 @@ async function initDashboardPage() {
                                     "member"
 
                         };
-
                     }
                 );
 
@@ -3901,7 +3471,6 @@ async function initDashboardPage() {
                         circle.id ===
                         saved
                     );
-
                 }
             )
             ||
@@ -3925,10 +3494,7 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !container
-        ) {
-
+        if (!container) {
             return;
         }
 
@@ -3943,7 +3509,6 @@ async function initDashboardPage() {
 
             container.innerHTML =
                 '<p class="empty-text">You have not joined any circles yet.</p>';
-
 
             return;
         }
@@ -4007,7 +3572,6 @@ async function initDashboardPage() {
 
 
                         await renderActiveCircle();
-
                     }
                 );
 
@@ -4015,7 +3579,6 @@ async function initDashboardPage() {
                 container.appendChild(
                     button
                 );
-
             }
         );
     }
@@ -4029,9 +3592,7 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !activeCircle
-        ) {
+        if (!activeCircle) {
 
             setText(
                 "circle-name",
@@ -4045,9 +3606,7 @@ async function initDashboardPage() {
             );
 
 
-            if (
-                leaveButton
-            ) {
+            if (leaveButton) {
 
                 leaveButton.hidden =
                     true;
@@ -4071,9 +3630,7 @@ async function initDashboardPage() {
         );
 
 
-        if (
-            leaveButton
-        ) {
+        if (leaveButton) {
 
             leaveButton.hidden =
                 activeCircle.role ===
@@ -4093,10 +3650,7 @@ async function initDashboardPage() {
 
     async function loadCircleMembers() {
 
-        if (
-            !activeCircle
-        ) {
-
+        if (!activeCircle) {
             return;
         }
 
@@ -4116,15 +3670,10 @@ async function initDashboardPage() {
 
 
         const list =
-            get(
-                "circle-list"
-            );
+            get("circle-list");
 
 
-        if (
-            !list
-        ) {
-
+        if (!list) {
             return;
         }
 
@@ -4133,9 +3682,17 @@ async function initDashboardPage() {
             "";
 
 
+        if (result.error) {
+
+            list.innerHTML =
+                "<li>Unable to load members.</li>";
+
+            return;
+        }
+
+
         const members =
-            result.data ||
-            [];
+            result.data || [];
 
 
         if (
@@ -4172,7 +3729,6 @@ async function initDashboardPage() {
                 list.appendChild(
                     item
                 );
-
             }
         );
     }
@@ -4225,9 +3781,7 @@ async function initDashboardPage() {
                         );
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     recommend(
                         result.error.message
@@ -4253,7 +3807,6 @@ async function initDashboardPage() {
                     loadDiscoverGroups()
 
                 ]);
-
             }
         );
 
@@ -4272,7 +3825,6 @@ async function initDashboardPage() {
                         "new-circle-name"
                     );
 
-
                 const descriptionInput =
                     get(
                         "new-circle-description"
@@ -4280,14 +3832,11 @@ async function initDashboardPage() {
 
 
                 const name =
-                    nameInput
-                        .value
+                    nameInput?.value
                         .trim();
 
 
-                if (
-                    !name
-                ) {
+                if (!name) {
 
                     setText(
                         "create-circle-message",
@@ -4305,13 +3854,13 @@ async function initDashboardPage() {
                         )
                         .insert({
 
-                            name:
-                                name,
+                            name,
 
                             description:
                                 descriptionInput
-                                    .value
-                                    .trim(),
+                                    ?.value
+                                    .trim() ||
+                                "",
 
                             created_by:
                                 currentUser.id,
@@ -4324,9 +3873,7 @@ async function initDashboardPage() {
                         .single();
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     setText(
                         "create-circle-message",
@@ -4337,12 +3884,13 @@ async function initDashboardPage() {
                 }
 
 
-                nameInput.value =
-                    "";
+                if (nameInput) {
+                    nameInput.value = "";
+                }
 
-
-                descriptionInput.value =
-                    "";
+                if (descriptionInput) {
+                    descriptionInput.value = "";
+                }
 
 
                 sessionStorage.setItem(
@@ -4370,7 +3918,6 @@ async function initDashboardPage() {
 
 
                 showJoinRequests();
-
             }
         );
 
@@ -4387,10 +3934,7 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !container
-        ) {
-
+        if (!container) {
             return;
         }
 
@@ -4420,10 +3964,7 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
-
-                            ascending:
-                                false
-
+                            ascending: false
                         }
                     )
 
@@ -4435,9 +3976,7 @@ async function initDashboardPage() {
                 memberships.map(
                     function (item) {
 
-                        return (
-                            item.circle_id
-                        );
+                        return item.circle_id;
                     }
                 )
             );
@@ -4464,7 +4003,6 @@ async function initDashboardPage() {
                         request
                     );
                 }
-
             }
         );
 
@@ -4554,7 +4092,6 @@ async function initDashboardPage() {
                     button.textContent =
                         "Your Circle ✓";
 
-
                     button.disabled =
                         true;
 
@@ -4590,10 +4127,7 @@ async function initDashboardPage() {
                                 );
 
 
-                            if (
-                                !selected
-                            ) {
-
+                            if (!selected) {
                                 return;
                             }
 
@@ -4612,7 +4146,6 @@ async function initDashboardPage() {
 
 
                             await renderActiveCircle();
-
                         }
                     );
 
@@ -4624,7 +4157,6 @@ async function initDashboardPage() {
 
                     button.textContent =
                         "Request Pending";
-
 
                     button.disabled =
                         true;
@@ -4665,9 +4197,7 @@ async function initDashboardPage() {
                                 );
 
 
-                            if (
-                                result.error
-                            ) {
+                            if (result.error) {
 
                                 button.disabled =
                                     false;
@@ -4696,7 +4226,6 @@ async function initDashboardPage() {
 
 
                             await loadDiscoverGroups();
-
                         }
                     );
                 }
@@ -4712,7 +4241,6 @@ async function initDashboardPage() {
                 container.appendChild(
                     card
                 );
-
             }
         );
     }
@@ -4737,10 +4265,7 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !container
-        ) {
-
+        if (!container) {
             return;
         }
 
@@ -4788,9 +4313,7 @@ async function initDashboardPage() {
                     owned.map(
                         function (circle) {
 
-                            return (
-                                circle.id
-                            );
+                            return circle.id;
                         }
                     )
                 )
@@ -4800,11 +4323,10 @@ async function initDashboardPage() {
                 );
 
 
-        if (
-            result.error
-        ) {
+        if (result.error) {
 
             console.error(
+                "Join request error:",
                 result.error
             );
 
@@ -4813,8 +4335,7 @@ async function initDashboardPage() {
 
 
         const requests =
-            result.data ||
-            [];
+            result.data || [];
 
 
         setText(
@@ -4898,7 +4419,6 @@ async function initDashboardPage() {
                 accept.type =
                     "button";
 
-
                 accept.textContent =
                     "Accept";
 
@@ -4912,10 +4432,8 @@ async function initDashboardPage() {
                 decline.type =
                     "button";
 
-
                 decline.textContent =
                     "Decline";
-
 
                 decline.className =
                     "danger-outline";
@@ -4927,7 +4445,6 @@ async function initDashboardPage() {
 
                     accept.disabled =
                         true;
-
 
                     decline.disabled =
                         true;
@@ -4948,13 +4465,10 @@ async function initDashboardPage() {
                         );
 
 
-                    if (
-                        response.error
-                    ) {
+                    if (response.error) {
 
                         accept.disabled =
                             false;
-
 
                         decline.disabled =
                             false;
@@ -4988,9 +4502,7 @@ async function initDashboardPage() {
                     "click",
                     function () {
 
-                        respond(
-                            true
-                        );
+                        respond(true);
                     }
                 );
 
@@ -4999,9 +4511,7 @@ async function initDashboardPage() {
                     "click",
                     function () {
 
-                        respond(
-                            false
-                        );
+                        respond(false);
                     }
                 );
 
@@ -5021,14 +4531,13 @@ async function initDashboardPage() {
                 container.appendChild(
                     row
                 );
-
             }
         );
     }
 
 
     /* ======================================================
-       SEND MESSAGE
+       CIRCLE MESSAGES
        ====================================================== */
 
     get("send-message-btn")
@@ -5036,9 +4545,7 @@ async function initDashboardPage() {
             "click",
             async function () {
 
-                if (
-                    !activeCircle
-                ) {
+                if (!activeCircle) {
 
                     setText(
                         "feed-message",
@@ -5056,15 +4563,11 @@ async function initDashboardPage() {
 
 
                 const message =
-                    input
-                        .value
+                    input?.value
                         .trim();
 
 
-                if (
-                    !message
-                ) {
-
+                if (!message) {
                     return;
                 }
 
@@ -5082,15 +4585,12 @@ async function initDashboardPage() {
                             user_id:
                                 currentUser.id,
 
-                            message:
-                                message
+                            message
 
                         });
 
 
-                if (
-                    result.error
-                ) {
+                if (result.error) {
 
                     setText(
                         "feed-message",
@@ -5101,8 +4601,9 @@ async function initDashboardPage() {
                 }
 
 
-                input.value =
-                    "";
+                if (input) {
+                    input.value = "";
+                }
 
 
                 setText(
@@ -5112,14 +4613,11 @@ async function initDashboardPage() {
 
 
                 await loadCircleFeed();
-
             }
         );
 
 
-    function checkInLabel(
-        type
-    ) {
+    function checkInLabel(type) {
 
         const labels = {
 
@@ -5162,17 +4660,12 @@ async function initDashboardPage() {
             );
 
 
-        if (
-            !feed
-        ) {
-
+        if (!feed) {
             return;
         }
 
 
-        if (
-            !activeCircle
-        ) {
+        if (!activeCircle) {
 
             feed.innerHTML =
                 '<p class="empty-text">Select a circle to view activity.</p>';
@@ -5201,15 +4694,10 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
-
-                            ascending:
-                                false
-
+                            ascending: false
                         }
                     )
-                    .limit(
-                        50
-                    ),
+                    .limit(50),
 
                 supabaseClient
                     .from(
@@ -5229,15 +4717,10 @@ async function initDashboardPage() {
                     .order(
                         "created_at",
                         {
-
-                            ascending:
-                                false
-
+                            ascending: false
                         }
                     )
-                    .limit(
-                        50
-                    )
+                    .limit(50)
 
             ]);
 
@@ -5265,7 +4748,6 @@ async function initDashboardPage() {
                         message.created_at
 
                 });
-
             }
         );
 
@@ -5290,7 +4772,6 @@ async function initDashboardPage() {
                         check.created_at
 
                 });
-
             }
         );
 
@@ -5376,23 +4857,13 @@ async function initDashboardPage() {
                 time.textContent =
                     new Date(
                         item.createdAt
-                    )
-                    .toLocaleString(
+                    ).toLocaleString(
                         [],
                         {
-
-                            month:
-                                "short",
-
-                            day:
-                                "numeric",
-
-                            hour:
-                                "numeric",
-
-                            minute:
-                                "2-digit"
-
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit"
                         }
                     );
 
@@ -5422,7 +4893,6 @@ async function initDashboardPage() {
                 feed.appendChild(
                     row
                 );
-
             }
         );
     }
@@ -5444,7 +4914,7 @@ async function initDashboardPage() {
         realtimeChannel =
             supabaseClient
                 .channel(
-                    "circlesync-v81-" +
+                    "circlesync-v82-" +
                     currentUser.id
                 )
 
@@ -5453,14 +4923,11 @@ async function initDashboardPage() {
                     "postgres_changes",
                     {
 
-                        event:
-                            "*",
+                        event: "*",
 
-                        schema:
-                            "public",
+                        schema: "public",
 
-                        table:
-                            "check_ins"
+                        table: "check_ins"
 
                     },
                     async function () {
@@ -5468,14 +4935,10 @@ async function initDashboardPage() {
                         await refreshRecentCheckIns();
 
 
-                        updateFloatingCountdown();
-
-
-                        updateNextUp();
+                        updateRoutineDisplays();
 
 
                         await loadCircleFeed();
-
                     }
                 )
 
@@ -5484,11 +4947,9 @@ async function initDashboardPage() {
                     "postgres_changes",
                     {
 
-                        event:
-                            "*",
+                        event: "*",
 
-                        schema:
-                            "public",
+                        schema: "public",
 
                         table:
                             "circle_join_requests"
@@ -5503,7 +4964,6 @@ async function initDashboardPage() {
                             loadDiscoverGroups()
 
                         ]);
-
                     }
                 )
 
@@ -5512,11 +4972,9 @@ async function initDashboardPage() {
                     "postgres_changes",
                     {
 
-                        event:
-                            "*",
+                        event: "*",
 
-                        schema:
-                            "public",
+                        schema: "public",
 
                         table:
                             "circle_members"
@@ -5533,7 +4991,6 @@ async function initDashboardPage() {
                             loadDiscoverGroups()
 
                         ]);
-
                     }
                 )
 
@@ -5542,11 +4999,9 @@ async function initDashboardPage() {
                     "postgres_changes",
                     {
 
-                        event:
-                            "*",
+                        event: "*",
 
-                        schema:
-                            "public",
+                        schema: "public",
 
                         table:
                             "circle_messages"
@@ -5563,7 +5018,6 @@ async function initDashboardPage() {
                             "CircleSync Realtime:",
                             status
                         );
-
                     }
                 );
     }
@@ -5586,18 +5040,16 @@ async function initDashboardPage() {
                     "CircleSync audio engine ready."
                 );
 
-
             } catch (error) {
 
                 console.warn(
+                    "Audio unlock:",
                     error
                 );
             }
-
         },
         {
-            once:
-                true
+            once: true
         }
     );
 
@@ -5632,28 +5084,28 @@ async function initDashboardPage() {
     ]);
 
 
-    updateFloatingCountdown();
+    /*
+     * One shared renderer now controls both
+     * Next Up and floating clock.
+     */
 
-
-    updateNextUp();
+    updateRoutineDisplays();
 
 
     startRealtime();
 
 
     /* ======================================================
-       VISUAL 24/7 CLOCK
+       24/7 CLOCK
 
-       Pure client-side update every second.
+       BOTH DISPLAYS update every second from the
+       exact same target.
        ====================================================== */
 
     setInterval(
         function () {
 
-            updateFloatingCountdown();
-
-
-            updateNextUp();
+            updateRoutineDisplays();
 
         },
         1000
@@ -5662,8 +5114,6 @@ async function initDashboardPage() {
 
     /* ======================================================
        ALARM ENGINE
-
-       Check every five seconds.
        ====================================================== */
 
     setInterval(
@@ -5680,6 +5130,6 @@ async function initDashboardPage() {
 
 
     console.log(
-        "CircleSync dashboard v81 ready."
+        "CircleSync dashboard v82 ready."
     );
 }
