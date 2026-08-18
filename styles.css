@@ -1,5 +1,5 @@
 /* ==========================================================
-   CIRCLESYNC V79
+   CIRCLESYNC V80
    ========================================================== */
 
 * {
@@ -25,21 +25,10 @@
     --danger: #ef476f;
 
     --border:
-        rgba(
-            156,
-            255,
-            100,
-            0.35
-        );
+        rgba(156, 255, 100, 0.35);
 
     --shadow:
-        0 12px 35px
-        rgba(
-            0,
-            0,
-            0,
-            0.28
-        );
+        0 12px 35px rgba(0, 0, 0, 0.28);
 }
 
 
@@ -56,8 +45,7 @@ body {
         Helvetica,
         sans-serif;
 
-    color:
-        var(--soft-white);
+    color: var(--soft-white);
 
     background:
         radial-gradient(
@@ -77,213 +65,140 @@ body {
             #130020
         );
 
-    background-attachment:
-        fixed;
+    background-attachment: fixed;
 
-    line-height:
-        1.5;
+    line-height: 1.5;
 }
 
-
-/* ==========================================================
-   TEXT
-   ========================================================== */
 
 h1,
 h2,
 h3,
 strong,
 label {
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
 h1 {
-    font-size:
-        2.2rem;
+    font-size: 2.2rem;
 }
 
 
 h2 {
-    font-size:
-        1.45rem;
+    font-size: 1.45rem;
 }
 
 
 h3 {
-    font-size:
-        1.1rem;
+    font-size: 1.1rem;
 }
 
 
 p {
-    line-height:
-        1.55;
+    line-height: 1.55;
 }
 
 
 /* ==========================================================
-   FLOATING ALARM COUNTDOWN
-   DISPLAY ONLY
+   FLOATING ROUTINE CLOCK
    ========================================================== */
 
 .routine-alarm-widget {
-    position:
-        fixed;
+    position: fixed;
 
-    top:
-        18px;
+    top: 18px;
+    right: 18px;
 
-    right:
-        18px;
+    z-index: 9999;
 
-    z-index:
-        9999;
+    width: 250px;
 
-    width:
-        250px;
+    display: grid;
 
-    display:
-        grid;
+    grid-template-columns: 44px 1fr;
 
-    grid-template-columns:
-        44px 1fr;
+    align-items: center;
 
-    align-items:
-        center;
+    gap: 11px;
 
-    gap:
-        11px;
-
-    padding:
-        13px 14px;
+    padding: 13px 14px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.46
-        );
+        rgba(156, 255, 100, 0.46);
 
-    border-radius:
-        16px;
+    border-radius: 16px;
 
     background:
-        rgba(
-            24,
-            0,
-            40,
-            0.95
-        );
+        rgba(24, 0, 40, 0.95);
 
     box-shadow:
         0 12px 35px
-        rgba(
-            0,
-            0,
-            0,
-            0.42
-        );
+        rgba(0, 0, 0, 0.42);
 
-    backdrop-filter:
-        blur(16px);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+    backdrop-filter: blur(16px);
 }
 
 
 .alarm-icon {
-    width:
-        44px;
+    width: 44px;
+    height: 44px;
 
-    height:
-        44px;
+    display: grid;
 
-    display:
-        grid;
+    place-items: center;
 
-    place-items:
-        center;
-
-    border-radius:
-        50%;
+    border-radius: 50%;
 
     background:
-        rgba(
-            156,
-            255,
-            100,
-            0.12
-        );
+        rgba(156, 255, 100, 0.12);
 
-    font-size:
-        1.3rem;
+    font-size: 1.3rem;
 }
 
 
 .alarm-info {
-    display:
-        flex;
+    display: flex;
 
-    flex-direction:
-        column;
+    flex-direction: column;
 
-    min-width:
-        0;
+    min-width: 0;
 }
 
 
 .alarm-label {
-    color:
-        var(--soft-white);
+    color: var(--soft-white);
 
-    opacity:
-        0.72;
+    opacity: 0.72;
 
-    font-size:
-        0.70rem;
+    font-size: 0.70rem;
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 
-    letter-spacing:
-        1px;
+    letter-spacing: 1px;
 }
 
 
 #alarm-title {
-    margin-top:
-        2px;
+    margin-top: 2px;
 
-    white-space:
-        nowrap;
+    overflow: hidden;
 
-    overflow:
-        hidden;
+    text-overflow: ellipsis;
 
-    text-overflow:
-        ellipsis;
+    white-space: nowrap;
 }
 
 
 #alarm-countdown {
-    margin-top:
-        3px;
+    margin-top: 3px;
 
-    color:
-        var(--green);
+    color: var(--green);
 
-    font-size:
-        1.18rem;
+    font-size: 1.18rem;
 
-    font-weight:
-        900;
+    font-weight: 900;
 
     font-variant-numeric:
         tabular-nums;
@@ -295,24 +210,11 @@ p {
    ========================================================== */
 
 .routine-alarm-widget.alarm-active {
-    border-color:
-        var(--green);
+    border-color: var(--green);
 
     box-shadow:
-        0 0 0 3px
-        rgba(
-            156,
-            255,
-            100,
-            0.12
-        ),
-        0 0 38px
-        rgba(
-            156,
-            255,
-            100,
-            0.28
-        );
+        0 0 0 3px rgba(156, 255, 100, 0.12),
+        0 0 38px rgba(156, 255, 100, 0.28);
 
     animation:
         gentleAlarmPulse
@@ -336,13 +238,11 @@ p {
 
     0%,
     100% {
-        transform:
-            scale(1);
+        transform: scale(1);
     }
 
     50% {
-        transform:
-            scale(1.025);
+        transform: scale(1.025);
     }
 }
 
@@ -351,18 +251,15 @@ p {
 
     0%,
     100% {
-        transform:
-            rotate(0deg);
+        transform: rotate(0deg);
     }
 
     35% {
-        transform:
-            rotate(-8deg);
+        transform: rotate(-8deg);
     }
 
     65% {
-        transform:
-            rotate(8deg);
+        transform: rotate(8deg);
     }
 }
 
@@ -372,35 +269,26 @@ p {
    ========================================================== */
 
 .topbar {
-    max-width:
-        1000px;
+    max-width: 1000px;
 
-    margin:
-        0 auto;
+    margin: 0 auto;
 
-    padding:
-        28px 24px 12px;
+    padding: 28px 24px 12px;
 
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    gap:
-        20px;
+    gap: 20px;
 }
 
 
 .topbar p {
-    margin-top:
-        4px;
+    margin-top: 4px;
 
-    opacity:
-        0.82;
+    opacity: 0.82;
 }
 
 
@@ -415,11 +303,9 @@ p {
             950px
         );
 
-    margin:
-        0 auto;
+    margin: 0 auto;
 
-    padding:
-        18px 0 60px;
+    padding: 18px 0 60px;
 }
 
 
@@ -428,107 +314,70 @@ p {
    ========================================================== */
 
 .card {
-    position:
-        relative;
+    position: relative;
 
-    overflow:
-        hidden;
+    overflow: hidden;
 
-    margin-bottom:
-        20px;
+    margin-bottom: 20px;
 
-    padding:
-        24px;
+    padding: 24px;
 
     border:
         1px solid
         var(--border);
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(
-                69,
-                20,
-                99,
-                0.94
-            ),
-            rgba(
-                40,
-                7,
-                65,
-                0.96
-            )
+            rgba(69, 20, 99, 0.94),
+            rgba(40, 7, 65, 0.96)
         );
 
-    box-shadow:
-        var(--shadow);
+    box-shadow: var(--shadow);
 
-    backdrop-filter:
-        blur(14px);
+    backdrop-filter: blur(14px);
 }
 
 
 .card-heading {
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        flex-start;
+    align-items: flex-start;
 
-    gap:
-        14px;
+    gap: 14px;
 
-    margin-bottom:
-        20px;
+    margin-bottom: 20px;
 }
 
 
 .card-heading p {
-    margin-top:
-        3px;
+    margin-top: 3px;
 
-    opacity:
-        0.82;
+    opacity: 0.82;
 }
 
 
 .card-icon {
-    width:
-        46px;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
 
-    min-width:
-        46px;
+    display: grid;
 
-    height:
-        46px;
-
-    display:
-        grid;
-
-    place-items:
-        center;
+    place-items: center;
 
     border:
         1px solid
         var(--border);
 
-    border-radius:
-        13px;
+    border-radius: 13px;
 
     background:
-        rgba(
-            156,
-            255,
-            100,
-            0.08
-        );
+        rgba(156, 255, 100, 0.08);
 
-    font-size:
-        1.25rem;
+    font-size: 1.25rem;
 }
 
 
@@ -537,17 +386,13 @@ p {
    ========================================================== */
 
 button {
-    width:
-        100%;
+    width: 100%;
 
-    padding:
-        13px 16px;
+    padding: 13px 16px;
 
-    border:
-        none;
+    border: none;
 
-    border-radius:
-        12px;
+    border-radius: 12px;
 
     background:
         linear-gradient(
@@ -556,20 +401,15 @@ button {
             var(--green-dark)
         );
 
-    color:
-        #130020;
+    color: #130020;
 
-    font-family:
-        inherit;
+    font-family: inherit;
 
-    font-size:
-        1rem;
+    font-size: 1rem;
 
-    font-weight:
-        800;
+    font-weight: 800;
 
-    cursor:
-        pointer;
+    cursor: pointer;
 
     transition:
         transform 0.18s ease,
@@ -584,27 +424,14 @@ button:hover:not(:disabled) {
 
     box-shadow:
         0 8px 20px
-        rgba(
-            98,
-            255,
-            101,
-            0.18
-        );
-}
-
-
-button:active:not(:disabled) {
-    transform:
-        translateY(0);
+        rgba(98, 255, 101, 0.18);
 }
 
 
 button:disabled {
-    opacity:
-        0.55;
+    opacity: 0.55;
 
-    cursor:
-        not-allowed;
+    cursor: not-allowed;
 }
 
 
@@ -613,11 +440,9 @@ button:disabled {
         1px solid
         var(--green);
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
@@ -632,17 +457,7 @@ button:disabled {
             var(--green-dark)
         );
 
-    color:
-        #130020;
-
-    box-shadow:
-        0 0 24px
-        rgba(
-            120,
-            255,
-            85,
-            0.15
-        );
+    color: #130020;
 }
 
 
@@ -654,8 +469,7 @@ button:disabled {
             #c92f59
         );
 
-    color:
-        white;
+    color: white;
 }
 
 
@@ -664,26 +478,20 @@ button:disabled {
         1px solid
         var(--danger);
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        #ff7697;
+    color: #ff7697;
 }
 
 
 .compact-btn {
-    width:
-        auto;
+    width: auto;
 
-    min-width:
-        100px;
+    min-width: 100px;
 
-    padding:
-        9px 13px;
+    padding: 9px 13px;
 
-    font-size:
-        0.9rem;
+    font-size: 0.9rem;
 }
 
 
@@ -692,56 +500,36 @@ button:disabled {
    ========================================================== */
 
 label {
-    display:
-        block;
+    display: block;
 
-    margin-top:
-        16px;
+    margin-top: 16px;
 
-    margin-bottom:
-        7px;
+    margin-bottom: 7px;
 
-    font-weight:
-        700;
+    font-weight: 700;
 }
 
 
 input,
 textarea {
-    width:
-        100%;
+    width: 100%;
 
-    padding:
-        13px 14px;
+    padding: 13px 14px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.28
-        );
+        rgba(156, 255, 100, 0.28);
 
-    border-radius:
-        12px;
+    border-radius: 12px;
 
-    outline:
-        none;
+    outline: none;
 
     background:
-        rgba(
-            19,
-            0,
-            32,
-            0.88
-        );
+        rgba(19, 0, 32, 0.88);
 
-    color:
-        var(--green);
+    color: var(--green);
 
-    font:
-        inherit;
+    font: inherit;
 }
 
 
@@ -752,24 +540,17 @@ textarea:focus {
 
     box-shadow:
         0 0 0 3px
-        rgba(
-            156,
-            255,
-            100,
-            0.11
-        );
+        rgba(156, 255, 100, 0.11);
 }
 
 
 textarea {
-    resize:
-        vertical;
+    resize: vertical;
 }
 
 
 input[type="range"] {
-    padding:
-        0;
+    padding: 0;
 
     accent-color:
         var(--green);
@@ -781,62 +562,49 @@ input[type="range"] {
    ========================================================== */
 
 .center {
-    text-align:
-        center;
+    text-align: center;
 }
 
 
 .status {
-    margin-top:
-        12px;
+    margin-top: 12px;
 
-    font-size:
-        0.94rem;
+    font-size: 0.94rem;
 }
 
 
 .success-message {
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
 .error-message {
-    color:
-        #ff9bb1;
+    color: #ff9bb1;
 }
 
 
 .empty-text {
-    opacity:
-        0.72;
+    opacity: 0.72;
 }
 
 
 .mini-label {
-    color:
-        var(--green);
+    color: var(--green);
 
-    font-size:
-        0.78rem;
+    font-size: 0.78rem;
 
-    font-weight:
-        800;
+    font-weight: 800;
 
-    letter-spacing:
-        1.7px;
+    letter-spacing: 1.7px;
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 }
 
 
 .section-title {
-    margin-top:
-        20px;
+    margin-top: 20px;
 
-    margin-bottom:
-        10px;
+    margin-bottom: 10px;
 }
 
 
@@ -845,43 +613,27 @@ input[type="range"] {
    ========================================================== */
 
 .next-up-panel {
-    margin-bottom:
-        20px;
+    margin-bottom: 20px;
 
-    padding:
-        22px;
+    padding: 22px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.26
-        );
+        rgba(156, 255, 100, 0.26);
 
-    border-radius:
-        16px;
+    border-radius: 16px;
 
     background:
-        rgba(
-            17,
-            0,
-            30,
-            0.72
-        );
+        rgba(17, 0, 30, 0.72);
 
-    text-align:
-        center;
+    text-align: center;
 }
 
 
 .next-up-panel h3 {
-    margin:
-        7px 0;
+    margin: 7px 0;
 
-    font-size:
-        1.8rem;
+    font-size: 1.8rem;
 }
 
 
@@ -891,47 +643,27 @@ input[type="range"] {
 
 .recommendation-card {
     border-color:
-        rgba(
-            156,
-            255,
-            100,
-            0.65
-        );
+        rgba(156, 255, 100, 0.65);
 
     box-shadow:
         0 0 28px
-        rgba(
-            117,
-            255,
-            95,
-            0.08
-        );
+        rgba(117, 255, 95, 0.08);
 }
 
 
 #recommendation {
-    padding:
-        17px;
+    padding: 17px;
 
-    border-radius:
-        13px;
+    border-radius: 13px;
 
     background:
-        rgba(
-            17,
-            0,
-            30,
-            0.63
-        );
+        rgba(17, 0, 30, 0.63);
 
-    color:
-        #efffe7;
+    color: #efffe7;
 
-    font-size:
-        1.02rem;
+    font-size: 1.02rem;
 
-    line-height:
-        1.65;
+    line-height: 1.65;
 }
 
 
@@ -940,55 +672,103 @@ input[type="range"] {
    ========================================================== */
 
 .score {
-    margin:
-        12px 0 18px;
+    margin: 12px 0 18px;
 
-    text-align:
-        center;
+    text-align: center;
 
-    color:
-        var(--green);
+    color: var(--green);
 
-    font-size:
-        3.3rem;
+    font-size: 3.3rem;
 
-    font-weight:
-        900;
+    font-weight: 900;
 }
 
 
 /* ==========================================================
-   QUICK CHECK-IN
+   QUICK CHECK IN
    ========================================================== */
 
 .button-grid {
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
+        repeat(2, 1fr);
 
-    gap:
-        12px;
+    gap: 12px;
 }
 
 
 /* ==========================================================
-   CIRCLE SWITCHER
+   ROUTINE
+   ========================================================== */
+
+.routine-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px 16px;
+}
+
+
+.routine-field {
+    position: relative;
+
+    padding: 14px;
+
+    border:
+        1px solid
+        rgba(156, 255, 100, 0.18);
+
+    border-radius: 14px;
+
+    background:
+        rgba(18, 0, 31, 0.42);
+}
+
+
+.routine-field label {
+    margin-top: 0;
+}
+
+
+.routine-number {
+    position: absolute;
+
+    top: 8px;
+    right: 10px;
+
+    width: 24px;
+    height: 24px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(156, 255, 100, 0.12);
+
+    color: var(--green);
+
+    font-size: 0.75rem;
+
+    font-weight: 900;
+}
+
+
+/* ==========================================================
+   CIRCLES
    ========================================================== */
 
 .circle-switcher {
-    display:
-        flex;
+    display: flex;
 
-    gap:
-        10px;
+    gap: 10px;
 
-    overflow-x:
-        auto;
+    overflow-x: auto;
 
     padding:
         5px 2px 15px;
@@ -996,11 +776,9 @@ input[type="range"] {
 
 
 .circle-chip {
-    width:
-        auto;
+    width: auto;
 
-    min-width:
-        145px;
+    min-width: 145px;
 
     flex:
         0 0 auto;
@@ -1010,15 +788,9 @@ input[type="range"] {
         var(--border);
 
     background:
-        rgba(
-            18,
-            0,
-            31,
-            0.78
-        );
+        rgba(18, 0, 31, 0.78);
 
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
@@ -1030,122 +802,81 @@ input[type="range"] {
             var(--green-dark)
         );
 
-    color:
-        #150020;
+    color: #150020;
 }
 
 
 .active-circle-box {
-    margin-top:
-        8px;
+    margin-top: 8px;
 
-    padding:
-        18px;
+    padding: 18px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.24
-        );
+        rgba(156, 255, 100, 0.24);
 
-    border-radius:
-        15px;
+    border-radius: 15px;
 
     background:
-        rgba(
-            19,
-            0,
-            32,
-            0.68
-        );
+        rgba(19, 0, 32, 0.68);
 }
 
 
 .active-circle-box button {
-    margin-top:
-        15px;
+    margin-top: 15px;
 }
 
 
-/* ==========================================================
-   MEMBERS
-   ========================================================== */
-
 .member-list {
-    list-style:
-        none;
+    list-style: none;
 }
 
 
 .member-list li {
-    margin-bottom:
-        8px;
+    margin-bottom: 8px;
 
-    padding:
-        11px 13px;
+    padding: 11px 13px;
 
-    border-radius:
-        10px;
+    border-radius: 10px;
 
     background:
-        rgba(
-            18,
-            0,
-            31,
-            0.72
-        );
+        rgba(18, 0, 31, 0.72);
 
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
 .compact-scroll {
-    max-height:
-        190px;
+    max-height: 190px;
 
-    overflow-y:
-        auto;
+    overflow-y: auto;
 }
 
 
 /* ==========================================================
-   MANAGEMENT TABS
+   MANAGEMENT
    ========================================================== */
 
 .management-tabs {
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap:
-        10px;
+    gap: 10px;
 
-    margin-bottom:
-        20px;
+    margin-bottom: 20px;
 
-    padding:
-        6px;
+    padding: 6px;
 
     border:
         1px solid
         var(--border);
 
-    border-radius:
-        16px;
+    border-radius: 16px;
 
     background:
-        rgba(
-            15,
-            0,
-            27,
-            0.62
-        );
+        rgba(15, 0, 27, 0.62);
 }
 
 
@@ -1154,11 +885,9 @@ input[type="range"] {
         1px solid
         transparent;
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        var(--green);
+    color: var(--green);
 }
 
 
@@ -1173,55 +902,36 @@ input[type="range"] {
             var(--green-dark)
         );
 
-    color:
-        #140020;
+    color: #140020;
 }
 
 
 .tab-count {
-    display:
-        inline-grid;
+    display: inline-grid;
 
-    place-items:
-        center;
+    place-items: center;
 
-    min-width:
-        24px;
+    min-width: 24px;
+    height: 24px;
 
-    height:
-        24px;
+    margin-left: 6px;
 
-    margin-left:
-        6px;
+    padding: 0 6px;
 
-    padding:
-        0 6px;
-
-    border-radius:
-        999px;
+    border-radius: 999px;
 
     background:
-        rgba(
-            20,
-            0,
-            32,
-            0.22
-        );
-
-    font-size:
-        0.77rem;
+        rgba(20, 0, 32, 0.22);
 }
 
 
 .management-panel[hidden] {
-    display:
-        none !important;
+    display: none !important;
 }
 
 
 .management-panel-header {
-    margin-bottom:
-        16px;
+    margin-bottom: 16px;
 }
 
 
@@ -1230,166 +940,115 @@ input[type="range"] {
    ========================================================== */
 
 .join-request-scroll {
-    max-height:
-        280px;
+    max-height: 280px;
 
-    overflow-y:
-        auto;
+    overflow-y: auto;
 }
 
 
 .request-row {
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    gap:
-        14px;
+    gap: 14px;
 
-    margin-bottom:
-        10px;
+    margin-bottom: 10px;
 
-    padding:
-        14px;
+    padding: 14px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.22
-        );
+        rgba(156, 255, 100, 0.22);
 
-    border-radius:
-        12px;
+    border-radius: 12px;
 
     background:
-        rgba(
-            16,
-            0,
-            29,
-            0.74
-        );
+        rgba(16, 0, 29, 0.74);
 }
 
 
 .request-actions {
-    display:
-        flex;
+    display: flex;
 
-    gap:
-        8px;
+    gap: 8px;
 }
 
 
 /* ==========================================================
-   MESSAGES
+   FEED
    ========================================================== */
 
 .message-compose {
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         1fr auto;
 
-    gap:
-        10px;
+    gap: 10px;
 }
 
 
 .message-compose button {
-    width:
-        auto;
+    width: auto;
 
-    min-width:
-        110px;
+    min-width: 110px;
 }
 
 
 .feed-toolbar {
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    gap:
-        12px;
+    gap: 12px;
 
-    margin:
-        12px 0;
+    margin: 12px 0;
 }
 
 
 .circle-feed-scroll {
-    max-height:
-        330px;
+    max-height: 330px;
 
-    overflow-y:
-        auto;
+    overflow-y: auto;
 }
 
 
 .feed-row {
-    margin-bottom:
-        8px;
+    margin-bottom: 8px;
 
-    padding:
-        11px 12px;
+    padding: 11px 12px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.18
-        );
+        rgba(156, 255, 100, 0.18);
 
-    border-radius:
-        11px;
+    border-radius: 11px;
 
     background:
-        rgba(
-            17,
-            0,
-            29,
-            0.70
-        );
+        rgba(17, 0, 29, 0.70);
 }
 
 
 .feed-meta {
-    display:
-        flex;
+    display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
-    gap:
-        15px;
+    gap: 15px;
 
-    margin-bottom:
-        3px;
+    margin-bottom: 3px;
 
-    font-size:
-        0.84rem;
+    font-size: 0.84rem;
 }
 
 
 .feed-meta span {
-    opacity:
-        0.70;
+    opacity: 0.70;
 }
 
 
@@ -1398,71 +1057,34 @@ input[type="range"] {
    ========================================================== */
 
 .discover-scroll {
-    max-height:
-        380px;
+    max-height: 380px;
 
-    overflow-y:
-        auto;
+    overflow-y: auto;
 
-    margin-top:
-        15px;
+    margin-top: 15px;
 }
 
 
 .discover-group-card {
-    margin-bottom:
-        11px;
+    margin-bottom: 11px;
 
-    padding:
-        15px;
+    padding: 15px;
 
     border:
         1px solid
-        rgba(
-            156,
-            255,
-            100,
-            0.22
-        );
+        rgba(156, 255, 100, 0.22);
 
-    border-radius:
-        13px;
+    border-radius: 13px;
 
     background:
-        rgba(
-            17,
-            0,
-            29,
-            0.74
-        );
+        rgba(17, 0, 29, 0.74);
 }
 
 
 .discover-group-card p {
-    margin-bottom:
-        12px;
+    margin-bottom: 12px;
 
-    opacity:
-        0.82;
-}
-
-
-/* ==========================================================
-   ROUTINE
-   ========================================================== */
-
-.routine-grid {
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
-
-    gap:
-        12px 16px;
+    opacity: 0.82;
 }
 
 
@@ -1477,73 +1099,51 @@ input[type="range"] {
             520px
         );
 
-    margin:
-        40px auto;
+    margin: 40px auto;
 
     min-height:
-        calc(
-            100vh - 80px
-        );
+        calc(100vh - 80px);
 
-    display:
-        grid;
+    display: grid;
 
-    align-items:
-        center;
+    align-items: center;
 }
 
 
 .auth-card {
-    padding:
-        28px;
+    padding: 28px;
 
     border:
         1px solid
         var(--border);
 
-    border-radius:
-        22px;
+    border-radius: 22px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(
-                69,
-                20,
-                99,
-                0.96
-            ),
-            rgba(
-                30,
-                3,
-                51,
-                0.98
-            )
+            rgba(69, 20, 99, 0.96),
+            rgba(30, 3, 51, 0.98)
         );
 
-    box-shadow:
-        var(--shadow);
+    box-shadow: var(--shadow);
 }
 
 
 .auth-card button {
-    margin-top:
-        12px;
+    margin-top: 12px;
 }
 
 
 .auth-tabs {
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap:
-        8px;
+    gap: 8px;
 
-    margin:
-        20px 0;
+    margin: 20px 0;
 }
 
 
@@ -1555,49 +1155,7 @@ input[type="range"] {
             var(--green-dark)
         );
 
-    color:
-        #140020;
-}
-
-
-/* ==========================================================
-   SCROLLBARS
-   ========================================================== */
-
-::-webkit-scrollbar {
-    width:
-        8px;
-
-    height:
-        8px;
-}
-
-
-::-webkit-scrollbar-track {
-    background:
-        rgba(
-            13,
-            0,
-            22,
-            0.35
-        );
-
-    border-radius:
-        20px;
-}
-
-
-::-webkit-scrollbar-thumb {
-    background:
-        rgba(
-            156,
-            255,
-            100,
-            0.45
-        );
-
-    border-radius:
-        20px;
+    color: #140020;
 }
 
 
@@ -1605,141 +1163,103 @@ input[type="range"] {
    MOBILE
    ========================================================== */
 
-@media (
-    max-width: 850px
-) {
+@media (max-width: 850px) {
 
     .routine-alarm-widget {
-        top:
-            10px;
+        top: 10px;
+        right: 10px;
 
-        right:
-            10px;
-
-        width:
-            215px;
+        width: 220px;
     }
 
 
     .topbar {
-        padding-top:
-            112px;
+        padding-top: 112px;
     }
 }
 
 
-@media (
-    max-width: 700px
-) {
+@media (max-width: 700px) {
 
     .topbar {
-        flex-direction:
-            column;
+        flex-direction: column;
 
-        align-items:
-            stretch;
+        align-items: stretch;
     }
 
 
     .button-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
 
     .routine-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
 
     .request-row {
-        flex-direction:
-            column;
+        flex-direction: column;
 
-        align-items:
-            stretch;
+        align-items: stretch;
     }
 
 
     .request-actions {
-        width:
-            100%;
+        width: 100%;
     }
 
 
     .request-actions button {
-        flex:
-            1;
+        flex: 1;
     }
 
 
     .message-compose {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
 
     .message-compose button {
-        width:
-            100%;
+        width: 100%;
     }
 
 
     .feed-toolbar {
-        flex-direction:
-            column;
+        flex-direction: column;
 
-        align-items:
-            stretch;
+        align-items: stretch;
     }
 }
 
 
-@media (
-    max-width: 430px
-) {
+@media (max-width: 430px) {
 
     .dashboard {
         width:
-            calc(
-                100% - 18px
-            );
+            calc(100% - 18px);
     }
 
 
     .card {
-        padding:
-            18px;
+        padding: 18px;
     }
 
 
     .routine-alarm-widget {
-        left:
-            9px;
+        left: 9px;
+        right: 9px;
 
-        right:
-            9px;
-
-        width:
-            auto;
+        width: auto;
     }
 
 
     .topbar {
-        padding-top:
-            110px;
+        padding-top: 110px;
     }
 
 
     .management-tabs {
-        grid-template-columns:
-            1fr;
-    }
-
-
-    .score {
-        font-size:
-            2.7rem;
+        grid-template-columns: 1fr;
     }
 }
