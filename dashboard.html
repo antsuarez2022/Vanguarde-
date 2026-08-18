@@ -36,7 +36,7 @@
 
 
 <!-- =======================================================
-     FLOATING ROUTINE ALARM
+     24/7 FLOATING ROUTINE CLOCK
      ======================================================= -->
 
 <aside
@@ -74,10 +74,6 @@
 
 </aside>
 
-
-<!-- =======================================================
-     HEADER
-     ======================================================= -->
 
 <header class="topbar">
 
@@ -128,8 +124,9 @@
                 </h2>
 
                 <p>
-                    Your routine always follows Wake, Breakfast,
-                    Lunch, Rest, Dinner, then Bedtime.
+                    CircleSync follows your routine 24/7:
+                    Wake → Breakfast → Lunch → Rest → Dinner → Bedtime →
+                    next day's Wake.
                 </p>
 
             </div>
@@ -149,20 +146,16 @@
 
 
             <h3 id="next-up-title">
-
                 --
-
             </h3>
 
 
             <p id="next-up-countdown">
-
                 --
-
             </p>
 
 
-            <p id="routine-alert">
+            <p id="next-up-time">
             </p>
 
         </div>
@@ -313,7 +306,7 @@
                 </h2>
 
                 <p>
-                    Stay productive without forgetting yourself.
+                    Stay productive without losing track of your routine.
                 </p>
 
             </div>
@@ -343,6 +336,7 @@
 
     <!-- ===================================================
          QUICK CHECK-IN
+         EXACT SAME ORDER AS ROUTINE
          =================================================== -->
 
     <section
@@ -362,8 +356,8 @@
                 </h2>
 
                 <p>
-                    Checking in stops that routine's alarm and all
-                    later 10-minute reminders.
+                    Checking in clears that routine occurrence and stops
+                    its repeating 10-minute alarms.
                 </p>
 
             </div>
@@ -372,6 +366,7 @@
 
 
         <div class="button-grid">
+
 
             <button
                 id="wake-btn"
@@ -434,6 +429,7 @@
                 💻 Working
 
             </button>
+
 
         </div>
 
@@ -551,7 +547,7 @@
                 </h2>
 
                 <p>
-                    Manage membership requests or create a circle.
+                    Manage join requests or create a new accountability circle.
                 </p>
 
             </div>
@@ -560,6 +556,7 @@
 
 
         <div class="management-tabs">
+
 
             <button
                 id="join-requests-tab"
@@ -587,6 +584,7 @@
                 ➕ Create Circle
 
             </button>
+
 
         </div>
 
@@ -640,9 +638,7 @@
 
 
             <label for="new-circle-name">
-
                 Circle Name
-
             </label>
 
 
@@ -654,9 +650,7 @@
 
 
             <label for="new-circle-description">
-
                 Description
-
             </label>
 
 
@@ -818,7 +812,7 @@
 
     <!-- ===================================================
          DAILY ROUTINE
-         FIXED ORDER
+         ORDER IS INTENTIONAL
          =================================================== -->
 
     <section class="card">
@@ -836,8 +830,9 @@
                 </h2>
 
                 <p>
-                    CircleSync follows this order:
-                    Wake → Breakfast → Lunch → Rest → Dinner → Bedtime.
+                    Your schedule repeats every day. Bedtime can occur
+                    after midnight and CircleSync will still connect it
+                    correctly to your next Wake time.
                 </p>
 
             </div>
@@ -847,8 +842,6 @@
 
         <div class="routine-grid">
 
-
-            <!-- 1. WAKE -->
 
             <div class="routine-field">
 
@@ -867,8 +860,6 @@
             </div>
 
 
-            <!-- 2. BREAKFAST -->
-
             <div class="routine-field">
 
                 <span class="routine-number">
@@ -885,8 +876,6 @@
 
             </div>
 
-
-            <!-- 3. LUNCH -->
 
             <div class="routine-field">
 
@@ -905,8 +894,6 @@
             </div>
 
 
-            <!-- 4. REST -->
-
             <div class="routine-field">
 
                 <span class="routine-number">
@@ -923,8 +910,6 @@
 
             </div>
 
-
-            <!-- 5. DINNER -->
 
             <div class="routine-field">
 
@@ -943,8 +928,6 @@
             </div>
 
 
-            <!-- 6. BEDTIME -->
-
             <div class="routine-field">
 
                 <span class="routine-number">
@@ -961,13 +944,12 @@
 
             </div>
 
+
         </div>
 
 
         <label for="sleep-goal">
-
             Sleep Goal
-
         </label>
 
 
@@ -1001,11 +983,8 @@
 </main>
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-
-<script src="./app.js?v=80"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./app.js?v=81"></script>
 
 
 </body>
